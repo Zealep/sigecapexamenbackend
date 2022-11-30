@@ -4,10 +4,12 @@ import com.sigecap.sigecapexamenbackend.model.entity.Pregunta;
 import com.sigecap.sigecapexamenbackend.repository.PreguntaRepository;
 import com.sigecap.sigecapexamenbackend.service.PreguntaService;
 import com.sigecap.sigecapexamenbackend.util.Constantes;
+import com.sigecap.sigecapexamenbackend.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -47,11 +49,14 @@ public class PreguntaServiceImpl implements PreguntaService {
     }
 
     @Override
-    public Pregunta save(Pregunta p) {
+    public Pregunta save(Pregunta p) throws IOException {
+
         if(p.getIdPregunta()==null) {
             String pk = preguntaRepository.generatePrimaryKey(Constantes.TABLE_PREGUNTA, Constantes.ID_TABLE_PREGUNTA);
             p.setIdPregunta(pk);
         }
+        String enunciadoTexto = Util.convertHtmlToString(p.getEnunciado());
+        p.setEnunciadoTexto(enunciadoTexto);
         return preguntaRepository.save(p);
     }
 
@@ -59,5 +64,11 @@ public class PreguntaServiceImpl implements PreguntaService {
     @Transactional
     public void delete(String id) {
         preguntaRepository.deleteLogicById(id,Constantes.ESTADO_INACTIVO);
+    }
+
+    @Override
+    @Transactional
+    public void updateState(String id, String state) {
+        preguntaRepository.deleteLogicById(id,state);
     }
 }

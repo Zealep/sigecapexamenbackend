@@ -1,7 +1,7 @@
 package com.sigecap.sigecapexamenbackend.exception;
 
 
-public class BusinessException extends Exception{
+public class BusinessException extends RuntimeException{
 
 	/**
 	 * 

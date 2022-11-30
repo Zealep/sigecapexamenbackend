@@ -9,4 +9,6 @@ public interface CursoService {
     List<Curso> getAllActives();
     List<Curso> getAll();
 
+    Curso getById(String id);
+
 }

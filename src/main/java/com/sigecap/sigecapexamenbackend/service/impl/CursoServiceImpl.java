@@ -24,4 +24,9 @@ public class CursoServiceImpl implements CursoService {
     public List<Curso> getAll() {
         return (List<Curso>) cursoRepository.findAll();
     }
+
+    @Override
+    public Curso getById(String id) {
+        return cursoRepository.findById(id).orElse(null);
+    }
 }

@@ -7,45 +7,38 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "sge_tm_pregunta")
-public class Pregunta {
+@Table(name = "sge_tm_respuesta")
+public class Respuesta {
 
     @Id
-    @Column(name = "id_pregunta")
-    private String idPregunta;
+    @Column(name = "id_respuesta")
+    private String idRespuesta;
 
     @ManyToOne
-    @JoinColumn(name="id_curso")
-    private Curso curso;
+    @JoinColumn(name = "id_pregunta")
+    private Pregunta pregunta;
 
-    @ManyToOne
-    @JoinColumn(name="id_tipo_pregunta")
-    private TipoPregunta tipoPregunta;
-
-    @Column(name = "no_pregunta")
-    private String nombrePregunta;
     @Lob
     @Column(name = "enunciado")
-    private String  enunciado;
+    private String enunciado;
 
     @Lob
     @Column(name = "enunciado_texto")
-    private String  enunciadoTexto;
+    private String enunciadoTexto;
 
-
-    @Column(name = "puntuacion")
-    private BigDecimal puntuacion;
     @Lob
     @Column(name = "retroalimentacion")
-    private String  retroalimentacion;
+    private String retroAlimentacion;
+
+    @Column(name = "in_respuesta_correcta")
+    private String respuestaCorrecta;
 
     @Column(name = "estado")
-    private String  estado;
+    private String estado;
 
     @CreatedBy
     @Column(name = "us_creacion",nullable = false, updatable = false)
@@ -64,38 +57,20 @@ public class Pregunta {
     private Date modified;
 
 
-
-
-    public String getIdPregunta() {
-        return idPregunta;
+    public String getIdRespuesta() {
+        return idRespuesta;
     }
 
-    public void setIdPregunta(String idPregunta) {
-        this.idPregunta = idPregunta;
+    public void setIdRespuesta(String idRespuesta) {
+        this.idRespuesta = idRespuesta;
     }
 
-    public Curso getCurso() {
-        return curso;
+    public Pregunta getPregunta() {
+        return pregunta;
     }
 
-    public void setCurso(Curso curso) {
-        this.curso = curso;
-    }
-
-    public TipoPregunta getTipoPregunta() {
-        return tipoPregunta;
-    }
-
-    public void setTipoPregunta(TipoPregunta tipoPregunta) {
-        this.tipoPregunta = tipoPregunta;
-    }
-
-    public String getNombrePregunta() {
-        return nombrePregunta;
-    }
-
-    public void setNombrePregunta(String nombrePregunta) {
-        this.nombrePregunta = nombrePregunta;
+    public void setPregunta(Pregunta pregunta) {
+        this.pregunta = pregunta;
     }
 
     public String getEnunciado() {
@@ -106,20 +81,20 @@ public class Pregunta {
         this.enunciado = enunciado;
     }
 
-    public BigDecimal getPuntuacion() {
-        return puntuacion;
+    public String getRetroAlimentacion() {
+        return retroAlimentacion;
     }
 
-    public void setPuntuacion(BigDecimal puntuacion) {
-        this.puntuacion = puntuacion;
+    public void setRetroAlimentacion(String retroAlimentacion) {
+        this.retroAlimentacion = retroAlimentacion;
     }
 
-    public String getRetroalimentacion() {
-        return retroalimentacion;
+    public String getRespuestaCorrecta() {
+        return respuestaCorrecta;
     }
 
-    public void setRetroalimentacion(String retroalimentacion) {
-        this.retroalimentacion = retroalimentacion;
+    public void setRespuestaCorrecta(String respuestaCorrecta) {
+        this.respuestaCorrecta = respuestaCorrecta;
     }
 
     public String getEstado() {
@@ -129,7 +104,6 @@ public class Pregunta {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-
 
     public String getEnunciadoTexto() {
         return enunciadoTexto;

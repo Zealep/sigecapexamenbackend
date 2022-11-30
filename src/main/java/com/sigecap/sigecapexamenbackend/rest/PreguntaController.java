@@ -73,9 +73,19 @@ public class PreguntaController {
     }
 
     @DeleteMapping(value = "/pregunta/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RespuestaApi> getPregunta(@PathVariable String id){
+    public ResponseEntity<RespuestaApi> delete(@PathVariable String id){
         try{
             preguntaService.delete(id);
+            return new ResponseEntity<>(new RespuestaApi("OK",null,null), HttpStatus.NO_CONTENT);
+        }catch (Exception ex){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping(value = "/pregunta/{id}/{state}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RespuestaApi> updateState(@PathVariable String id,@PathVariable String state){
+        try{
+            preguntaService.updateState(id,state);
             return new ResponseEntity<>(new RespuestaApi("OK",null,null), HttpStatus.NO_CONTENT);
         }catch (Exception ex){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
