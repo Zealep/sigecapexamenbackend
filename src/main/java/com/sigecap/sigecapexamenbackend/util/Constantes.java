@@ -9,6 +9,7 @@ public interface Constantes {
     public static final String TABLE_PREGUNTA= "sge_tm_pregunta";
     public static final String ID_TABLE_PREGUNTA= "id_pregunta";
 
+
     public static final String TABLE_EXAMEN= "sge_tz_examen";
     public static final String ID_TABLE_EXAMEN= "id_examen";
 
@@ -20,6 +21,9 @@ public interface Constantes {
 
     public static final String TABLE_RESPUESTA= "sge_tm_respuesta";
     public static final String ID_TABLE_RESPUESTA= "id_respuesta";
+
+    public static final String TABLA_PARTICIPANTE= "sgc_tz_participante";
+	public static final String ID_TABLA_PARTICIPANTE= "id_participante";
 
     public static final String CODIGO_EMPRESA = "01";
 
