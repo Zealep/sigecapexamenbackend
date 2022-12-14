@@ -1,5 +1,6 @@
 package com.sigecap.sigecapexamenbackend.rest;
 
+import com.sigecap.sigecapexamenbackend.model.dto.ExamenPreguntaDTO;
 import com.sigecap.sigecapexamenbackend.model.entity.Pregunta;
 import com.sigecap.sigecapexamenbackend.model.entity.TipoPregunta;
 import com.sigecap.sigecapexamenbackend.service.PreguntaService;
@@ -87,6 +88,14 @@ public class PreguntaController {
         try{
             preguntaService.updateState(id,state);
             return new ResponseEntity<>(new RespuestaApi("OK",null,null), HttpStatus.NO_CONTENT);
+        }catch (Exception ex){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping(value = "/pregunta/examen/{examen}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ExamenPreguntaDTO>> getPreguntasPorExamen(@PathVariable String examen){
+        try{
+            return new ResponseEntity<List<ExamenPreguntaDTO>>(preguntaService.getPreguntasyRespuestasPorExamen(examen), HttpStatus.OK);
         }catch (Exception ex){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -27,4 +27,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
     public void deleteLogicById(String estado,Long id);
 
 
+
+
 }

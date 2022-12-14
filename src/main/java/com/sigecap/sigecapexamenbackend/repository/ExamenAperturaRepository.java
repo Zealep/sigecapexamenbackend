@@ -30,4 +30,7 @@ public interface ExamenAperturaRepository extends CrudRepository<ExamenApertura,
     @Modifying
     void cerrar(String id, String estado, Date fechaCierre);
 
+    @Query(nativeQuery = true ,value= "update sgc_tz_solicitud_inscripcion_detalle c set c.in_asistio =?2 where c.id_solicitud_inscripcion_detalle=?1")
+    @Modifying
+    void updateAsistencia(String id,String estado);
 }

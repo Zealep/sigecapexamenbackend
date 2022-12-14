@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface MenuService {
 
-    List<ItemMenuDTO> getMenu(String usuario, String rol);
+    List<ItemMenuDTO> getMenu(String usuario);
 
 }

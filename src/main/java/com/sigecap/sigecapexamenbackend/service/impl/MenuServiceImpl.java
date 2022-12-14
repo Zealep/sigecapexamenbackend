@@ -18,11 +18,11 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<ItemMenuDTO> getMenu(String usuario, String rol) {
+    public List<ItemMenuDTO> getMenu(String usuario) {
 
-        List<ItemMenuDTO> items = menuJdbcRepository.getMenuUsuario(usuario,rol).stream().map(x ->{
+        List<ItemMenuDTO> items = menuJdbcRepository.getMenuUsuario(usuario).stream().map(x ->{
             ItemMenuDTO i = new ItemMenuDTO();
-            i.setLabel(x.getNombreLargo());
+            i.setLabel(x.getNombreMenu());
             i.setLink(x.getUrl());
             return i;
         }).collect(Collectors.toList());

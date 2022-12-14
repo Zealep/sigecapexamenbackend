@@ -119,8 +119,14 @@ public class RespuestaServiceImpl implements RespuestaService {
                 }
             }
             if (p.getTipoPregunta().getIdTipoPregunta().equals(Constantes.OPCION_VERDADERO_FALSO)) {
-                respuestaVerdaderoFalsoRepetida(p, respuesta);
-                respuestaCorrectaRepetida(p, respuesta);
+                if(respuesta.getIdRespuesta() == null){
+                    respuestaVerdaderoFalsoRepetida(p, respuesta);
+                    respuestaCorrectaRepetida(p, respuesta);
+                }
+                else{
+                    respuestaCorrectaRepetidaEditar(p, respuesta);
+                }
+
             }
             if (p.getTipoPregunta().getIdTipoPregunta().equals(Constantes.OPCION_NUMERICA)) {
 

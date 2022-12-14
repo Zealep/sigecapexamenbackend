@@ -22,65 +22,86 @@ public class ExamenAperturaController {
     @Autowired
     private ExamenAperturaService examenAperturaService;
 
-    @GetMapping(value = "/examen-apertura",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ExamenApertura>> getAll(){
-        try{
+    @GetMapping(value = "/examen-apertura", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ExamenApertura>> getAll() {
+        try {
             return new ResponseEntity<>(examenAperturaService.getAll(), HttpStatus.OK);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping(value = "/examen-apertura/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ExamenApertura> getById(@PathVariable String id){
-        try{
+    @GetMapping(value = "/examen-apertura/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ExamenApertura> getById(@PathVariable String id) {
+        try {
             return new ResponseEntity<>(examenAperturaService.getById(id), HttpStatus.OK);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PostMapping(value = "/examen-apertura",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ExamenApertura> save(@RequestBody ExamenApertura examenApertura){
-        try{
+    @PostMapping(value = "/examen-apertura", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ExamenApertura> save(@RequestBody ExamenApertura examenApertura) {
+        try {
             return new ResponseEntity<>(examenAperturaService.save(examenApertura), HttpStatus.CREATED);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @DeleteMapping(value = "/examen-apertura/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RespuestaApi> deleteById(@PathVariable String id){
-        try{
+    @DeleteMapping(value = "/examen-apertura/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RespuestaApi> deleteById(@PathVariable String id) {
+        try {
             examenAperturaService.delete(id);
-            return new ResponseEntity<>(new RespuestaApi("OK",null,null), HttpStatus.NO_CONTENT);
-        }catch (Exception ex){
+            return new ResponseEntity<>(new RespuestaApi("OK", null, null), HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PostMapping(value = "/examen-apertura/bandeja",produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/examen-apertura/bandeja", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ExamenApertura>> bucarBandeja(@RequestBody BandejaAperturaInDTO bandejaAperturaInDTO) {
         return new ResponseEntity<>(examenAperturaService.listBandeja(bandejaAperturaInDTO), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/examen-apertura/{id}/{state}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RespuestaApi> updateState(@PathVariable String id,@PathVariable String state){
-        try{
-            examenAperturaService.updateState(id,state);
-            return new ResponseEntity<>(new RespuestaApi("OK",null,null), HttpStatus.NO_CONTENT);
-        }catch (Exception ex){
+    @DeleteMapping(value = "/examen-apertura/{id}/{state}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RespuestaApi> updateState(@PathVariable String id, @PathVariable String state) {
+        try {
+            examenAperturaService.updateState(id, state);
+            return new ResponseEntity<>(new RespuestaApi("OK", null, null), HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @DeleteMapping(value = "/examen-apertura/cerrar",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RespuestaApi> updateState(@RequestParam(name = "id",required = true)String id){
-        try{
-            examenAperturaService.cerrarExamen(id,new Date());
-            return new ResponseEntity<>(new RespuestaApi("OK",null,null), HttpStatus.NO_CONTENT);
-        }catch (Exception ex){
+    @DeleteMapping(value = "/examen-apertura/cerrar", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RespuestaApi> updateState(@RequestParam(name = "id", required = true) String id) {
+        try {
+            examenAperturaService.cerrarExamen(id, new Date());
+            return new ResponseEntity<>(new RespuestaApi("OK", null, null), HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping(value = "/examen-apertura/notificar", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RespuestaApi> notificarParticipantes(@RequestParam(name = "idApertura") String idApertura,
+                                                               @RequestParam(name = "curso") String curso, @RequestParam(name = "grupo") String grupo) {
+        try {
+            examenAperturaService.notificarParticipantes(idApertura, curso, grupo);
+            return new ResponseEntity<>(new RespuestaApi("OK", null, null), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/examen-apertura/asistencia", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RespuestaApi> registrarAsistencia(@RequestParam(name = "dni") String dni,
+                                                            @RequestParam(name = "curso") String curso, @RequestParam(name = "grupo") String grupo) {
+        examenAperturaService.registrarAsistencia(dni, curso, grupo);
+        return new ResponseEntity<RespuestaApi>(new RespuestaApi("OK",null,null),HttpStatus.OK);
+    }
+
+
+
 }

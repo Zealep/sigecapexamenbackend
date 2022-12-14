@@ -1,10 +1,12 @@
 package com.sigecap.sigecapexamenbackend.rest;
 
 import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenInDTO;
+import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenPorAlumnoDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.BandejaRespuestasInDTO;
 import com.sigecap.sigecapexamenbackend.model.entity.Examen;
 import com.sigecap.sigecapexamenbackend.model.entity.Pregunta;
 import com.sigecap.sigecapexamenbackend.model.entity.Respuesta;
+import com.sigecap.sigecapexamenbackend.repository.jdbc.ExamenJdbcRepository;
 import com.sigecap.sigecapexamenbackend.service.ExamenService;
 import com.sigecap.sigecapexamenbackend.service.PreguntaService;
 import com.sigecap.sigecapexamenbackend.util.RespuestaApi;
@@ -21,6 +23,9 @@ public class ExamenController {
 
     @Autowired
     private ExamenService examenService;
+
+    @Autowired
+    private ExamenJdbcRepository examenJdbcRepository;
 
     @GetMapping(value = "/examen",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Examen>> getAll(){
@@ -79,6 +84,15 @@ public class ExamenController {
         try{
             examenService.updateState(id,state);
             return new ResponseEntity<>(new RespuestaApi("OK",null,null), HttpStatus.NO_CONTENT);
+        }catch (Exception ex){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping(value = "/examen/bandeja-alumno/{usuario}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<BandejaExamenPorAlumnoDTO>> getBandejaExamenPorAlumno(@PathVariable(name = "usuario") String usuario){
+        try{
+            List<BandejaExamenPorAlumnoDTO> examenes = examenJdbcRepository.getBandejaPorAlumno(usuario);
+            return new ResponseEntity<>(examenes, HttpStatus.OK);
         }catch (Exception ex){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

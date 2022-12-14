@@ -2,7 +2,7 @@ package com.sigecap.sigecapexamenbackend.util;
 
 public interface Constantes {
 
-    public final String ROL_OK = "20210008";
+    public final String ROL_ADMINISTRADOR_OK = "20210009";
     public final String ESTADO_ACTIVO = "ACT";
     public final String ESTADO_INACTIVO = "INA";
 
@@ -46,6 +46,11 @@ public interface Constantes {
     public static final String CREADO_APERTURA_EXAMEN = "CRE";
     public static final String INICIADO_APERTURA_EXAMEN = "INI";
     public static final String CERRADO_APERTURA_EXAMEN = "CER";
+
+    // ESTADOS ASISTIO
+    public static final String ASISTIO_EXAMEN = "S";
+    public static final String NO_ASISTIO_EXAMEN = "N";
+
 
 
 }

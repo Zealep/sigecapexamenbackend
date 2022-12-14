@@ -19,10 +19,10 @@ public class MenuController {
         this.menuService = menuService;
     }
 
-    @GetMapping(value = "/menu/{usuario}/{rol}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ItemMenuDTO>> getMenu(@PathVariable String usuario, @PathVariable String rol){
+    @GetMapping(value = "/menu/{usuario}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ItemMenuDTO>> getMenu(@PathVariable String usuario){
         try{
-            return new ResponseEntity<>(menuService.getMenu(usuario,rol), HttpStatus.OK);
+            return new ResponseEntity<>(menuService.getMenu(usuario), HttpStatus.OK);
         }catch (Exception ex){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

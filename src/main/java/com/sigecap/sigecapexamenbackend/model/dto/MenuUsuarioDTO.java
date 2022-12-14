@@ -1,39 +1,21 @@
 package com.sigecap.sigecapexamenbackend.model.dto;
 
 public class MenuUsuarioDTO {
-    private String idMenu;
-    private String nombreLargo;
-    private String nombreCorto;
+    private String nombreMenu;
     private String url;
-    private Integer orden;
-    private String estadoMenu;
     private String idUsuario;
     private String idRol;
     private String sistema;
     private String nombreUsuario;
+    private String contraseña;
+    private String nombreRol;
 
-    public String getIdMenu() {
-        return idMenu;
+    public String getNombreMenu() {
+        return nombreMenu;
     }
 
-    public void setIdMenu(String idMenu) {
-        this.idMenu = idMenu;
-    }
-
-    public String getNombreLargo() {
-        return nombreLargo;
-    }
-
-    public void setNombreLargo(String nombreLargo) {
-        this.nombreLargo = nombreLargo;
-    }
-
-    public String getNombreCorto() {
-        return nombreCorto;
-    }
-
-    public void setNombreCorto(String nombreCorto) {
-        this.nombreCorto = nombreCorto;
+    public void setNombreMenu(String nombreMenu) {
+        this.nombreMenu = nombreMenu;
     }
 
     public String getUrl() {
@@ -42,22 +24,6 @@ public class MenuUsuarioDTO {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public Integer getOrden() {
-        return orden;
-    }
-
-    public void setOrden(Integer orden) {
-        this.orden = orden;
-    }
-
-    public String getEstadoMenu() {
-        return estadoMenu;
-    }
-
-    public void setEstadoMenu(String estadoMenu) {
-        this.estadoMenu = estadoMenu;
     }
 
     public String getIdUsuario() {
@@ -90,5 +56,21 @@ public class MenuUsuarioDTO {
 
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
+
+    public String getNombreRol() {
+        return nombreRol;
+    }
+
+    public void setNombreRol(String nombreRol) {
+        this.nombreRol = nombreRol;
     }
 }

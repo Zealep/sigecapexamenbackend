@@ -71,9 +71,13 @@ public class JwtAuthenticationController {
 
 	private void validateUser(String username) throws Exception{
 		Usuario u = usuarioRepository.findByUsername(username).orElse(null);
-		if(!u.getIdRol().equals(Constantes.ROL_OK)){
+		/*
+
+		if(!u.getIdRol().equals(Constantes.ROL_ADMINISTRADOR_OK)){
 			throw new BusinessException(BusinessMsgError.ERROR_USUARIO_ROL);
 		}
+
+		 */
 
 		if(!u.getEstado().equals(Constantes.ESTADO_ACTIVO)){
 			throw new BusinessException(BusinessMsgError.ERROR_USUARIO_INACTIVO);

@@ -39,6 +39,9 @@ public class ExamenApertura {
     @Column(name = "numero_intentos")
     private Integer numeroIntentos;
 
+    @Column(name = "in_realizar_encuesta")
+    private String indEncuesta;
+
     @Column(name = "estado")
     private String estado;
 
@@ -64,6 +67,14 @@ public class ExamenApertura {
 
     public void setCursoGrupo(CursoGrupo cursoGrupo) {
         this.cursoGrupo = cursoGrupo;
+    }
+
+    public String getIndEncuesta() {
+        return indEncuesta;
+    }
+
+    public void setIndEncuesta(String indEncuesta) {
+        this.indEncuesta = indEncuesta;
     }
 
     public String getIdExamenApertura() {

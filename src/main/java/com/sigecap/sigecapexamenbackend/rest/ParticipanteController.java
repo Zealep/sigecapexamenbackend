@@ -14,12 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sigecap.sigecapexamenbackend.model.dto.ParticipanteInscritoDto;
@@ -37,11 +34,19 @@ public class ParticipanteController {
 	
 	@Autowired
 	ParticipanteDtoService participanteInscritoService;
+
+	@GetMapping(value = "/consultarAlumnosPorGrupo")
+	public  ResponseEntity<List<ParticipanteInscritoDto>>consultarAlumnosPorGrupo(@RequestParam(name = "curso")String curso,@RequestParam(name = "grupo")String grupo){
+		try{
+			return new ResponseEntity<>(participanteInscritoService.getListParticipanteByIdCursoAndIdCursoGrupo(curso,grupo), HttpStatus.OK);
+		}catch (Exception ex){
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
 
 	@PostMapping(value = "/consultarParticipantesInscritos")
-	@ResponseBody
-	public List<ParticipanteInscritoDto> consultaRegistroParticipante(@RequestBody String jsonString,HttpServletRequest srv) {
+	public ResponseEntity<List<ParticipanteInscritoDto>> consultaRegistroParticipante(@RequestBody String jsonString) {
 		List<ParticipanteInscritoDto> jqTable = new ArrayList<>();
 		try {
 			
@@ -50,23 +55,16 @@ public class ParticipanteController {
 			
 			String parIdCurso = jsonObject.getString("parIdCurso");
 			String parIdCursoGrupo = jsonObject.getString("parIdCursoGrupo");
-			String parFecFinGrupoRi = jsonObject.getString("parFecFinGrupoRi");
-			String parFecFinGrupoRf = jsonObject.getString("parFecFinGrupoRf");
-			String parIdEntidadCliente = jsonObject.getString("parIdEntidadCliente");
-			
-			// Defino objetos
-			List<ParticipanteInscritoDto> listParticipantesInscritos = new ArrayList<>();
-			
-			
-			jqTable = participanteInscritoService.getListParticipantesInscritosPorCriterios(parIdCurso,parIdCursoGrupo,parFecFinGrupoRi,parFecFinGrupoRf,parIdEntidadCliente);
 
 
-		  	    	
-	    	
-			return listParticipantesInscritos;
+			return new ResponseEntity<>(participanteInscritoService.getListParticipantesInscritosPorCriterios(parIdCurso,parIdCursoGrupo,"","",""), HttpStatus.OK);
+
+
+
 		}catch (Exception ex) {
 			System.out.print(ex.getMessage());
-			return jqTable;
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+
 		}
 	}
 	

@@ -67,7 +67,21 @@ public class ParticipanteInscritoDto{
 
 	@Column(name="ponente")
 	private String ponente;
-	
+
+	@Column(name="asistio")
+	private String asistio;
+
+	@Column(name="id_solicitud_inscripcion_detalle")
+	private String idSolicitudInscripcionDetalle;
+
+	public String getIdSolicitudInscripcionDetalle() {
+		return idSolicitudInscripcionDetalle;
+	}
+
+	public void setIdSolicitudInscripcionDetalle(String idSolicitudInscripcionDetalle) {
+		this.idSolicitudInscripcionDetalle = idSolicitudInscripcionDetalle;
+	}
+
 	public String getIdParticipante() {
 		return idParticipante;
 	}
@@ -228,11 +242,12 @@ public class ParticipanteInscritoDto{
 	public void setCentroCosto(String centroCosto) {
 		this.centroCosto = centroCosto;
 	}
-	
-	
-	
-	
-	
 
+	public String getAsistio() {
+		return asistio;
+	}
 
+	public void setAsistio(String asistio) {
+		this.asistio = asistio;
+	}
 }
