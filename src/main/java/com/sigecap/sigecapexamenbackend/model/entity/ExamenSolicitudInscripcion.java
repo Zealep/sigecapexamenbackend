@@ -15,14 +15,14 @@ public class ExamenSolicitudInscripcion {
     private String idSolicitudInscripcionDetalle;
 
     @ManyToOne
-    @JoinColumn(name = "idExamenApertura")
+    @JoinColumn(name = "id_examen_apertura")
     private ExamenApertura examenApertura;
 
     @Column(name = "in_realizo_examen")
     private String indicadorRealizoExamen;
 
-    @Column(name = "nota")
-    private Integer nota;
+    @Column(name = "numero_intento_realizado")
+    private Integer numeroIntentoRealizado;
 
     public Long getIdExamenSolicitudInscripcion() {
         return idExamenSolicitudInscripcion;
@@ -56,11 +56,11 @@ public class ExamenSolicitudInscripcion {
         this.indicadorRealizoExamen = indicadorRealizoExamen;
     }
 
-    public Integer getNota() {
-        return nota;
+    public Integer getNumeroIntentoRealizado() {
+        return numeroIntentoRealizado;
     }
 
-    public void setNota(Integer nota) {
-        this.nota = nota;
+    public void setNumeroIntentoRealizado(Integer numeroIntentoRealizado) {
+        this.numeroIntentoRealizado = numeroIntentoRealizado;
     }
 }

@@ -4,6 +4,7 @@ import com.sigecap.sigecapexamenbackend.model.dto.BandejaAperturaInDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenInDTO;
 import com.sigecap.sigecapexamenbackend.model.entity.Examen;
 import com.sigecap.sigecapexamenbackend.model.entity.ExamenApertura;
+import com.sigecap.sigecapexamenbackend.model.entity.ExamenSolicitudInscripcion;
 import com.sigecap.sigecapexamenbackend.service.ExamenAperturaService;
 import com.sigecap.sigecapexamenbackend.service.ExamenService;
 import com.sigecap.sigecapexamenbackend.util.RespuestaApi;
@@ -102,6 +103,14 @@ public class ExamenAperturaController {
         return new ResponseEntity<RespuestaApi>(new RespuestaApi("OK",null,null),HttpStatus.OK);
     }
 
+    @GetMapping(value = "/examen-apertura/inscripcion/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ExamenSolicitudInscripcion> getExamenInscripcionById(@PathVariable(name = "id") Long id){
+        try {
+            return new ResponseEntity<ExamenSolicitudInscripcion>(examenAperturaService.getExamenInscripcionById(id),HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 }

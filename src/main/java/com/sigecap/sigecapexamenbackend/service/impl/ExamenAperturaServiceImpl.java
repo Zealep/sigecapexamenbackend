@@ -179,6 +179,11 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
 
     }
 
+    @Override
+    public ExamenSolicitudInscripcion getExamenInscripcionById(Long id) {
+        return examenSolicitudInscripcionRepository.findById(id).orElse(null);
+    }
+
 
     private void guardarRelacionPorcadaAlumno(ExamenApertura examenApertura) {
         List<ParticipanteInscritoDto> participanteInscritoDtos = participanteInscritoRepository.getListParticipantesInscritosPorCriterios("", examenApertura.getCursoGrupo().getIdCursoGrupo(), "", "", "");

@@ -73,8 +73,8 @@ public class ExamenJdbcRepository {
             t.setNombreCurso(rs.getString("nombre_curso"));
             t.setIdExamen(rs.getString("id_examen"));
             t.setNombreExamen(rs.getString("no_examen"));
-            t.setFechaHoraApertura(rs.getDate("fecha_hora_apertura"));
-            t.setFechaHoraCierre(rs.getDate("fecha_hora_cierre"));
+            t.setFechaHoraApertura(rs.getTimestamp("fecha_hora_apertura"));
+            t.setFechaHoraCierre(rs.getTimestamp("fecha_hora_cierre"));
             t.setEstado(rs.getString("estado"));
             t.setPromedio(rs.getInt("promedio"));
             t.setIndicadorEncuesta(rs.getString("in_realizar_encuesta"));

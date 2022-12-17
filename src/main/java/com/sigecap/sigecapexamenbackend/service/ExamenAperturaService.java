@@ -5,6 +5,7 @@ import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenInDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.ParticipanteInscritoDto;
 import com.sigecap.sigecapexamenbackend.model.entity.Examen;
 import com.sigecap.sigecapexamenbackend.model.entity.ExamenApertura;
+import com.sigecap.sigecapexamenbackend.model.entity.ExamenSolicitudInscripcion;
 
 import java.util.Date;
 import java.util.List;
@@ -26,6 +27,8 @@ public interface ExamenAperturaService {
     void notificarParticipantes(String idApertura,String idCurso,String idGrupo);
 
     void registrarAsistencia(String dni,String idCurso,String idGrupo);
+
+    ExamenSolicitudInscripcion getExamenInscripcionById(Long id);
 
 
 }
