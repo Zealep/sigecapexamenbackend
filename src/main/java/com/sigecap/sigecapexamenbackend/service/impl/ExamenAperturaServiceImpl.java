@@ -3,6 +3,7 @@ package com.sigecap.sigecapexamenbackend.service.impl;
 import com.sigecap.sigecapexamenbackend.exception.BusinessException;
 import com.sigecap.sigecapexamenbackend.model.dto.BandejaAperturaInDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenInDTO;
+import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenPorAlumnoDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.ParticipanteInscritoDto;
 import com.sigecap.sigecapexamenbackend.model.entity.Examen;
 import com.sigecap.sigecapexamenbackend.model.entity.ExamenApertura;
@@ -184,14 +185,47 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
         return examenSolicitudInscripcionRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public void validarInicioExamen(BandejaExamenPorAlumnoDTO bandejaExamenPorAlumnoDTO) {
+        if(bandejaExamenPorAlumnoDTO.getIndicadorEncuesta().equals("S")){
+            if(bandejaExamenPorAlumnoDTO.getIndicadorRealizoEncuesta() == null || bandejaExamenPorAlumnoDTO.getIndicadorRealizoEncuesta().equals("") || bandejaExamenPorAlumnoDTO.getIndicadorAsistio().equals("N") ){
+                throw new BusinessException(BusinessMsgError.ERROR_NO_REALIZO_ENCUESTA);
+            }
+        }
+
+        if(bandejaExamenPorAlumnoDTO.getIndicadorAsistio() == null || bandejaExamenPorAlumnoDTO.getIndicadorAsistio().equals("") || bandejaExamenPorAlumnoDTO.getIndicadorAsistio().equals("N")){
+            throw new BusinessException(BusinessMsgError.ERROR_NO_REALIZO_ASISTENCIA);
+        }
+
+        if(new Date().toInstant().isBefore(bandejaExamenPorAlumnoDTO.getFechaHoraApertura().toInstant())){
+            throw new BusinessException(BusinessMsgError.ERROR_FECHA_INICIO_EXAMEN);
+        }
+
+        if(new Date().toInstant().isAfter(bandejaExamenPorAlumnoDTO.getFechaHoraCierre().toInstant())){
+            throw new BusinessException(BusinessMsgError.ERROR_FECHA_FIN_EXAMEN);
+        }
+
+        ExamenSolicitudInscripcion ea = examenSolicitudInscripcionRepository.findById(bandejaExamenPorAlumnoDTO.getIdSidExamen()).orElse(null);
+
+        Integer intentosRealizados = ea.getNumeroIntentoRealizado();
+        Integer intentosPermitidos = ea.getExamenApertura().getNumeroIntentos();
+        if(intentosRealizados != null){
+            if(intentosRealizados>=intentosPermitidos){
+                throw new BusinessException(BusinessMsgError.ERROR_NUMEROS_INTENTOS_);
+            }
+        }
+    }
 
     private void guardarRelacionPorcadaAlumno(ExamenApertura examenApertura) {
         List<ParticipanteInscritoDto> participanteInscritoDtos = participanteInscritoRepository.getListParticipantesInscritosPorCriterios("", examenApertura.getCursoGrupo().getIdCursoGrupo(), "", "", "");
         participanteInscritoDtos.stream().forEach(x -> {
             ExamenSolicitudInscripcion ex = new ExamenSolicitudInscripcion();
             ex.setExamenApertura(examenApertura);
+            ex.setIndicadorAsistio("N");
             ex.setIdSolicitudInscripcionDetalle(x.getIdSolicitudInscripcionDetalle());
             ex.setIndicadorRealizoExamen("N");
+            ex.setNumeroIntentoRealizado(0);
+            ex.setEstado(Constantes.ESTADO_ACTIVO);
             examenSolicitudInscripcionRepository.save(ex);
         });
     }

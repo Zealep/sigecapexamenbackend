@@ -18,11 +18,26 @@ public class ExamenSolicitudInscripcion {
     @JoinColumn(name = "id_examen_apertura")
     private ExamenApertura examenApertura;
 
+    @Column(name = "in_asistio")
+    private String indicadorAsistio;
+
     @Column(name = "in_realizo_examen")
     private String indicadorRealizoExamen;
 
+
     @Column(name = "numero_intento_realizado")
     private Integer numeroIntentoRealizado;
+
+    @Column(name = "estado")
+    private String estado;
+
+    public String getIndicadorAsistio() {
+        return indicadorAsistio;
+    }
+
+    public void setIndicadorAsistio(String indicadorAsistio) {
+        this.indicadorAsistio = indicadorAsistio;
+    }
 
     public Long getIdExamenSolicitudInscripcion() {
         return idExamenSolicitudInscripcion;
@@ -62,5 +77,13 @@ public class ExamenSolicitudInscripcion {
 
     public void setNumeroIntentoRealizado(Integer numeroIntentoRealizado) {
         this.numeroIntentoRealizado = numeroIntentoRealizado;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }

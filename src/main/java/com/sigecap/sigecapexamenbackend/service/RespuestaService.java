@@ -13,6 +13,8 @@ public interface RespuestaService {
     Respuesta getById(String id);
     List<Respuesta> getByPregunta(String id);
 
+    Respuesta getByPreguntaAndRespuesta(String idPregunta,String idRespuesta);
+
     List<Respuesta> listBandeja(BandejaRespuestasInDTO bandejaRespuestasInDTO);
     
     Respuesta save(Respuesta p) throws Exception;

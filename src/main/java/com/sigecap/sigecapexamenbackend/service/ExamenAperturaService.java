@@ -2,6 +2,7 @@ package com.sigecap.sigecapexamenbackend.service;
 
 import com.sigecap.sigecapexamenbackend.model.dto.BandejaAperturaInDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenInDTO;
+import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenPorAlumnoDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.ParticipanteInscritoDto;
 import com.sigecap.sigecapexamenbackend.model.entity.Examen;
 import com.sigecap.sigecapexamenbackend.model.entity.ExamenApertura;
@@ -29,6 +30,8 @@ public interface ExamenAperturaService {
     void registrarAsistencia(String dni,String idCurso,String idGrupo);
 
     ExamenSolicitudInscripcion getExamenInscripcionById(Long id);
+
+    void validarInicioExamen(BandejaExamenPorAlumnoDTO bandejaExamenPorAlumnoDTO);
 
 
 }

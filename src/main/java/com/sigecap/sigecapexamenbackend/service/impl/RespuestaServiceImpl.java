@@ -59,6 +59,11 @@ public class RespuestaServiceImpl implements RespuestaService {
     }
 
     @Override
+    public Respuesta getByPreguntaAndRespuesta(String idPregunta, String idRespuesta) {
+        return respuestaRepository.getByPreguntaAndRespuesta(idPregunta,idRespuesta,Constantes.ESTADO_ACTIVO);
+    }
+
+    @Override
     public List<Respuesta> listBandeja(BandejaRespuestasInDTO bandejaRespuestasInDTO) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Respuesta> cq = cb.createQuery(Respuesta.class);

@@ -25,6 +25,9 @@ public interface Constantes {
     public static final String TABLA_PARTICIPANTE= "sgc_tz_participante";
 	public static final String ID_TABLA_PARTICIPANTE= "id_participante";
 
+    public static final String TABLA_ARCHIVO= "sgc_tz_archivo";
+    public static final String ID_TABLA_ARCHIVO= "id_archivo";
+
     public static final String CODIGO_EMPRESA = "01";
 
     // TIPOS DE PREGUNTAS

@@ -20,6 +20,8 @@ public interface RespuestaRepository extends CrudRepository<Respuesta,String> {
     @Query("select c from Respuesta c where c.pregunta.idPregunta=?1 and c.estado=?2")
     List<Respuesta> getByPregunta(String id,String estado);
 
+    @Query("select c from Respuesta c where c.pregunta.idPregunta=?1 and c.idRespuesta = ?2 and c.estado=?3")
+    Respuesta getByPreguntaAndRespuesta(String idPregunta, String idRespuesta, String estado);
 
     @Query("update Respuesta c set c.estado=?2 where c.idRespuesta=?1")
     @Modifying
