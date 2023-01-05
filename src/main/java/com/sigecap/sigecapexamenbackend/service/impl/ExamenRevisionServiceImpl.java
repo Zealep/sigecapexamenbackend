@@ -59,6 +59,6 @@ public class ExamenRevisionServiceImpl implements ExamenRevisionService {
         }
 
         examenInscripcionIntentoService.updateNotaAndIntento(idExamenIntento,nota,numeroIntento);
-        examenSolicitudInscripcionRepository.updateIntentoRealizado(intento.getExamenSolicitudInscripcion().getIdExamenSolicitudInscripcion(),numeroIntento);
+        examenSolicitudInscripcionRepository.updateIntentoRealizado(intento.getExamenSolicitudInscripcion().getIdExamenSolicitudInscripcion(),numeroIntento,"S");
     }
 }

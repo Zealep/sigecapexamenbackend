@@ -7,8 +7,8 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ExamenSolicitudInscripcionRepository extends CrudRepository<ExamenSolicitudInscripcion,Long> {
 
-    @Query("update ExamenSolicitudInscripcion c set c.numeroIntentoRealizado=?2 where c.idExamenSolicitudInscripcion=?1")
+    @Query("update ExamenSolicitudInscripcion c set c.numeroIntentoRealizado=?2 , c.indicadorRealizoExamen=?3 where c.idExamenSolicitudInscripcion=?1")
     @Modifying
-    void updateIntentoRealizado(Long idExamenSolicitud,Integer intento);
+    void updateIntentoRealizado(Long idExamenSolicitud,Integer intento,String indicador);
 
 }
