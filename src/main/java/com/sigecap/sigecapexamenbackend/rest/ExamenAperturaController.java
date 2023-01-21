@@ -119,5 +119,11 @@ public class ExamenAperturaController {
             return new ResponseEntity<>(new RespuestaApi("OK",null,null),HttpStatus.OK);
     }
 
+    @PostMapping(value = "/examen-apertura/validar-encuesta", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RespuestaApi> validarEncuesta(@RequestBody BandejaExamenPorAlumnoDTO bandejaExamenPorAlumnoDTO){
+        examenAperturaService.validarEncuesta(bandejaExamenPorAlumnoDTO);
+        return new ResponseEntity<>(new RespuestaApi("OK",null,null),HttpStatus.OK);
+    }
+
 
 }

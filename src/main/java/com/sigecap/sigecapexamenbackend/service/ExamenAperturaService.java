@@ -33,5 +33,5 @@ public interface ExamenAperturaService {
 
     void validarInicioExamen(BandejaExamenPorAlumnoDTO bandejaExamenPorAlumnoDTO);
 
-
+    void validarEncuesta(BandejaExamenPorAlumnoDTO bandejaExamenPorAlumnoDTO);
 }

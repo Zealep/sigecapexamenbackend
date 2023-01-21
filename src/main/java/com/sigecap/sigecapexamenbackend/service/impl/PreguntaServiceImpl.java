@@ -1,10 +1,9 @@
 package com.sigecap.sigecapexamenbackend.service.impl;
 
-import com.sigecap.sigecapexamenbackend.model.dto.ExamenPreguntaDTO;
-import com.sigecap.sigecapexamenbackend.model.dto.ExamenRespuestaDTO;
-import com.sigecap.sigecapexamenbackend.model.dto.PreguntasPorExamenDTO;
+import com.sigecap.sigecapexamenbackend.model.dto.*;
 import com.sigecap.sigecapexamenbackend.model.entity.Pregunta;
 import com.sigecap.sigecapexamenbackend.repository.PreguntaRepository;
+import com.sigecap.sigecapexamenbackend.repository.jdbc.EncuestaJdbcRepository;
 import com.sigecap.sigecapexamenbackend.repository.jdbc.ExamenJdbcRepository;
 import com.sigecap.sigecapexamenbackend.service.PreguntaService;
 import com.sigecap.sigecapexamenbackend.util.Constantes;
@@ -27,6 +26,9 @@ public class PreguntaServiceImpl implements PreguntaService {
 
     @Autowired
     private ExamenJdbcRepository examenJdbcRepository;
+
+    @Autowired
+    private EncuestaJdbcRepository encuestaJdbcRepository;
 
     @Override
     public List<Pregunta> getAllActives() {
@@ -116,5 +118,42 @@ public class PreguntaServiceImpl implements PreguntaService {
         }
 
         return preguntaPorExamen;
+    }
+
+    @Override
+    public List<EncuestaPreguntaDTO> getPreguntasyRespuestasPorEncuesta() {
+        List<PreguntasPorEncuestaDTO> preguntasEncuesta = encuestaJdbcRepository.getPreguntasPorEncuesta();
+        Map<String,List<PreguntasPorEncuestaDTO>> result = preguntasEncuesta.stream().collect(Collectors.groupingBy(PreguntasPorEncuestaDTO::getIdPregunta));
+
+        List<EncuestaPreguntaDTO> preguntaPorEncuesta = new ArrayList<>();
+        for (Map.Entry<String,List<PreguntasPorEncuestaDTO>> entry : result.entrySet()) {
+
+            EncuestaPreguntaDTO pregunta = new EncuestaPreguntaDTO();
+
+            if(entry.getValue().size()>0){
+                pregunta.setIdPregunta(entry.getValue().get(0).getIdPregunta());
+                pregunta.setEnunciadoPregunta(entry.getValue().get(0).getEnunciadoPregunta());
+                pregunta.setNombrePregunta(entry.getValue().get(0).getNombrePregunta());
+                pregunta.setRetroAlimentacionPregunta(entry.getValue().get(0).getRetroAlimentacionPregunta());
+                pregunta.setIdTipoPregunta(entry.getValue().get(0).getIdTipoPregunta());
+                pregunta.setNombreTipoPregunta(entry.getValue().get(0).getNombreTipoPregunta());
+            }
+            else{
+                break;
+            }
+
+            List<EncuestaRespuestaDTO> respuestasPorPregunta = new ArrayList<>();
+            for(PreguntasPorEncuestaDTO p: entry.getValue()){
+                EncuestaRespuestaDTO res = new EncuestaRespuestaDTO();
+                res.setIdRespuesta(p.getIdRespuesta());
+                res.setEnunciadoRespuesta(p.getEnunciadoRespuesta());
+                res.setRetroAlimentacionRespuesta(p.getRetroAlimentacionRespuesta());
+                respuestasPorPregunta.add(res);
+            }
+            pregunta.setRespuestas(respuestasPorPregunta);
+            preguntaPorEncuesta.add(pregunta);
+        }
+
+        return preguntaPorEncuesta;
     }
 }

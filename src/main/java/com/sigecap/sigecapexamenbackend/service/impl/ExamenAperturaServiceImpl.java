@@ -187,6 +187,8 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
 
     @Override
     public void validarInicioExamen(BandejaExamenPorAlumnoDTO bandejaExamenPorAlumnoDTO) {
+
+
         if(bandejaExamenPorAlumnoDTO.getIndicadorEncuesta().equals("S")){
             if(bandejaExamenPorAlumnoDTO.getIndicadorRealizoEncuesta() == null || bandejaExamenPorAlumnoDTO.getIndicadorRealizoEncuesta().equals("") || bandejaExamenPorAlumnoDTO.getIndicadorAsistio().equals("N") ){
                 throw new BusinessException(BusinessMsgError.ERROR_NO_REALIZO_ENCUESTA);
@@ -216,6 +218,11 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
         }
     }
 
+    @Override
+    public void validarEncuesta(BandejaExamenPorAlumnoDTO bandejaExamenPorAlumnoDTO) {
+
+    }
+
     private void guardarRelacionPorcadaAlumno(ExamenApertura examenApertura) {
         List<ParticipanteInscritoDto> participanteInscritoDtos = participanteInscritoRepository.getListParticipantesInscritosPorCriterios("", examenApertura.getCursoGrupo().getIdCursoGrupo(), "", "", "");
         participanteInscritoDtos.stream().forEach(x -> {
@@ -225,7 +232,7 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
             ex.setIdSolicitudInscripcionDetalle(x.getIdSolicitudInscripcionDetalle());
             ex.setIndicadorRealizoExamen("N");
             ex.setNumeroIntentoRealizado(0);
-            ex.setEstado(Constantes.ESTADO_ACTIVO);
+            ex.setEstado(Constantes.POR_INICIAR);
             examenSolicitudInscripcionRepository.save(ex);
         });
     }

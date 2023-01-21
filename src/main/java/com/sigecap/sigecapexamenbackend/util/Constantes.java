@@ -55,5 +55,12 @@ public interface Constantes {
     public static final String NO_ASISTIO_EXAMEN = "N";
 
 
+    // ESTADO EXAMEN SOLICITUD INSCRIPCION
+    public static final String POR_INICIAR = "POI";
 
+    //ENCUESTA
+    public static final String RESPUESTA_VACIA = "99999999";
+    public static final String ID_CURSO = "ENCUESTA";
+    public static final String TIPO_PREGUNTA_COMENTARIO = "20220705";
+    public static final String IND_REALIZO_ENCUESTA = "S";
 }

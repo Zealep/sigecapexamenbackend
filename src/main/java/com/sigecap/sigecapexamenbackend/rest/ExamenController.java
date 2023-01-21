@@ -3,10 +3,13 @@ package com.sigecap.sigecapexamenbackend.rest;
 import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenInDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenPorAlumnoDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.BandejaRespuestasInDTO;
+import com.sigecap.sigecapexamenbackend.model.dto.EncuestaInscripcionRespuestasDTO;
+import com.sigecap.sigecapexamenbackend.model.entity.EncuestaInscripcionRespuesta;
 import com.sigecap.sigecapexamenbackend.model.entity.Examen;
 import com.sigecap.sigecapexamenbackend.model.entity.Pregunta;
 import com.sigecap.sigecapexamenbackend.model.entity.Respuesta;
 import com.sigecap.sigecapexamenbackend.repository.jdbc.ExamenJdbcRepository;
+import com.sigecap.sigecapexamenbackend.service.EncuestaInscripcionRespuestaService;
 import com.sigecap.sigecapexamenbackend.service.ExamenService;
 import com.sigecap.sigecapexamenbackend.service.PreguntaService;
 import com.sigecap.sigecapexamenbackend.util.RespuestaApi;
@@ -26,6 +29,9 @@ public class ExamenController {
 
     @Autowired
     private ExamenJdbcRepository examenJdbcRepository;
+
+    @Autowired
+    private EncuestaInscripcionRespuestaService encuestaInscripcionRespuestaService;
 
     @GetMapping(value = "/examen",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Examen>> getAll(){
@@ -97,4 +103,11 @@ public class ExamenController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PostMapping(value = "/examen/encuesta/respuestas",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RespuestaApi> registrarRespuestasEncuesta(@RequestBody EncuestaInscripcionRespuestasDTO encuestaInscripcionRespuestaDTO) {
+            encuestaInscripcionRespuestaService.save(encuestaInscripcionRespuestaDTO);
+        return new ResponseEntity<>(new RespuestaApi("OK",null,null), HttpStatus.CREATED);
+    }
+
 }

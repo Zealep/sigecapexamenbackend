@@ -32,7 +32,7 @@ public class MenuJdbcRepository {
                 "m.no_menu," +
                 "m.url_operacion" +
                 " from sgc_tz_usuario u " +
-                "inner join sgc_tm_usuario_por_rol uxr on u.id_usuario = uxr.id_usuario " +
+                "inner join sgc_tz_usuario_por_rol uxr on u.id_usuario = uxr.id_usuario " +
                 "inner join sgc_tm_rol r on uxr.id_rol = r.id_rol " +
                 "inner join sgc_tm_rol_por_menu rxm on r.id_rol = rxm.id_rol " +
                 "inner join sgc_tm_menu m on rxm.id_menu = m.id_menu " +

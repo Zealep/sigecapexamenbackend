@@ -23,6 +23,9 @@ public class BandejaExamenPorAlumnoDTO {
     private String indicadorRealizoEncuesta;
     private String indicadorAsistio;
     private String indicadorRealizoExamen;
+    private Integer nroIntentoPermitido;
+    private Integer nroIntentoRealizado;
+    private Date fechaEnvio;
 
 
     public Long getIdSidExamen() {
@@ -175,5 +178,30 @@ public class BandejaExamenPorAlumnoDTO {
 
     public void setIndicadorRealizoExamen(String indicadorRealizoExamen) {
         this.indicadorRealizoExamen = indicadorRealizoExamen;
+
+    }
+
+    public Integer getNroIntentoPermitido() {
+        return nroIntentoPermitido;
+    }
+
+    public void setNroIntentoPermitido(Integer nroIntentoPermitido) {
+        this.nroIntentoPermitido = nroIntentoPermitido;
+    }
+
+    public Integer getNroIntentoRealizado() {
+        return nroIntentoRealizado;
+    }
+
+    public void setNroIntentoRealizado(Integer nroIntentoRealizado) {
+        this.nroIntentoRealizado = nroIntentoRealizado;
+    }
+
+    public Date getFechaEnvio() {
+        return fechaEnvio;
+    }
+
+    public void setFechaEnvio(Date fechaEnvio) {
+        this.fechaEnvio = fechaEnvio;
     }
 }

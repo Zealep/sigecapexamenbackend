@@ -38,6 +38,9 @@ public class ExamenInscripcionIntentoServiceImpl implements ExamenInscripcionInt
 
         ex.setEstado(Constantes.ESTADO_ACTIVO);
         ex.getDetalleRespuestas().forEach(x -> {
+            if(x.getIdRespuestaMarcada().equals("")|| x.getIdRespuestaMarcada() == null){
+                x.setIdRespuestaMarcada(Constantes.RESPUESTA_VACIA);
+            }
             x.setExamenSolicInsIntento(ex);
         });
 

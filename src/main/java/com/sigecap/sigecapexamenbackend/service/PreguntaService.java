@@ -1,5 +1,6 @@
 package com.sigecap.sigecapexamenbackend.service;
 
+import com.sigecap.sigecapexamenbackend.model.dto.EncuestaPreguntaDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.ExamenPreguntaDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.PreguntasPorExamenDTO;
 import com.sigecap.sigecapexamenbackend.model.entity.Pregunta;
@@ -22,5 +23,7 @@ public interface PreguntaService {
     void updateState(String id,String  state);
 
     List<ExamenPreguntaDTO> getPreguntasyRespuestasPorExamen(String idExamen);
+
+    List<EncuestaPreguntaDTO> getPreguntasyRespuestasPorEncuesta();
 
 }

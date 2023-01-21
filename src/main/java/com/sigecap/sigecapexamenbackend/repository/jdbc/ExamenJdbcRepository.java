@@ -2,6 +2,7 @@ package com.sigecap.sigecapexamenbackend.repository.jdbc;
 
 import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenPorAlumnoDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.MenuUsuarioDTO;
+import com.sigecap.sigecapexamenbackend.model.dto.PreguntasPorEncuestaDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.PreguntasPorExamenDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -82,6 +83,9 @@ public class ExamenJdbcRepository {
             t.setIndicadorRealizoEncuesta(rs.getString("in_realizo_encuesta"));
             t.setIndicadorAsistio(rs.getString("in_asistio"));
             t.setIndicadorRealizoExamen(rs.getString("in_realizo_examen"));
+            t.setNroIntentoPermitido(rs.getInt("numero_intetos_permitidos"));
+            t.setNroIntentoRealizado(rs.getInt("numero_ultimo_intento_realizado"));
+            t.setFechaEnvio(rs.getDate("fecha_envio"));
             return t;
 
         }
@@ -119,9 +123,9 @@ public class ExamenJdbcRepository {
             return t;
 
         }
+
+
     }
-
-
 
 
 }

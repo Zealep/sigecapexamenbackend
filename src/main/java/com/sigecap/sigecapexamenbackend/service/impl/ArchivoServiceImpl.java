@@ -36,7 +36,7 @@ public class ArchivoServiceImpl implements ArchivoService {
 
 
         try {
-            String url = "/"+a.getIdDocumento();
+            String url = "/"+"SIDXEA-"+a.getIdDocumento();
             Path path = Paths.get(URL_PATH_BASE_ATTACHMENT+url);
             boolean dirExist = Files.exists(path);
             if (!dirExist) {
