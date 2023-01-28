@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,5 +31,18 @@ public class ArchivoController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    @GetMapping(value = "/archivo/getFile",produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public ResponseEntity<byte[]> getFile(@RequestParam(value = "idCurso")String idCurso,@RequestParam(value = "id")String idArchivo,@RequestParam(value = "nombre")String nombreArchivo){
+        try {
+            Archivo a = new Archivo();
+            a.setIdArchivo(idArchivo);
+            a.setNombre(nombreArchivo);
+            return new ResponseEntity<byte[]>(archivoService.getImage(a,idCurso),HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

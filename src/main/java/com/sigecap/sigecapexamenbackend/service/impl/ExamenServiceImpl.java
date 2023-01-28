@@ -1,10 +1,11 @@
 package com.sigecap.sigecapexamenbackend.service.impl;
 
-import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenInDTO;
-import com.sigecap.sigecapexamenbackend.model.dto.BandejaRespuestasInDTO;
+import com.sigecap.sigecapexamenbackend.model.dto.*;
 import com.sigecap.sigecapexamenbackend.model.entity.Examen;
 import com.sigecap.sigecapexamenbackend.model.entity.Respuesta;
 import com.sigecap.sigecapexamenbackend.repository.ExamenRepository;
+import com.sigecap.sigecapexamenbackend.repository.jdbc.ExamenJdbcRepository;
+import com.sigecap.sigecapexamenbackend.repository.jdbc.ExamenParticipanteJdbcRepository;
 import com.sigecap.sigecapexamenbackend.service.ExamenService;
 import com.sigecap.sigecapexamenbackend.util.Constantes;
 import com.sigecap.sigecapexamenbackend.util.Util;
@@ -20,6 +21,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service("examenService")
 public class ExamenServiceImpl implements ExamenService {
@@ -29,6 +32,12 @@ public class ExamenServiceImpl implements ExamenService {
 
     @Autowired
     private ExamenRepository examenRepository;
+
+    @Autowired
+    private ExamenJdbcRepository examenJdbcRepository;
+
+    @Autowired
+    private ExamenParticipanteJdbcRepository examenParticipanteJdbcRepository;
 
     @Override
     public List<Examen> getAllActives() {
@@ -95,5 +104,47 @@ public class ExamenServiceImpl implements ExamenService {
     @Transactional
     public void updateState(String id, String state) {
         this.examenRepository.deleteLogicById(id,state);
+    }
+
+    @Override
+    public List<CursosDisponibleExamenAlumnoDTO> listBandejaExamenesCursoPorAlumno(String id) {
+
+        List<CursosDisponibleExamenAlumnoDTO> examenesCurso = examenJdbcRepository.getBandejaPorAlumno(id);
+
+       /*
+        Map<String,List<BandejaExamenPorAlumnoDTO>> result = examenes.stream().collect(Collectors.groupingBy(BandejaExamenPorAlumnoDTO::getIdCurso));
+
+        List<BandejaCursoExamenPorAlumnoDTO> examenesCurso = new ArrayList<>();
+        for(Map.Entry<String,List<BandejaExamenPorAlumnoDTO>> entry:result.entrySet()){
+            BandejaCursoExamenPorAlumnoDTO cursoExamen = new BandejaCursoExamenPorAlumnoDTO();
+            cursoExamen.setIdCurso(entry.getKey());
+            cursoExamen.setExamanes(entry.getValue());
+            examenesCurso.add(cursoExamen);
+        }
+        */
+
+
+        return examenesCurso;
+    }
+
+    @Override
+    public List<ExamenParticipanteDTO> getExamenesParticipante(String idCursoGrupo, String idSolicitudInscripcionDetalle) {
+        List<ExamenParticipanteDTO> examenesParticipante = this.examenParticipanteJdbcRepository.getExamenesParticipante(idCursoGrupo,idSolicitudInscripcionDetalle);
+    if(examenesParticipante!=null){
+        examenesParticipante.stream().forEach(x->{
+            List<IntentoExamenDTO> intentos = this.examenParticipanteJdbcRepository.getIntentoExamen(x.getIdSidExamen());
+            x.setIntentosExamen(intentos);
+        });
+        return examenesParticipante;
+    }
+    else{
+        return null;
+    }
+
+    }
+
+    @Override
+    public List<IntentoExamenDTO> getIntentoExamen(Long idSidExamen) {
+        return null;
     }
 }

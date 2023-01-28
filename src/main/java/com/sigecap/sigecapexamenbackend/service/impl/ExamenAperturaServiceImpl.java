@@ -1,18 +1,9 @@
 package com.sigecap.sigecapexamenbackend.service.impl;
 
 import com.sigecap.sigecapexamenbackend.exception.BusinessException;
-import com.sigecap.sigecapexamenbackend.model.dto.BandejaAperturaInDTO;
-import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenInDTO;
-import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenPorAlumnoDTO;
-import com.sigecap.sigecapexamenbackend.model.dto.ParticipanteInscritoDto;
-import com.sigecap.sigecapexamenbackend.model.entity.Examen;
-import com.sigecap.sigecapexamenbackend.model.entity.ExamenApertura;
-import com.sigecap.sigecapexamenbackend.model.entity.ExamenSolicitudInscripcion;
-import com.sigecap.sigecapexamenbackend.model.entity.Participante;
-import com.sigecap.sigecapexamenbackend.repository.ExamenAperturaRepository;
-import com.sigecap.sigecapexamenbackend.repository.ExamenRepository;
-import com.sigecap.sigecapexamenbackend.repository.ExamenSolicitudInscripcionRepository;
-import com.sigecap.sigecapexamenbackend.repository.ParticipanteInscritoRepository;
+import com.sigecap.sigecapexamenbackend.model.dto.*;
+import com.sigecap.sigecapexamenbackend.model.entity.*;
+import com.sigecap.sigecapexamenbackend.repository.*;
 import com.sigecap.sigecapexamenbackend.service.EmailService;
 import com.sigecap.sigecapexamenbackend.service.ExamenAperturaService;
 import com.sigecap.sigecapexamenbackend.service.ExamenService;
@@ -45,16 +36,19 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
     private ExamenAperturaRepository examenAperturaRepository;
 
     @Autowired
-    ParticipanteDtoService participanteInscritoService;
+    private ParticipanteDtoService participanteInscritoService;
 
     @Autowired
-    EmailService emailService;
+    private EmailService emailService;
 
     @Autowired
-    ParticipanteInscritoRepository participanteInscritoRepository;
+    private ParticipanteInscritoRepository participanteInscritoRepository;
 
     @Autowired
-    ExamenSolicitudInscripcionRepository examenSolicitudInscripcionRepository;
+    private ExamenSolicitudInscripcionRepository examenSolicitudInscripcionRepository;
+
+    @Autowired
+    private AsistenciaSolicitudInscripcionRepository asistenciaSolicitudInscripcionRepository;
 
     @Override
     public List<ExamenApertura> getAllActives() {
@@ -166,13 +160,14 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
     @Override
     @Transactional
     public void registrarAsistencia(String dni, String idCurso, String idGrupo) {
-        List<ParticipanteInscritoDto> participantes = participanteInscritoService.getListParticipantesInscritosPorCriterios(idCurso, idGrupo, "", "", "");
+        List<ParticipanteInscritoDto> participantes = participanteInscritoRepository.getAsistenciaParticipantesCursoGrupo( idGrupo);
         ParticipanteInscritoDto p = participantes.stream().filter(x -> dni.equals(x.getNumeroDocumento()))
                 .findAny()
                 .orElse(null);
 
         if (p != null) {
             examenAperturaRepository.updateAsistencia(p.getIdSolicitudInscripcionDetalle(), Constantes.ASISTIO_EXAMEN);
+            AsistenciaSolicitudInscripcion a = new AsistenciaSolicitudInscripcion(p.getIdSolicitudInscripcionDetalle(),new Date());
         } else {
             throw new BusinessException(BusinessMsgError.ERROR_NO_SE_ENCUENTRA_PARTICIPANTE_EXAMEN);
         }
@@ -186,28 +181,30 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
     }
 
     @Override
-    public void validarInicioExamen(BandejaExamenPorAlumnoDTO bandejaExamenPorAlumnoDTO) {
+    public void validarInicioExamen(ExamenParticipanteDTO examenParticipanteDTO) {
 
-
+    /*
         if(bandejaExamenPorAlumnoDTO.getIndicadorEncuesta().equals("S")){
             if(bandejaExamenPorAlumnoDTO.getIndicadorRealizoEncuesta() == null || bandejaExamenPorAlumnoDTO.getIndicadorRealizoEncuesta().equals("") || bandejaExamenPorAlumnoDTO.getIndicadorAsistio().equals("N") ){
                 throw new BusinessException(BusinessMsgError.ERROR_NO_REALIZO_ENCUESTA);
             }
         }
 
-        if(bandejaExamenPorAlumnoDTO.getIndicadorAsistio() == null || bandejaExamenPorAlumnoDTO.getIndicadorAsistio().equals("") || bandejaExamenPorAlumnoDTO.getIndicadorAsistio().equals("N")){
+     */
+
+        if(examenParticipanteDTO.getIndicadorAsistio() == null || examenParticipanteDTO.getIndicadorAsistio().equals("") || examenParticipanteDTO.getIndicadorAsistio().equals("N")){
             throw new BusinessException(BusinessMsgError.ERROR_NO_REALIZO_ASISTENCIA);
         }
 
-        if(new Date().toInstant().isBefore(bandejaExamenPorAlumnoDTO.getFechaHoraApertura().toInstant())){
+        if(new Date().toInstant().isBefore(examenParticipanteDTO.getFechaHoraApertura().toInstant())){
             throw new BusinessException(BusinessMsgError.ERROR_FECHA_INICIO_EXAMEN);
         }
 
-        if(new Date().toInstant().isAfter(bandejaExamenPorAlumnoDTO.getFechaHoraCierre().toInstant())){
+        if(new Date().toInstant().isAfter(examenParticipanteDTO.getFechaHoraCierre().toInstant())){
             throw new BusinessException(BusinessMsgError.ERROR_FECHA_FIN_EXAMEN);
         }
 
-        ExamenSolicitudInscripcion ea = examenSolicitudInscripcionRepository.findById(bandejaExamenPorAlumnoDTO.getIdSidExamen()).orElse(null);
+        ExamenSolicitudInscripcion ea = examenSolicitudInscripcionRepository.findById(examenParticipanteDTO.getIdSidExamen()).orElse(null);
 
         Integer intentosRealizados = ea.getNumeroIntentoRealizado();
         Integer intentosPermitidos = ea.getExamenApertura().getNumeroIntentos();

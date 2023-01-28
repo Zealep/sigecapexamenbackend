@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+import com.sigecap.sigecapexamenbackend.repository.ParticipanteInscritoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -31,6 +32,9 @@ public class ParticipanteController {
 		
 	@Autowired
 	ParticipanteService participanteService;
+
+	@Autowired
+	ParticipanteInscritoRepository participanteInscritoRepository;
 	
 	@Autowired
 	ParticipanteDtoService participanteInscritoService;
@@ -67,6 +71,32 @@ public class ParticipanteController {
 
 		}
 	}
+
+	@PostMapping(value = "/consultarAsistenciaParticipantesInscritos")
+	public ResponseEntity<List<ParticipanteInscritoDto>> consultaAsistenciaParticipante(@RequestBody String jsonString) {
+		List<ParticipanteInscritoDto> jqTable = new ArrayList<>();
+		try {
+
+
+			JSONObject jsonObject = new JSONObject(jsonString);
+
+			String parIdCurso = jsonObject.getString("parIdCurso");
+			String parIdCursoGrupo = jsonObject.getString("parIdCursoGrupo");
+
+
+			return new ResponseEntity<>(participanteInscritoRepository.getAsistenciaParticipantesCursoGrupo(parIdCursoGrupo), HttpStatus.OK);
+
+
+
+		}catch (Exception ex) {
+			System.out.print(ex.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+	}
+
+
+
 	
 	/*
 	@PostMapping(value = "/descargarReporteParticipantes")

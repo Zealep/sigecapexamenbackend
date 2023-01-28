@@ -1,9 +1,6 @@
 package com.sigecap.sigecapexamenbackend.rest;
 
-import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenInDTO;
-import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenPorAlumnoDTO;
-import com.sigecap.sigecapexamenbackend.model.dto.BandejaRespuestasInDTO;
-import com.sigecap.sigecapexamenbackend.model.dto.EncuestaInscripcionRespuestasDTO;
+import com.sigecap.sigecapexamenbackend.model.dto.*;
 import com.sigecap.sigecapexamenbackend.model.entity.EncuestaInscripcionRespuesta;
 import com.sigecap.sigecapexamenbackend.model.entity.Examen;
 import com.sigecap.sigecapexamenbackend.model.entity.Pregunta;
@@ -95,9 +92,9 @@ public class ExamenController {
         }
     }
     @GetMapping(value = "/examen/bandeja-alumno/{usuario}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<BandejaExamenPorAlumnoDTO>> getBandejaExamenPorAlumno(@PathVariable(name = "usuario") String usuario){
+    public ResponseEntity<List<CursosDisponibleExamenAlumnoDTO>> getBandejaExamenPorAlumno(@PathVariable(name = "usuario") String usuario){
         try{
-            List<BandejaExamenPorAlumnoDTO> examenes = examenJdbcRepository.getBandejaPorAlumno(usuario);
+            List<CursosDisponibleExamenAlumnoDTO> examenes = examenService.listBandejaExamenesCursoPorAlumno(usuario);
             return new ResponseEntity<>(examenes, HttpStatus.OK);
         }catch (Exception ex){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -108,6 +105,16 @@ public class ExamenController {
     public ResponseEntity<RespuestaApi> registrarRespuestasEncuesta(@RequestBody EncuestaInscripcionRespuestasDTO encuestaInscripcionRespuestaDTO) {
             encuestaInscripcionRespuestaService.save(encuestaInscripcionRespuestaDTO);
         return new ResponseEntity<>(new RespuestaApi("OK",null,null), HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/examen/participante/{idCursoGrupo}/{idSolicitudInscripcionDetalle}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ExamenParticipanteDTO>> getBandejaExamenPorAlumno(@PathVariable(name = "idCursoGrupo") String idCursoGrupo,@PathVariable(name = "idSolicitudInscripcionDetalle") String idSolicitudInscripcionDetalle){
+        try{
+            List<ExamenParticipanteDTO> examenes = examenService.getExamenesParticipante(idCursoGrupo,idSolicitudInscripcionDetalle);
+            return new ResponseEntity<>(examenes, HttpStatus.OK);
+        }catch (Exception ex){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

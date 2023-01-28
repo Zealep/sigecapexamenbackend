@@ -4,12 +4,14 @@ import com.sigecap.sigecapexamenbackend.model.entity.Archivo;
 import com.sigecap.sigecapexamenbackend.repository.ArchivoRepository;
 import com.sigecap.sigecapexamenbackend.service.ArchivoService;
 import com.sigecap.sigecapexamenbackend.util.Constantes;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,6 +27,9 @@ public class ArchivoServiceImpl implements ArchivoService {
 
     @Value("${url-path-base-attachment}")
     private String URL_PATH_BASE_ATTACHMENT;
+
+    @Value("${url-path-base}")
+    private String URL_PATH_BASE;
 
     @Override
     public Archivo save(Archivo a, MultipartFile file) {
@@ -55,5 +60,16 @@ public class ArchivoServiceImpl implements ArchivoService {
         }
 
         return archivoRepository.save(a);
+    }
+
+    @Override
+    public byte[] getImage(Archivo a, String idCurso) {
+        try {
+            String url = "/CURSOS/" + idCurso + "/" + a.getIdArchivo() + "/" + a.getNombre();
+            String path = URL_PATH_BASE + url;
+            return FileUtils.readFileToByteArray(new File(FilenameUtils.separatorsToSystem(path)));
+        }catch (IOException i){
+            return null;
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.sigecap.sigecapexamenbackend.rest;
 import com.sigecap.sigecapexamenbackend.model.dto.BandejaAperturaInDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenInDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenPorAlumnoDTO;
+import com.sigecap.sigecapexamenbackend.model.dto.ExamenParticipanteDTO;
 import com.sigecap.sigecapexamenbackend.model.entity.Examen;
 import com.sigecap.sigecapexamenbackend.model.entity.ExamenApertura;
 import com.sigecap.sigecapexamenbackend.model.entity.ExamenSolicitudInscripcion;
@@ -114,8 +115,8 @@ public class ExamenAperturaController {
     }
 
     @PostMapping(value = "/examen-apertura/validar-inicio-examen", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RespuestaApi> validarInicioExamen(@RequestBody BandejaExamenPorAlumnoDTO bandejaExamenPorAlumnoDTO){
-            examenAperturaService.validarInicioExamen(bandejaExamenPorAlumnoDTO);
+    public ResponseEntity<RespuestaApi> validarInicioExamen(@RequestBody ExamenParticipanteDTO examenParticipanteDTO){
+            examenAperturaService.validarInicioExamen(examenParticipanteDTO);
             return new ResponseEntity<>(new RespuestaApi("OK",null,null),HttpStatus.OK);
     }
 

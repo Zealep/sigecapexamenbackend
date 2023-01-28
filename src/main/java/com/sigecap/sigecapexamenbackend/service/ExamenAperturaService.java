@@ -1,9 +1,6 @@
 package com.sigecap.sigecapexamenbackend.service;
 
-import com.sigecap.sigecapexamenbackend.model.dto.BandejaAperturaInDTO;
-import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenInDTO;
-import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenPorAlumnoDTO;
-import com.sigecap.sigecapexamenbackend.model.dto.ParticipanteInscritoDto;
+import com.sigecap.sigecapexamenbackend.model.dto.*;
 import com.sigecap.sigecapexamenbackend.model.entity.Examen;
 import com.sigecap.sigecapexamenbackend.model.entity.ExamenApertura;
 import com.sigecap.sigecapexamenbackend.model.entity.ExamenSolicitudInscripcion;
@@ -31,7 +28,7 @@ public interface ExamenAperturaService {
 
     ExamenSolicitudInscripcion getExamenInscripcionById(Long id);
 
-    void validarInicioExamen(BandejaExamenPorAlumnoDTO bandejaExamenPorAlumnoDTO);
+    void validarInicioExamen(ExamenParticipanteDTO examenParticipanteDTO);
 
     void validarEncuesta(BandejaExamenPorAlumnoDTO bandejaExamenPorAlumnoDTO);
 }

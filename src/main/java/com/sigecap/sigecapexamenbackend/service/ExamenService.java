@@ -1,7 +1,6 @@
 package com.sigecap.sigecapexamenbackend.service;
 
-import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenInDTO;
-import com.sigecap.sigecapexamenbackend.model.dto.BandejaRespuestasInDTO;
+import com.sigecap.sigecapexamenbackend.model.dto.*;
 import com.sigecap.sigecapexamenbackend.model.entity.Examen;
 import com.sigecap.sigecapexamenbackend.model.entity.Pregunta;
 import com.sigecap.sigecapexamenbackend.model.entity.Respuesta;
@@ -22,5 +21,11 @@ public interface ExamenService {
     Examen save(Examen p);
     void delete(String id);
     void updateState(String id,String  state);
+
+    List<CursosDisponibleExamenAlumnoDTO> listBandejaExamenesCursoPorAlumno(String id);
+
+    List<ExamenParticipanteDTO> getExamenesParticipante(String idCursoGrupo, String idSolicitudInscripcionDetalle);
+
+    List<IntentoExamenDTO> getIntentoExamen(Long idSidExamen);
 
 }

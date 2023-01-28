@@ -1,9 +1,6 @@
 package com.sigecap.sigecapexamenbackend.repository.jdbc;
 
-import com.sigecap.sigecapexamenbackend.model.dto.BandejaExamenPorAlumnoDTO;
-import com.sigecap.sigecapexamenbackend.model.dto.MenuUsuarioDTO;
-import com.sigecap.sigecapexamenbackend.model.dto.PreguntasPorEncuestaDTO;
-import com.sigecap.sigecapexamenbackend.model.dto.PreguntasPorExamenDTO;
+import com.sigecap.sigecapexamenbackend.model.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -21,33 +18,13 @@ public class ExamenJdbcRepository {
     NamedParameterJdbcTemplate jdbcTemplate;
 
 
-    public List<BandejaExamenPorAlumnoDTO> getBandejaPorAlumno(String usuario){
+    public List<CursosDisponibleExamenAlumnoDTO> getBandejaPorAlumno(String usuario){
         try{
             MapSqlParameterSource parameters = new MapSqlParameterSource();
             parameters.addValue("usuario",usuario);
 
-            String sql = "call spu_ListarBandejaExamenes( '"+usuario+"');";
-                /*
-            String sql = "select " +
-                    "cg.id_curso_grupo," +
-                    "c.id_curso," +
-                    "c.nombre_curso ," +
-                    "ea.fecha_hora_apertura," +
-                    "ea.fecha_hora_cierre," +
-                    "ea.estado," +
-                    "sid.promedio," +
-                    "ea.in_realizar_encuesta " +
-                    "from sgc_tz_curso_grupo cg " +
-                    "inner join sgc_tz_curso c on cg.id_curso = c.id_curso " +
-                    "inner join sgc_tz_solicitud_inscripcion si on cg.id_curso_grupo = si.id_curso_grupo " +
-                    "inner join sgc_tz_solicitud_inscripcion_detalle sid on si.id_solicitud_inscripcion = sid.id_solicitud_inscripcion " +
-                    "inner join sge_tz_examen_apertura ea on cg.id_curso_grupo = ea.id_curso_grupo " +
-                    "inner join sgc_tz_participante p on sid.id_participante = p.id_participante " +
-                    "inner join sgc_tz_usuario u on p.id_usuario = u.id_usuario " +
-                    "where cg.estado != 'CER' " +
-                    "and u.id_usuario = :usuario;";
+            String sql = "call spu_sgeListarCursosDisponiblesParaExamen( '"+usuario+"');";
 
-            */
 
             return jdbcTemplate.query(sql, parameters,new getBandejaPorAlumnoMapper());
 
@@ -58,34 +35,24 @@ public class ExamenJdbcRepository {
 
     }
 
-    private static final class getBandejaPorAlumnoMapper implements RowMapper<BandejaExamenPorAlumnoDTO> {
+    private static final class getBandejaPorAlumnoMapper implements RowMapper<CursosDisponibleExamenAlumnoDTO> {
 
         @Override
-        public BandejaExamenPorAlumnoDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public CursosDisponibleExamenAlumnoDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-            BandejaExamenPorAlumnoDTO t = new BandejaExamenPorAlumnoDTO();
-            t.setIdSidExamen(rs.getLong("id_sid_examen"));
-            t.setIdSolicitudInscripcionDetalle(rs.getString("id_solicitud_inscripcion_detalle"));
-            t.setIdUsuario(rs.getString("id_usuario"));
-            t.setNombreUsuario(rs.getString("nombre_usuario"));
-            t.setNombreCliente(rs.getString("nombre_cliente"));
+            CursosDisponibleExamenAlumnoDTO t = new CursosDisponibleExamenAlumnoDTO();
             t.setIdCursoGrupo(rs.getString("id_curso_grupo"));
+            t.setNombreGrupo(rs.getString("nombre_grupo"));
             t.setIdCurso(rs.getString("id_curso"));
             t.setNombreCurso(rs.getString("nombre_curso"));
-            t.setIdExamen(rs.getString("id_examen"));
-            t.setNombreExamen(rs.getString("no_examen"));
-            t.setFechaHoraApertura(rs.getTimestamp("fecha_hora_apertura"));
-            t.setFechaHoraCierre(rs.getTimestamp("fecha_hora_cierre"));
-            t.setEstado(rs.getString("estado"));
-            t.setNotaUltimoIntento(rs.getInt("nota_ultimo_intento"));
-            t.setNotaFinal(rs.getInt("nota_final"));
-            t.setIndicadorEncuesta(rs.getString("in_realizar_encuesta"));
-            t.setIndicadorRealizoEncuesta(rs.getString("in_realizo_encuesta"));
-            t.setIndicadorAsistio(rs.getString("in_asistio"));
-            t.setIndicadorRealizoExamen(rs.getString("in_realizo_examen"));
-            t.setNroIntentoPermitido(rs.getInt("numero_intetos_permitidos"));
-            t.setNroIntentoRealizado(rs.getInt("numero_ultimo_intento_realizado"));
-            t.setFechaEnvio(rs.getDate("fecha_envio"));
+            t.setIdUsuario(rs.getString("id_usuario"));
+            t.setNombreUsuario(rs.getString("nombre_usuario"));
+            t.setIdSolicitudInscripcionDetall(rs.getString("id_solicitud_inscripcion_detalle"));
+            t.setNombreCliente(rs.getString("nombre_cliente"));
+            t.setIndicadorRealizarEncuesta(rs.getString("indicador_realizar_encuesta"));
+            t.setIndicadorRealizoEncuesta(rs.getString("indicador_realizo_encuesta"));
+            t.setIdArchivo(rs.getString("id_archivo"));
+            t.setNombreArchivo(rs.getString("nombre_archivo"));
             return t;
 
         }
@@ -126,6 +93,7 @@ public class ExamenJdbcRepository {
 
 
     }
+
 
 
 }
