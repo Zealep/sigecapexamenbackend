@@ -50,6 +50,8 @@ public interface Constantes {
     public static final String INICIADO_APERTURA_EXAMEN = "INI";
     public static final String CERRADO_APERTURA_EXAMEN = "CER";
 
+    public static final String SI_FIRMO_EXAMEN = "S";
+
     // ESTADOS ASISTIO
     public static final String ASISTIO_EXAMEN = "S";
     public static final String NO_ASISTIO_EXAMEN = "N";
@@ -63,4 +65,6 @@ public interface Constantes {
     public static final String ID_CURSO = "ENCUESTA";
     public static final String TIPO_PREGUNTA_COMENTARIO = "20220705";
     public static final String IND_REALIZO_ENCUESTA = "S";
+
+
 }

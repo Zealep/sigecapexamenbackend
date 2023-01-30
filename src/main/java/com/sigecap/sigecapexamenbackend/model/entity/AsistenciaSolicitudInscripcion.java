@@ -18,6 +18,9 @@ public class AsistenciaSolicitudInscripcion {
     @Column(name = "fecha_asistencia")
     private Date fechaAsistencia;
 
+    @Column(name = "realizo_firma")
+    private String realizoFirma;
+
     public AsistenciaSolicitudInscripcion(){
 
     }

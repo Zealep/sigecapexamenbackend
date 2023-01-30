@@ -140,4 +140,6 @@ public class ExamenParticipanteDTO {
     public void setIntentosExamen(List<IntentoExamenDTO> intentosExamen) {
         this.intentosExamen = intentosExamen;
     }
+
+
 }

@@ -6,6 +6,7 @@ import com.sigecap.sigecapexamenbackend.model.entity.Examen;
 import com.sigecap.sigecapexamenbackend.model.entity.Pregunta;
 import com.sigecap.sigecapexamenbackend.model.entity.Respuesta;
 import com.sigecap.sigecapexamenbackend.repository.jdbc.ExamenJdbcRepository;
+import com.sigecap.sigecapexamenbackend.repository.jdbc.ExamenParticipanteJdbcRepository;
 import com.sigecap.sigecapexamenbackend.service.EncuestaInscripcionRespuestaService;
 import com.sigecap.sigecapexamenbackend.service.ExamenService;
 import com.sigecap.sigecapexamenbackend.service.PreguntaService;
@@ -29,6 +30,9 @@ public class ExamenController {
 
     @Autowired
     private EncuestaInscripcionRespuestaService encuestaInscripcionRespuestaService;
+
+    @Autowired
+    private ExamenParticipanteJdbcRepository examenParticipanteJdbcRepository;
 
     @GetMapping(value = "/examen",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Examen>> getAll(){
@@ -112,6 +116,20 @@ public class ExamenController {
         try{
             List<ExamenParticipanteDTO> examenes = examenService.getExamenesParticipante(idCursoGrupo,idSolicitudInscripcionDetalle);
             return new ResponseEntity<>(examenes, HttpStatus.OK);
+        }catch (Exception ex){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/examen/participante/firma/{idSolicitudInscripcionDetalle}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<FirmaExamenDTO> getFirmaExamen(@PathVariable(name = "idSolicitudInscripcionDetalle") String idSolicitudInscripcionDetalle){
+        try{
+            List<FirmaExamenDTO> firmas = examenParticipanteJdbcRepository.getFirmaExamen(idSolicitudInscripcionDetalle);
+            FirmaExamenDTO firma = new FirmaExamenDTO();
+            if(firmas!=null && firmas.size()>0){
+                firma = firmas.get(0);
+            }
+            return new ResponseEntity<>(firma, HttpStatus.OK);
         }catch (Exception ex){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

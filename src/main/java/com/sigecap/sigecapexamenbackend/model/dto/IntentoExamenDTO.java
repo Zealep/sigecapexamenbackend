@@ -9,7 +9,8 @@ public class IntentoExamenDTO {
     private Double nota;
     private String codigoEstado;
     private String nombreEstado;
-    private String comentario;
+    private String comentarioTexto;
+    private Integer comentarioTiempo;
 
     public Long getIdSidIntento() {
         return idSidIntento;
@@ -59,11 +60,19 @@ public class IntentoExamenDTO {
         this.nombreEstado = nombreEstado;
     }
 
-    public String getComentario() {
-        return comentario;
+    public String getComentarioTexto() {
+        return comentarioTexto;
     }
 
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
+    public void setComentarioTexto(String comentarioTexto) {
+        this.comentarioTexto = comentarioTexto;
+    }
+
+    public Integer getComentarioTiempo() {
+        return comentarioTiempo;
+    }
+
+    public void setComentarioTiempo(Integer comentarioTiempo) {
+        this.comentarioTiempo = comentarioTiempo;
     }
 }

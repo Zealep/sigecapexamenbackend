@@ -2,6 +2,7 @@ package com.sigecap.sigecapexamenbackend.service.impl;
 
 import com.sigecap.sigecapexamenbackend.model.entity.Archivo;
 import com.sigecap.sigecapexamenbackend.repository.ArchivoRepository;
+import com.sigecap.sigecapexamenbackend.repository.AsistenciaSolicitudInscripcionRepository;
 import com.sigecap.sigecapexamenbackend.service.ArchivoService;
 import com.sigecap.sigecapexamenbackend.util.Constantes;
 import org.apache.commons.io.FileUtils;
@@ -9,6 +10,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -31,7 +33,11 @@ public class ArchivoServiceImpl implements ArchivoService {
     @Value("${url-path-base}")
     private String URL_PATH_BASE;
 
+    @Autowired
+    private AsistenciaSolicitudInscripcionRepository asistenciaSolicitudInscripcionRepository;
+
     @Override
+    @Transactional
     public Archivo save(Archivo a, MultipartFile file) {
         if(a.getIdArchivo()==null) {
             String pk = archivoRepository.generatePrimaryKey(Constantes.TABLA_ARCHIVO, Constantes.ID_TABLA_ARCHIVO);
@@ -41,8 +47,8 @@ public class ArchivoServiceImpl implements ArchivoService {
 
 
         try {
-            String url = "/"+"SIDXEA-"+a.getIdDocumento();
-            Path path = Paths.get(URL_PATH_BASE_ATTACHMENT+url);
+            String url = "/"+"FIRMAS/"+a.getIdDocumento();
+            Path path = Paths.get(URL_PATH_BASE+url);
             boolean dirExist = Files.exists(path);
             if (!dirExist) {
                 Files.createDirectories(path);
@@ -54,6 +60,7 @@ public class ArchivoServiceImpl implements ArchivoService {
             a.setFechaCreacion(new Date());
             a.setPeso(String.valueOf(file.getSize()) + " KB");
             archivoRepository.save(a);
+            asistenciaSolicitudInscripcionRepository.updateFirmaAsistencia(Long.parseLong(a.getIdDocumento()),Constantes.SI_FIRMO_EXAMEN);
 
         } catch (IOException e) {
             e.printStackTrace();

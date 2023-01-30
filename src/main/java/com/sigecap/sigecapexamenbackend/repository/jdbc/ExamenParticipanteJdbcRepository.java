@@ -2,6 +2,7 @@ package com.sigecap.sigecapexamenbackend.repository.jdbc;
 
 import com.sigecap.sigecapexamenbackend.model.dto.CursosDisponibleExamenAlumnoDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.ExamenParticipanteDTO;
+import com.sigecap.sigecapexamenbackend.model.dto.FirmaExamenDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.IntentoExamenDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -96,7 +97,43 @@ public class ExamenParticipanteJdbcRepository {
             t.setNota(rs.getDouble("nota"));
             t.setCodigoEstado(rs.getString("codigo_estado"));
             t.setNombreEstado(rs.getString("nombre_estado"));
-            t.setComentario(rs.getString("comentario"));
+            t.setComentarioTexto(rs.getString("comentarioTexto"));
+            t.setComentarioTiempo(rs.getInt("comentarioTiempo"));
+
+            return t;
+
+        }
+    }
+
+
+    public List<FirmaExamenDTO> getFirmaExamen(String idSidExamen){
+        try{
+            MapSqlParameterSource parameters = new MapSqlParameterSource();
+            parameters.addValue("idSidExamen",idSidExamen);
+
+
+            String sql = "call spu_sgeListarFirmaDelDiaPorParticipante( '"+idSidExamen+"');";
+
+
+            return jdbcTemplate.query(sql, parameters, new getFirmaExamenMapper());
+
+        }catch (Exception e){
+            return null;
+        }
+
+
+    }
+
+    private static final class getFirmaExamenMapper implements RowMapper<FirmaExamenDTO> {
+
+        @Override
+        public FirmaExamenDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            FirmaExamenDTO t = new FirmaExamenDTO();
+            t.setIdSidAsistencia(rs.getLong("id_sid_asistencia"));
+            t.setIdSolicitudInscripcion(rs.getString("id_solicitud_inscripcion_detalle"));
+            t.setFechaAsistencia(rs.getTimestamp("fecha_asistencia"));
+            t.setRealizoFirma(rs.getString("realizo_firma"));
 
             return t;
 

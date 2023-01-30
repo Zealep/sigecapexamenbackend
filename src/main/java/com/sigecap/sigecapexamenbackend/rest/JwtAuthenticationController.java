@@ -54,6 +54,8 @@ public class JwtAuthenticationController {
 
 		final String idUsuario = usuarioRepository.findIdUsuarioByUsername(authenticationRequest.getUsername());
 
+		final String nombre = usuarioRepository.findIdUsuarioByUsername(authenticationRequest.getUsername());
+
 		return ResponseEntity.ok(new JwtResponse(token,idUsuario));
 	}
 

@@ -16,6 +16,7 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -34,6 +35,7 @@ public class CargaMasivaServiceImpl implements CargaMasivaService {
     private RespuestaService respuestaService;
 
     @Override
+    @Transactional
     public void cargarPreguntasYRespuestas(MultipartFile file) throws IOException {
 
         try (
