@@ -24,7 +24,6 @@ public class ExamenSolicitudInscripcion {
     @Column(name = "in_realizo_examen")
     private String indicadorRealizoExamen;
 
-
     @Column(name = "numero_intento_realizado")
     private Integer numeroIntentoRealizado;
 

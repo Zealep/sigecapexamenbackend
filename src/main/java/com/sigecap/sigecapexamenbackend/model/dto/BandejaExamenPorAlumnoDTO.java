@@ -17,8 +17,8 @@ public class BandejaExamenPorAlumnoDTO {
     private Date fechaHoraApertura;
     private Date fechaHoraCierre;
     private String estado;
-    private Integer notaUltimoIntento;
-    private Integer notaFinal;
+    private Double notaUltimoIntento;
+    private Double notaFinal;
     private String indicadorEncuesta;
     private String indicadorRealizoEncuesta;
     private String indicadorAsistio;
@@ -132,19 +132,19 @@ public class BandejaExamenPorAlumnoDTO {
         this.estado = estado;
     }
 
-    public Integer getNotaUltimoIntento() {
+    public Double getNotaUltimoIntento() {
         return notaUltimoIntento;
     }
 
-    public void setNotaUltimoIntento(Integer notaUltimoIntento) {
+    public void setNotaUltimoIntento(Double notaUltimoIntento) {
         this.notaUltimoIntento = notaUltimoIntento;
     }
 
-    public Integer getNotaFinal() {
+    public Double getNotaFinal() {
         return notaFinal;
     }
 
-    public void setNotaFinal(Integer notaFinal) {
+    public void setNotaFinal(Double notaFinal) {
         this.notaFinal = notaFinal;
     }
 

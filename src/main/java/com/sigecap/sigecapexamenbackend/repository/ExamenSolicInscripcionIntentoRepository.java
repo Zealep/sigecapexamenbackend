@@ -12,7 +12,7 @@ public interface ExamenSolicInscripcionIntentoRepository extends CrudRepository<
 
     @Query("update ExamenSolicInsIntento c set c.nota=?2, c.numeroIntento=?3 where c.idExamSoliInscIntento=?1")
     @Modifying
-    void updateNotaAndIntento(Long id,Integer nota,Integer intento);
+    void updateNotaAndIntento(Long id,Double nota,Integer intento);
 
     @Query("select c from ExamenSolicInsIntento c where c.examenSolicitudInscripcion.idExamenSolicitudInscripcion = ?1")
     List<ExamenSolicInsIntento> findByExamen(Long idExamen);

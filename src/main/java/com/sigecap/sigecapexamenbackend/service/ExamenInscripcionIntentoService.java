@@ -13,7 +13,7 @@ public interface ExamenInscripcionIntentoService {
 
     ExamenSolicInsIntento getById(Long id);
 
-    void updateNotaAndIntento(Long id,Integer nota,Integer intento);
+    void updateNotaAndIntento(Long id,Double nota,Integer intento);
 
     Integer ultimoIntento(Long idExamenSolicitud);
 }

@@ -66,5 +66,8 @@ public interface Constantes {
     public static final String TIPO_PREGUNTA_COMENTARIO = "20220705";
     public static final String IND_REALIZO_ENCUESTA = "S";
 
+    //EXAMEN
+    public static final String TIPO_EXAMEN_FIJO = "20230101";
+    public static final String TIPO_EXAMEN_BALOTARIO = "20230102";
 
 }

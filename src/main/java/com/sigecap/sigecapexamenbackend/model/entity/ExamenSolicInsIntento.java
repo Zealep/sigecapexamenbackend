@@ -27,7 +27,7 @@ public class ExamenSolicInsIntento {
     private Date fechaTermino;
 
     @Column(name = "nota")
-    private Integer nota;
+    private Double nota;
 
     @Column(name = "estado")
     private String estado;
@@ -75,11 +75,11 @@ public class ExamenSolicInsIntento {
         this.fechaTermino = fechaTermino;
     }
 
-    public Integer getNota() {
+    public Double getNota() {
         return nota;
     }
 
-    public void setNota(Integer nota) {
+    public void setNota(Double nota) {
         this.nota = nota;
     }
 

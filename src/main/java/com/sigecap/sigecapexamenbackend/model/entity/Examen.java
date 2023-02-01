@@ -23,6 +23,13 @@ public class Examen {
     @JoinColumn(name = "id_curso")
     private Curso curso;
 
+    @ManyToOne
+    @JoinColumn(name = "id_tipo_examen")
+    private TipoExamen tipoExamen;
+
+    @Column(name = "cantidad_preguntas")
+    private Integer cantidadPreguntas;
+
     @Column(name = "no_examen")
     private String nombreExamen;
 
@@ -118,5 +125,21 @@ public class Examen {
 
     public void setModified(Date modified) {
         this.modified = modified;
+    }
+
+    public TipoExamen getTipoExamen() {
+        return tipoExamen;
+    }
+
+    public void setTipoExamen(TipoExamen tipoExamen) {
+        this.tipoExamen = tipoExamen;
+    }
+
+    public Integer getCantidadPreguntas() {
+        return cantidadPreguntas;
+    }
+
+    public void setCantidadPreguntas(Integer cantidadPreguntas) {
+        this.cantidadPreguntas = cantidadPreguntas;
     }
 }

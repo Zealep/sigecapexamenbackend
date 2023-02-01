@@ -13,6 +13,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.input.BOMInputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,8 @@ public class CargaMasivaServiceImpl implements CargaMasivaService {
     public void cargarPreguntasYRespuestas(MultipartFile file) throws IOException {
 
         try (
-                CSVParser csvParser = new CSVParser(new InputStreamReader(file.getInputStream()), CSVFormat.DEFAULT
+                final Reader reader = new InputStreamReader(new BOMInputStream(file.getInputStream()), "UTF-8");
+                CSVParser csvParser = new CSVParser(reader,CSVFormat.DEFAULT
                         .withHeader("id_curso", "id_tipo_pregunta", "enunciado", "retroalimentacion","puntuacion")
                         .withIgnoreHeaderCase()
                         .withDelimiter(';')

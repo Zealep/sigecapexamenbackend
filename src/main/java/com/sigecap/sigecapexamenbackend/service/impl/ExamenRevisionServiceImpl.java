@@ -11,6 +11,7 @@ import com.sigecap.sigecapexamenbackend.util.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,17 +33,36 @@ public class ExamenRevisionServiceImpl implements ExamenRevisionService {
         ExamenSolicInsIntento intento = examenInscripcionIntentoService.getById(idExamenIntento);
         List<ExamenSolicInsIntentoRespuesta> respuestasIntento = intento.getDetalleRespuestas();
 
-        Integer nota = 0;
+        String tipoExamen = intento.getExamenSolicitudInscripcion().getExamenApertura().getExamen().getTipoExamen().getIdTipoExamen();
 
-        for(ExamenSolicInsIntentoRespuesta respuesta:respuestasIntento){
-            Respuesta r = respuestaService.getByPreguntaAndRespuesta(respuesta.getIdPregunta(),respuesta.getIdRespuestaMarcada());
-            if(r!=null){
-                if(r.getRespuestaCorrecta().equals(Constantes.INDICADOR_RESPUESTA_CORRECTA)){
-                    Integer puntaje = r.getPregunta().getPuntuacion().intValue();
-                    nota = nota + puntaje;
+        Double nota = 0.0;
+
+        if(tipoExamen.equals(Constantes.TIPO_EXAMEN_FIJO)){
+
+            for(ExamenSolicInsIntentoRespuesta respuesta:respuestasIntento){
+                Respuesta r = respuestaService.getByPreguntaAndRespuesta(respuesta.getIdPregunta(),respuesta.getIdRespuestaMarcada());
+                if(r!=null){
+                    if(r.getRespuestaCorrecta().equals(Constantes.INDICADOR_RESPUESTA_CORRECTA)){
+                        Double puntuacion = r.getPregunta().getPuntuacion().doubleValue();
+                        nota = nota + puntuacion;
+                    }
                 }
             }
         }
+
+        if(tipoExamen.equals(Constantes.TIPO_EXAMEN_BALOTARIO)){
+            BigDecimal puntaje = new BigDecimal("20").divide(new BigDecimal(intento.getExamenSolicitudInscripcion().getExamenApertura().getExamen().getCantidadPreguntas()));
+
+            for(ExamenSolicInsIntentoRespuesta respuesta:respuestasIntento) {
+                Respuesta r = respuestaService.getByPreguntaAndRespuesta(respuesta.getIdPregunta(),respuesta.getIdRespuestaMarcada());
+                if(r!=null){
+                    if(r.getRespuestaCorrecta().equals(Constantes.INDICADOR_RESPUESTA_CORRECTA)){
+                        nota = nota +  puntaje.doubleValue();;
+                    }
+                }
+            }
+        }
+
 
         Integer numeroIntento = 0;
 
