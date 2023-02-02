@@ -1,8 +1,11 @@
 package com.sigecap.sigecapexamenbackend.rest;
 
+import com.sigecap.sigecapexamenbackend.model.dto.BandejaPreguntaInDTO;
+import com.sigecap.sigecapexamenbackend.model.dto.BandejaRespuestasInDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.EncuestaPreguntaDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.ExamenPreguntaDTO;
 import com.sigecap.sigecapexamenbackend.model.entity.Pregunta;
+import com.sigecap.sigecapexamenbackend.model.entity.Respuesta;
 import com.sigecap.sigecapexamenbackend.model.entity.TipoPregunta;
 import com.sigecap.sigecapexamenbackend.service.PreguntaService;
 import com.sigecap.sigecapexamenbackend.util.RespuestaApi;
@@ -36,6 +39,11 @@ public class PreguntaController {
         }catch (Exception ex){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping(value = "/pregunta/bandeja",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Pregunta>> buscarBandejaPreguntas(@RequestBody BandejaPreguntaInDTO bandejaPreguntaInDTO) {
+        return new ResponseEntity<>(preguntaService.listBandeja(bandejaPreguntaInDTO), HttpStatus.OK);
     }
 
     @GetMapping(value = "/pregunta/curso/{idCurso}",produces = MediaType.APPLICATION_JSON_VALUE)

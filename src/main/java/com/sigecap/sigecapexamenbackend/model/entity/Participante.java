@@ -33,17 +33,23 @@ public class Participante{
 
 	@Column(name="centro_costo")
 	private String centroCosto;
-	
+
+	/*
 	@ManyToOne
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "unidad", referencedColumnName = "id_unidad")
 	private Unidad unidad;
+
+	 */
 	
 	@Column(name="correo")
 	private String correo;
 	
 	@Column(name="celular")
 	private int celular;
+
+	@Column(name="id_usuario")
+	private String idUsuario;
 
 	public String getIdParticipante() {
 		return idParticipante;
@@ -125,14 +131,13 @@ public class Participante{
 		this.centroCosto = centroCosto;
 	}
 
-	public Unidad getUnidad() {
-		return unidad;
+
+
+	public String getIdUsuario() {
+		return idUsuario;
 	}
 
-	public void setUnidad(Unidad unidad) {
-		this.unidad = unidad;
+	public void setIdUsuario(String idUsuario) {
+		this.idUsuario = idUsuario;
 	}
-
-
-	
 }

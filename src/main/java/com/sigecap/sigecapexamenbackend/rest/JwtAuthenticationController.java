@@ -4,9 +4,11 @@ package com.sigecap.sigecapexamenbackend.rest;
 
 import com.sigecap.sigecapexamenbackend.config.JwtTokenUtil;
 import com.sigecap.sigecapexamenbackend.exception.BusinessException;
+import com.sigecap.sigecapexamenbackend.model.entity.Participante;
 import com.sigecap.sigecapexamenbackend.model.entity.Usuario;
 import com.sigecap.sigecapexamenbackend.model.jwt.JwtRequest;
 import com.sigecap.sigecapexamenbackend.model.jwt.JwtResponse;
+import com.sigecap.sigecapexamenbackend.repository.ParticipanteRepository;
 import com.sigecap.sigecapexamenbackend.repository.UsuarioRepository;
 import com.sigecap.sigecapexamenbackend.util.BusinessMsgError;
 import com.sigecap.sigecapexamenbackend.util.Constantes;
@@ -38,6 +40,9 @@ public class JwtAuthenticationController {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
+	@Autowired
+	private ParticipanteRepository participanteRepository;
+
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> generateAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
 			throws Exception {
@@ -54,9 +59,9 @@ public class JwtAuthenticationController {
 
 		final String idUsuario = usuarioRepository.findIdUsuarioByUsername(authenticationRequest.getUsername());
 
-		final String nombre = usuarioRepository.findIdUsuarioByUsername(authenticationRequest.getUsername());
+		final Participante participante = participanteRepository.getParticipanteByIdUsuario(idUsuario);
 
-		return ResponseEntity.ok(new JwtResponse(token,idUsuario));
+		return ResponseEntity.ok(new JwtResponse(token,idUsuario,participante.getNombres()+" "+participante.getApellidoPaterno()));
 	}
 
 	private void authenticate(String username, String password) throws Exception {

@@ -1,5 +1,7 @@
 package com.sigecap.sigecapexamenbackend.service.impl;
 
+import com.ibm.icu.text.CharsetDetector;
+import com.ibm.icu.text.CharsetMatch;
 import com.sigecap.sigecapexamenbackend.model.entity.Curso;
 import com.sigecap.sigecapexamenbackend.model.entity.Pregunta;
 import com.sigecap.sigecapexamenbackend.model.entity.Respuesta;
@@ -14,6 +16,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.BOMInputStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.math.BigDecimal;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -39,8 +44,26 @@ public class CargaMasivaServiceImpl implements CargaMasivaService {
     @Transactional
     public void cargarPreguntasYRespuestas(MultipartFile file) throws IOException {
 
+
+        File outputFile = new File("file_utf8.csv");
+        CharsetDetector detector = new CharsetDetector();
+        byte[] inputBytes = file.getBytes();
+        detector.setText(inputBytes);
+        CharsetMatch match = detector.detect();
+        String encoding = match.getName();
+
+
+        try (Reader reader = new InputStreamReader(file.getInputStream(), encoding)) {
+            try (Writer writer = new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8)) {
+                int c;
+                while ((c = reader.read()) != -1) {
+                    writer.write(c);
+                }
+            }
+        }
+
         try (
-                final Reader reader = new InputStreamReader(new BOMInputStream(file.getInputStream()), "UTF-8");
+                final Reader reader = new InputStreamReader(new FileInputStream(outputFile), StandardCharsets.UTF_8);
                 CSVParser csvParser = new CSVParser(reader,CSVFormat.DEFAULT
                         .withHeader("id_curso", "id_tipo_pregunta", "enunciado", "retroalimentacion","puntuacion")
                         .withIgnoreHeaderCase()

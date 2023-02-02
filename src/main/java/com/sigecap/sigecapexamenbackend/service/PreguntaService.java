@@ -1,5 +1,6 @@
 package com.sigecap.sigecapexamenbackend.service;
 
+import com.sigecap.sigecapexamenbackend.model.dto.BandejaPreguntaInDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.EncuestaPreguntaDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.ExamenPreguntaDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.PreguntasPorExamenDTO;
@@ -26,4 +27,5 @@ public interface PreguntaService {
 
     List<EncuestaPreguntaDTO> getPreguntasyRespuestasPorEncuesta();
 
+    List<Pregunta> listBandeja(BandejaPreguntaInDTO bandejaPreguntaInDTO);
 }

@@ -2,6 +2,7 @@ package com.sigecap.sigecapexamenbackend.service.impl;
 
 import com.sigecap.sigecapexamenbackend.model.dto.*;
 import com.sigecap.sigecapexamenbackend.model.entity.Pregunta;
+import com.sigecap.sigecapexamenbackend.model.entity.Respuesta;
 import com.sigecap.sigecapexamenbackend.repository.PreguntaRepository;
 import com.sigecap.sigecapexamenbackend.repository.jdbc.EncuestaJdbcRepository;
 import com.sigecap.sigecapexamenbackend.repository.jdbc.ExamenJdbcRepository;
@@ -11,6 +12,12 @@ import com.sigecap.sigecapexamenbackend.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,6 +37,9 @@ public class PreguntaServiceImpl implements PreguntaService {
 
     @Autowired
     private EncuestaJdbcRepository encuestaJdbcRepository;
+
+    @PersistenceContext
+    EntityManager em;
 
     @Override
     public List<Pregunta> getAllActives() {
@@ -158,5 +168,27 @@ public class PreguntaServiceImpl implements PreguntaService {
         return preguntaPorEncuesta;
 
 
+    }
+
+    @Override
+    public List<Pregunta> listBandeja(BandejaPreguntaInDTO bandejaPreguntaInDTO) {
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Pregunta> cq = cb.createQuery(Pregunta.class);
+
+        Root<Pregunta> preguntaRoot = cq.from(Pregunta.class);
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (bandejaPreguntaInDTO.getIdCurso() != null && !bandejaPreguntaInDTO.getIdCurso().equals("")) {
+            predicates.add(cb.equal(preguntaRoot.get("curso").get("idCurso"), bandejaPreguntaInDTO.getIdCurso()));
+        }
+
+        if (bandejaPreguntaInDTO.getNombrePregunta() != null && !bandejaPreguntaInDTO.getNombrePregunta().equals("")) {
+            predicates.add(cb.like(preguntaRoot.get("enunciadoTexto"), "%" + bandejaPreguntaInDTO.getNombrePregunta() + "%"));
+        }
+
+        cq.where(predicates.toArray(new Predicate[0]));
+
+        return em.createQuery(cq).getResultList();
     }
 }
