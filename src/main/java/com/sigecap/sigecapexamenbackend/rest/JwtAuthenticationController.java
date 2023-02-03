@@ -61,7 +61,7 @@ public class JwtAuthenticationController {
 
 		final Participante participante = participanteRepository.getParticipanteByIdUsuario(idUsuario);
 
-		return ResponseEntity.ok(new JwtResponse(token,idUsuario,participante.getNombres()+" "+participante.getApellidoPaterno()));
+		return ResponseEntity.ok(new JwtResponse(token,idUsuario,participante!=null ?participante.getNombres()+" "+participante.getApellidoPaterno():""));
 	}
 
 	private void authenticate(String username, String password) throws Exception {

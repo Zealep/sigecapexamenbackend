@@ -20,10 +20,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -128,6 +125,25 @@ public class PreguntaServiceImpl implements PreguntaService {
             preguntaPorExamen.add(pregunta);
         }
 
+        if(preguntaPorExamen.size()>0){
+            Collections.shuffle(preguntaPorExamen);
+        }
+
+
+        /*
+        if(preguntaPorExamen.size()>0){
+            Random random = new Random();
+            int n = preguntaPorExamen.size();
+
+            for (int i = 0; i < n; i++) {
+                int randomIndex = i + random.nextInt(n - i);
+                ExamenPreguntaDTO temp = preguntaPorExamen.get(randomIndex);
+                preguntaPorExamen.set(randomIndex, preguntaPorExamen.get(i));
+                preguntaPorExamen.set(i, temp);
+            }
+
+        }
+        */
         return preguntaPorExamen;
     }
 
@@ -164,7 +180,7 @@ public class PreguntaServiceImpl implements PreguntaService {
             pregunta.setRespuestas(respuestasPorPregunta);
             preguntaPorEncuesta.add(pregunta);
         }
-        Collections.shuffle(preguntaPorEncuesta);
+
         return preguntaPorEncuesta;
 
 

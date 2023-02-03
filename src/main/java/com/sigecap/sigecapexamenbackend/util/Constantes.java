@@ -69,5 +69,7 @@ public interface Constantes {
     //EXAMEN
     public static final String TIPO_EXAMEN_FIJO = "20230101";
     public static final String TIPO_EXAMEN_BALOTARIO = "20230102";
+    public static final String EXAMEN_POR_INICIAR = "POI";
+    public static final String EXAMEN_REALIZADO = "REA";
 
 }

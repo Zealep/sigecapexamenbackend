@@ -61,6 +61,13 @@ public class ExamenInscripcionIntentoServiceImpl implements ExamenInscripcionInt
     }
 
     @Override
+    @Transactional
+    public void updateEstado(Long id, String estado) {
+        examenSolicInscripcionIntentoRepository.updateEstado(id,estado);
+
+    }
+
+    @Override
     public Integer ultimoIntento(Long idExamenSolicitud) {
         return examenSolicInscripcionIntentoRepository.ultimoIntento(idExamenSolicitud);
     }
