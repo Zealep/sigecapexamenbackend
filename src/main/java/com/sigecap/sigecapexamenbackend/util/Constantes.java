@@ -51,6 +51,7 @@ public interface Constantes {
     public static final String CERRADO_APERTURA_EXAMEN = "CER";
 
     public static final String SI_FIRMO_EXAMEN = "S";
+    public static final String NO_FIRMO_EXAMEN = "N";
 
     // ESTADOS ASISTIO
     public static final String ASISTIO_EXAMEN = "S";
@@ -70,6 +71,7 @@ public interface Constantes {
     public static final String TIPO_EXAMEN_FIJO = "20230101";
     public static final String TIPO_EXAMEN_BALOTARIO = "20230102";
     public static final String EXAMEN_POR_INICIAR = "POI";
-    public static final String EXAMEN_REALIZADO = "REA";
+    public static final String EXAMEN_REALIZADO = "REG";
+    public static final String EXAMEN_FINALIZADO = "FIN";
 
 }

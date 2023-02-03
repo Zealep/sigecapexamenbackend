@@ -25,9 +25,10 @@ public class AsistenciaSolicitudInscripcion {
 
     }
 
-    public AsistenciaSolicitudInscripcion(String idSolicitudInscripcionDetalle, Date fechaAsistencia) {
+    public AsistenciaSolicitudInscripcion(String idSolicitudInscripcionDetalle, Date fechaAsistencia,String realizoFirma) {
         this.idSolicitudInscripcionDetalle = idSolicitudInscripcionDetalle;
         this.fechaAsistencia = fechaAsistencia;
+        this.realizoFirma = realizoFirma;
     }
 
     public Long getIdSolicitudAsistencia() {
@@ -52,5 +53,13 @@ public class AsistenciaSolicitudInscripcion {
 
     public void setFechaAsistencia(Date fechaAsistencia) {
         this.fechaAsistencia = fechaAsistencia;
+    }
+
+    public String getRealizoFirma() {
+        return realizoFirma;
+    }
+
+    public void setRealizoFirma(String realizoFirma) {
+        this.realizoFirma = realizoFirma;
     }
 }

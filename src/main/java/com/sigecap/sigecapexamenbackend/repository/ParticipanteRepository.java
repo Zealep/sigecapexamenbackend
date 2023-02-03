@@ -87,6 +87,6 @@ public interface ParticipanteRepository extends JpaRepository<Participante,Long>
 			+ "where si.id_solicitud_inscripcion = ?1 order by numero_documento asc")
 	List<Participante> getListParticipanteByIdSolicitudInscripcion(String idSolicitudInscripcion);
 
-	@Query("select c from Participante  c where c.idParticipante =?1")
+	@Query("select c from Participante  c where c.idUsuario =?1")
 	Participante getParticipanteByIdUsuario(String idUsuario);
 }

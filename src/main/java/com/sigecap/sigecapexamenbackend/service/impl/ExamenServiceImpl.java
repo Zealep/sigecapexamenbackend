@@ -130,11 +130,12 @@ public class ExamenServiceImpl implements ExamenService {
     @Override
     public List<ExamenParticipanteDTO> getExamenesParticipante(String idCursoGrupo, String idSolicitudInscripcionDetalle) {
         List<ExamenParticipanteDTO> examenesParticipante = this.examenParticipanteJdbcRepository.getExamenesParticipante(idCursoGrupo,idSolicitudInscripcionDetalle);
-    if(examenesParticipante!=null){
-        examenesParticipante.stream().forEach(x->{
-            List<IntentoExamenDTO> intentos = this.examenParticipanteJdbcRepository.getIntentoExamen(x.getIdSidExamen());
-            x.setIntentosExamen(intentos);
-        });
+
+        if(examenesParticipante!=null){
+            for(ExamenParticipanteDTO e:examenesParticipante){
+                List<IntentoExamenDTO> intentos = this.examenParticipanteJdbcRepository.getIntentoExamen(e.getIdSidExamen());
+                e.setIntentosExamen(intentos);
+            }
         return examenesParticipante;
     }
     else{

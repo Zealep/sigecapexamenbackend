@@ -167,7 +167,8 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
 
         if (p != null) {
             examenAperturaRepository.updateAsistencia(p.getIdSolicitudInscripcionDetalle(), Constantes.ASISTIO_EXAMEN);
-            AsistenciaSolicitudInscripcion a = new AsistenciaSolicitudInscripcion(p.getIdSolicitudInscripcionDetalle(),new Date());
+            AsistenciaSolicitudInscripcion a = new AsistenciaSolicitudInscripcion(p.getIdSolicitudInscripcionDetalle(),new Date(),Constantes.NO_FIRMO_EXAMEN);
+            asistenciaSolicitudInscripcionRepository.save(a);
         } else {
             throw new BusinessException(BusinessMsgError.ERROR_NO_SE_ENCUENTRA_PARTICIPANTE_EXAMEN);
         }
@@ -216,12 +217,12 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
     }
 
     @Override
-    public void validarEncuesta(BandejaExamenPorAlumnoDTO bandejaExamenPorAlumnoDTO) {
+    public void validarEncuesta(ExamenParticipanteDTO bandejaExamenPorAlumnoDTO) {
 
     }
 
     private void guardarRelacionPorcadaAlumno(ExamenApertura examenApertura) {
-        List<ParticipanteInscritoDto> participanteInscritoDtos = participanteInscritoRepository.getListParticipantesInscritosPorCriterios("", examenApertura.getCursoGrupo().getIdCursoGrupo(), "", "", "");
+        List<ParticipanteInscritoDto> participanteInscritoDtos = participanteInscritoRepository.getAsistenciaParticipantesCursoGrupo(examenApertura.getCursoGrupo().getIdCursoGrupo());
         participanteInscritoDtos.stream().forEach(x -> {
             ExamenSolicitudInscripcion ex = new ExamenSolicitudInscripcion();
             ex.setExamenApertura(examenApertura);
