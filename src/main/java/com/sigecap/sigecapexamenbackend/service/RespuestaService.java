@@ -18,6 +18,8 @@ public interface RespuestaService {
     List<Respuesta> listBandeja(BandejaRespuestasInDTO bandejaRespuestasInDTO);
     
     Respuesta save(Respuesta p) throws Exception;
+    Respuesta saveMasivo(Respuesta p) throws Exception;
+
     void delete(String id);
 
     void updateState(String id,String  state);

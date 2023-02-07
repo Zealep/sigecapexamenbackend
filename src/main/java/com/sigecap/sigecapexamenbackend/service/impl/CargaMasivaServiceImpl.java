@@ -41,7 +41,6 @@ public class CargaMasivaServiceImpl implements CargaMasivaService {
     private RespuestaService respuestaService;
 
     @Override
-    @Transactional
     public void cargarPreguntasYRespuestas(MultipartFile file) throws IOException {
 
 
@@ -99,7 +98,7 @@ public class CargaMasivaServiceImpl implements CargaMasivaService {
                     pregunta.setRetroalimentacion(retroalimentacion);
                     pregunta.setPuntuacion(new BigDecimal(puntuacion));
                     pregunta.setEstado(Constantes.ESTADO_ACTIVO);
-                    Pregunta p = preguntaService.save(pregunta);
+                    Pregunta p = preguntaService.saveMasivo(pregunta);
                     ultimoIdPregunta = p.getIdPregunta();
                 }
                 else{
@@ -116,7 +115,8 @@ public class CargaMasivaServiceImpl implements CargaMasivaService {
                     else{
                         r.setRespuestaCorrecta("N");
                     }
-                    Respuesta res = respuestaService.save(r);
+                    Respuesta res = respuestaService.saveMasivo(r);
+                    String ultimaRes = res.getIdRespuesta();
                 }
             }
         } catch (Exception e) {

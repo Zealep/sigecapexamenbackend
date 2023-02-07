@@ -82,6 +82,20 @@ public class PreguntaServiceImpl implements PreguntaService {
 
     @Override
     @Transactional
+    public Pregunta saveMasivo(Pregunta p) throws IOException {
+
+        if(p.getIdPregunta()==null) {
+            String pk = preguntaRepository.generatePrimaryKey(Constantes.TABLE_PREGUNTA, Constantes.ID_TABLE_PREGUNTA);
+            p.setIdPregunta(pk);
+        }
+
+        String enunciadoTexto = Util.convertHtmlToString(p.getEnunciado());
+        p.setEnunciadoTexto(enunciadoTexto);
+        return preguntaRepository.save(p);
+    }
+
+    @Override
+    @Transactional
     public void delete(String id) {
         preguntaRepository.deleteLogicById(id,Constantes.ESTADO_INACTIVO);
     }

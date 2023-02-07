@@ -3,3 +3,19 @@ MADEF01;20220701;Las normas reguladoras del tránsito son componentes: ;;1
 ;;Del Manejo defensivo ;;
 ;;Del Reglamento nacional de tránsito ;;
 ;;De la seguridad vial ;;S
+MADEF01;20220701;El accidente de tránsito es: ;;1
+;;Un hecho fortuito ;;
+;;Un hecho evitable ;;S
+;;Un hecho que no se puede evitar ;;
+MADEF01;20220701;La causa principal de accidente de tránsito en el Perú es: ;;1
+;;La Imprudencia ;;
+;;Conducir en estado de ebriedad ;;
+;;El exceso de velocidad ;;S
+MADEF01;20220701;El tiempo de reacción de un conductor frente a una situación de peligro es: ;;1
+;;Un segundo ;;
+;;Tres cuartos de segundo ;;S
+;;Depende de la velocidad ;;
+MADEF01;20220701;Cuando se aumenta la velocidad de un vehículo la distancia de frenado: ;;1
+;;Se mantiene igual ;;
+;;Disminuye ;;
+;;Aumenta ;;S

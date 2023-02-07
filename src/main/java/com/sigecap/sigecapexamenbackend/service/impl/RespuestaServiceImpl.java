@@ -98,6 +98,19 @@ public class RespuestaServiceImpl implements RespuestaService {
 
     @Override
     @Transactional
+    public Respuesta saveMasivo(Respuesta p) throws Exception {
+
+        if (p.getIdRespuesta() == null) {
+            String pk = respuestaRepository.generatePrimaryKey(Constantes.TABLE_RESPUESTA, Constantes.ID_TABLE_RESPUESTA);
+            p.setIdRespuesta(pk);
+        }
+        String enunciandoTexto = Util.convertHtmlToString(p.getEnunciado());
+        p.setEnunciadoTexto(enunciandoTexto);
+        return respuestaRepository.save(p);
+    }
+
+    @Override
+    @Transactional
     public void delete(String id) {
         respuestaRepository.deleteLogicById(id, Constantes.ESTADO_INACTIVO);
     }
