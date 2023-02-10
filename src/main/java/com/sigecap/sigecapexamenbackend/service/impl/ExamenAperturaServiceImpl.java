@@ -217,8 +217,12 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
     }
 
     @Override
-    public void validarEncuesta(ExamenParticipanteDTO bandejaExamenPorAlumnoDTO) {
-
+    public void validarEncuesta(CursosDisponibleExamenAlumnoDTO cursosDisponibleExamenAlumnoDTO) {
+        if(cursosDisponibleExamenAlumnoDTO.getIndicadorRealizarEncuesta().equals("S")){
+            if(cursosDisponibleExamenAlumnoDTO.getIndicadorRealizoEncuesta() == null || cursosDisponibleExamenAlumnoDTO.getIndicadorRealizoEncuesta().equals("")|| cursosDisponibleExamenAlumnoDTO.getIndicadorRealizoEncuesta().equals("N")){
+                throw new BusinessException(BusinessMsgError.ERROR_NO_REALIZO_ENCUESTA);
+            }
+        }
     }
 
     private void guardarRelacionPorcadaAlumno(ExamenApertura examenApertura) {
