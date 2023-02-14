@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface EncuestaInscripcionRespuestaRepository extends CrudRepository<EncuestaInscripcionRespuesta,Long> {
 
-    @Query(nativeQuery = true ,value= "update id_solicitud_inscripcion_detalle c set c.in_realizo_encuesta =?2 where c.id_solicitud_inscripcion_detalle=?1")
+    @Query(nativeQuery = true ,value= "update sgc_tz_solicitud_inscripcion_detalle c set c.in_realizo_encuesta =?2 where c.id_solicitud_inscripcion_detalle=?1")
     @Modifying
     void updateEncuesta(String id,String estado);
 }

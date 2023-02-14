@@ -67,6 +67,11 @@ public class PreguntaServiceImpl implements PreguntaService {
     public List<Pregunta> getByCursoAndTipoPregunta(String idCurso, String idTipoPregunta) {
         return preguntaRepository.getByCursoAndTipoPregunta(idCurso,idTipoPregunta,Constantes.ESTADO_ACTIVO);
     }
+    
+    @Override
+    public List<Pregunta> getByCursoAndTipoPreguntaAndEstado(String idCurso, String idTipoPregunta,String estado) {
+        return preguntaRepository.getByCursoAndTipoPreguntaAndEstado(idCurso,idTipoPregunta,estado);
+    }
 
     @Override
     public Pregunta save(Pregunta p) throws IOException {

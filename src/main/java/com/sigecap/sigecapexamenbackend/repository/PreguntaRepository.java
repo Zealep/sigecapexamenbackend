@@ -26,6 +26,9 @@ public interface PreguntaRepository extends CrudRepository<Pregunta,String> {
     @Query("select c from Pregunta c where c.curso.idCurso=?1 and c.tipoPregunta.idTipoPregunta=?2 and c.estado=?3")
     List<Pregunta> getByCursoAndTipoPregunta(String idCurso,String idTipoPregunta,String estado);
 
+    @Query("select c from Pregunta c where c.curso.idCurso=?1 and c.tipoPregunta.idTipoPregunta=?2 and c.estado=?3")
+    List<Pregunta> getByCursoAndTipoPreguntaAndEstado(String idCurso,String idTipoPregunta,String estado);
+    
     @Query("update Pregunta c set c.estado=?2 where c.idPregunta=?1")
     @Modifying
     void deleteLogicById(String idPregunta,String estado);
