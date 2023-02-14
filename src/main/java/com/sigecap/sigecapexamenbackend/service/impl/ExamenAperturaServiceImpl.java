@@ -193,7 +193,7 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
 
      */
 
-        if(examenParticipanteDTO.getIndicadorAsistio() == null || examenParticipanteDTO.getIndicadorAsistio().equals("") || examenParticipanteDTO.getIndicadorAsistio().equals("N")){
+        if(examenParticipanteDTO.getIndicadorAsistio() == null || examenParticipanteDTO.getIndicadorAsistio().equals("") || examenParticipanteDTO.getIndicadorAsistio().equals("NO")){
             throw new BusinessException(BusinessMsgError.ERROR_NO_REALIZO_ASISTENCIA);
         }
 
