@@ -69,6 +69,11 @@ public class PreguntaServiceImpl implements PreguntaService {
     }
 
     @Override
+    public List<Pregunta> getByCursoAndTipoPreguntaAndEstado(String idCurso, String idTipoPregunta, String estado) {
+        return preguntaRepository.getByCursoAndTipoPreguntaAndEstado(idCurso,idTipoPregunta,estado);
+    }
+
+    @Override
     public Pregunta save(Pregunta p) throws IOException {
 
         if(p.getIdPregunta()==null) {

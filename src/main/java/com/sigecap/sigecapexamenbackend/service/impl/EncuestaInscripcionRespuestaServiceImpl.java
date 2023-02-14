@@ -37,7 +37,7 @@ public class EncuestaInscripcionRespuestaServiceImpl implements EncuestaInscripc
 
         //Registro de comentarios
 
-        List<Pregunta> p = preguntaService.getByCursoAndTipoPregunta(Constantes.ID_CURSO,Constantes.TIPO_PREGUNTA_COMENTARIO);
+        List<Pregunta> p = preguntaService.getByCursoAndTipoPreguntaAndEstado(Constantes.ID_CURSO,Constantes.TIPO_PREGUNTA_COMENTARIO,Constantes.ESTADO_INACTIVO);
 
         if(p.size()>0){
             Pregunta pre = p.get(0);
@@ -48,8 +48,7 @@ public class EncuestaInscripcionRespuestaServiceImpl implements EncuestaInscripc
             encuestaInscripcionRespuestaRepository.save(ea);
         }
 
-        encuestaInscripcionRespuestaRepository.updateEncuesta(Constantes.IND_REALIZO_ENCUESTA,s.getIdSolicitudInscripcion());
-
+        encuestaInscripcionRespuestaRepository.updateEncuesta(s.getIdSolicitudInscripcion(),Constantes.IND_REALIZO_ENCUESTA);
 
     }
 }

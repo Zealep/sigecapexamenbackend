@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+import com.sigecap.sigecapexamenbackend.model.dto.ConsultaAsistenciaParticipanteDTO;
 import com.sigecap.sigecapexamenbackend.repository.ParticipanteInscritoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -73,18 +74,11 @@ public class ParticipanteController {
 	}
 
 	@PostMapping(value = "/consultarAsistenciaParticipantesInscritos")
-	public ResponseEntity<List<ParticipanteInscritoDto>> consultaAsistenciaParticipante(@RequestBody String jsonString) {
+	public ResponseEntity<List<ParticipanteInscritoDto>> consultaAsistenciaParticipante(@RequestBody ConsultaAsistenciaParticipanteDTO consultaAsistenciaParticipanteDTO) {
 		List<ParticipanteInscritoDto> jqTable = new ArrayList<>();
 		try {
 
-
-			JSONObject jsonObject = new JSONObject(jsonString);
-
-			String parIdCurso = jsonObject.getString("parIdCurso");
-			String parIdCursoGrupo = jsonObject.getString("parIdCursoGrupo");
-
-
-			return new ResponseEntity<>(participanteInscritoRepository.getAsistenciaParticipantesCursoGrupo(parIdCursoGrupo), HttpStatus.OK);
+			return new ResponseEntity<>(participanteInscritoRepository.getAsistenciaParticipantesCursoGrupo(consultaAsistenciaParticipanteDTO.getParIdCursoGrupo()), HttpStatus.OK);
 
 
 

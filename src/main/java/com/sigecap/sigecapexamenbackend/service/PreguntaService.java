@@ -18,6 +18,9 @@ public interface PreguntaService {
     List<Pregunta> getByCurso(String idCurso);
     List<Pregunta> getByTipoPregunta(String idTipoPregunta);
     List<Pregunta> getByCursoAndTipoPregunta(String idCurso,String idTipoPregunta);
+
+    List<Pregunta> getByCursoAndTipoPreguntaAndEstado(String idCurso,String idTipoPregunta,String estado);
+
     Pregunta save(Pregunta p) throws IOException;
 
     Pregunta saveMasivo(Pregunta p) throws IOException;
