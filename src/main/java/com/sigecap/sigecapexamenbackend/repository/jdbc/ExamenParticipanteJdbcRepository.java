@@ -53,6 +53,7 @@ public class ExamenParticipanteJdbcRepository {
             t.setNombreCurso(rs.getString("nombre_curso"));
             t.setIdExamen(rs.getString("id_examen"));
             t.setNombreExamen(rs.getString("no_examen"));
+            t.setIdExamenApertura(rs.getString("id_examen_apertura"));
             t.setFechaHoraApertura(rs.getTimestamp("fecha_hora_apertura"));
             t.setFechaHoraCierre(rs.getTimestamp("fecha_hora_cierre"));
             t.setNroIntentosPermitidos(rs.getInt("numero_intentos_permitidos"));

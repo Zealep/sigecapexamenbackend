@@ -11,15 +11,14 @@ import java.io.Reader;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Date;
 
 public class Test {
 
     public static void main(String[] args) throws IOException {
-        Double nota = 0.0;
 
-        BigDecimal puntaje = new BigDecimal("20").divide(new BigDecimal(40));
-
-        nota = nota + puntaje.doubleValue();
+        final long JWT_TOKEN_VALIDITY = 90*60;
+        System.out.println(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY*1000));
 
     }
 }

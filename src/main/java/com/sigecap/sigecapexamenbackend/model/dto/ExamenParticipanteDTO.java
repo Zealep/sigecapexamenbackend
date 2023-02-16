@@ -12,6 +12,7 @@ public class ExamenParticipanteDTO {
     private String nombreCurso;
     private String idExamen;
     private String nombreExamen;
+    private String idExamenApertura;
     private Date fechaHoraApertura;
     private Date fechaHoraCierre;
     private Integer nroIntentosPermitidos;
@@ -23,6 +24,14 @@ public class ExamenParticipanteDTO {
 
     public Long getIdSidExamen() {
         return idSidExamen;
+    }
+
+    public String getIdExamenApertura() {
+        return idExamenApertura;
+    }
+
+    public void setIdExamenApertura(String idExamenApertura) {
+        this.idExamenApertura = idExamenApertura;
     }
 
     public void setIdSidExamen(Long idSidExamen) {
