@@ -77,6 +77,7 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
         }
 
         cq.where(predicates.toArray(new Predicate[0]));
+        cq.orderBy(cb.desc(examenAperturaRoot.get("fechaHoraApertura")));
 
         return em.createQuery(cq).getResultList();
     }

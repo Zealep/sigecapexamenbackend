@@ -74,6 +74,9 @@ public class ParticipanteInscritoDto{
 	@Column(name="id_solicitud_inscripcion_detalle")
 	private String idSolicitudInscripcionDetalle;
 
+	@Column(name="nota")
+	private Double notaMaxima;
+
 	public String getIdSolicitudInscripcionDetalle() {
 		return idSolicitudInscripcionDetalle;
 	}
@@ -249,5 +252,13 @@ public class ParticipanteInscritoDto{
 
 	public void setAsistio(String asistio) {
 		this.asistio = asistio;
+	}
+
+	public Double getNotaMaxima() {
+		return notaMaxima;
+	}
+
+	public void setNotaMaxima(Double notaMaxima) {
+		this.notaMaxima = notaMaxima;
 	}
 }

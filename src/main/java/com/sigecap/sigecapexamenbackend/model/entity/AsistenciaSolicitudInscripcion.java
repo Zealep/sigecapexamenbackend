@@ -21,6 +21,9 @@ public class AsistenciaSolicitudInscripcion {
     @Column(name = "realizo_firma")
     private String realizoFirma;
 
+    @Column(name = "fecha_firma")
+    private String fechaFirma;
+
     public AsistenciaSolicitudInscripcion(){
 
     }
@@ -61,5 +64,13 @@ public class AsistenciaSolicitudInscripcion {
 
     public void setRealizoFirma(String realizoFirma) {
         this.realizoFirma = realizoFirma;
+    }
+
+    public String getFechaFirma() {
+        return fechaFirma;
+    }
+
+    public void setFechaFirma(String fechaFirma) {
+        this.fechaFirma = fechaFirma;
     }
 }

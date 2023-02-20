@@ -47,7 +47,7 @@ public class ArchivoServiceImpl implements ArchivoService {
 
 
         try {
-            String url = "/"+"FIRMAS/"+a.getIdDocumento();
+            String url = "/FIRMAS/"+a.getIdDocumento();
             Path path = Paths.get(URL_PATH_BASE+url);
             boolean dirExist = Files.exists(path);
             if (!dirExist) {
@@ -60,7 +60,7 @@ public class ArchivoServiceImpl implements ArchivoService {
             a.setFechaCreacion(new Date());
             a.setPeso(String.valueOf(file.getSize()) + " KB");
             archivoRepository.save(a);
-            asistenciaSolicitudInscripcionRepository.updateFirmaAsistencia(Long.parseLong(a.getIdDocumento()),Constantes.SI_FIRMO_EXAMEN);
+            asistenciaSolicitudInscripcionRepository.updateFirmaAsistencia(Long.parseLong(a.getIdDocumento()),Constantes.SI_FIRMO_EXAMEN,new Date());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -78,5 +78,28 @@ public class ArchivoServiceImpl implements ArchivoService {
         }catch (IOException i){
             return null;
         }
+    }
+
+    @Override
+    public byte[] getFirma(String idDocumento) {
+        try {
+
+            Archivo a = this.findByIdDocumento(idDocumento);
+            if(a!=null){
+                String url = "/FIRMAS/" + a.getIdDocumento() + "/" + a.getNombre()+".png";
+                String path = URL_PATH_BASE + url;
+                return FileUtils.readFileToByteArray(new File(FilenameUtils.separatorsToSystem(path)));
+            }else{
+                return null;
+            }
+
+        }catch (IOException i){
+            return null;
+        }
+    }
+
+    @Override
+    public Archivo findByIdDocumento(String idDocumento) {
+        return archivoRepository.getByIdDocumento(Constantes.ESTADO_ACTIVO,idDocumento);
     }
 }

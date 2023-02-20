@@ -45,4 +45,15 @@ public class ArchivoController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping(value = "/archivo/getFirma",produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public ResponseEntity<byte[]> getFile(@RequestParam(value = "idDocumento")String idDocumento){
+        try {
+
+            return new ResponseEntity<byte[]>(archivoService.getFirma(idDocumento),HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
