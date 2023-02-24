@@ -8,11 +8,15 @@ import com.sigecap.sigecapexamenbackend.service.ExamenAperturaService;
 import com.sigecap.sigecapexamenbackend.service.ExamenService;
 import com.sigecap.sigecapexamenbackend.util.RespuestaApi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.InputStreamSource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -121,6 +125,19 @@ public class ExamenAperturaController {
     public ResponseEntity<RespuestaApi> validarEncuesta(@RequestBody CursosDisponibleExamenAlumnoDTO cursosDisponibleExamenAlumnoDTO){
         examenAperturaService.validarEncuesta(cursosDisponibleExamenAlumnoDTO);
         return new ResponseEntity<>(new RespuestaApi("OK",null,null),HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/examen-apertura/exportParticipantesGrupo")
+    public ResponseEntity<InputStreamSource> exportarExcelVentas(@RequestBody ConsultaAsistenciaParticipanteDTO parms){
+        try {
+
+            ByteArrayInputStream stream = examenAperturaService.exportReporteParticipantes(parms);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=reporte-participantes-grupo.xls");
+            return ResponseEntity.ok().headers(headers).body(new InputStreamResource(stream));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
 

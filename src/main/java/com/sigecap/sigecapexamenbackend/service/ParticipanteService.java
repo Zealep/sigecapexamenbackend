@@ -1,5 +1,6 @@
 package com.sigecap.sigecapexamenbackend.service;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 import com.sigecap.sigecapexamenbackend.model.entity.Participante;

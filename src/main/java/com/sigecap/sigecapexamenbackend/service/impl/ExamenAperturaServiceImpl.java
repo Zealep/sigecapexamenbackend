@@ -10,6 +10,9 @@ import com.sigecap.sigecapexamenbackend.service.ExamenService;
 import com.sigecap.sigecapexamenbackend.service.ParticipanteDtoService;
 import com.sigecap.sigecapexamenbackend.util.BusinessMsgError;
 import com.sigecap.sigecapexamenbackend.util.Constantes;
+import com.sigecap.sigecapexamenbackend.util.ExcelUtil;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +23,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -223,6 +228,58 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
             if(cursosDisponibleExamenAlumnoDTO.getIndicadorRealizoEncuesta() == null || cursosDisponibleExamenAlumnoDTO.getIndicadorRealizoEncuesta().equals("")|| cursosDisponibleExamenAlumnoDTO.getIndicadorRealizoEncuesta().equals("N")){
                 throw new BusinessException(BusinessMsgError.ERROR_NO_REALIZO_ENCUESTA);
             }
+        }
+    }
+
+    @Override
+    public ByteArrayInputStream exportReporteParticipantes(ConsultaAsistenciaParticipanteDTO consultaAsistenciaParticipanteDTO) {
+        try {
+
+            List<ParticipanteInscritoDto> list = participanteInscritoRepository.getAsistenciaParticipantesCursoGrupo(consultaAsistenciaParticipanteDTO.getParIdCursoGrupo());
+
+            String[] headers = {"Participante","DNI" ,"Empresa","Unidad","Asistencia","Nota Maxima"};
+
+            Workbook workbook = new HSSFWorkbook();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+            CellStyle headerStyle = ExcelUtil.headersStyle(workbook);
+            CellStyle rowStyle = ExcelUtil.rowsStyle(workbook);
+
+            Sheet sheet = workbook.createSheet("Reporte de participantes inscritos en el grupo");
+            sheet.setDefaultColumnWidth(20);
+
+            Row row = sheet.createRow(0);
+
+            for (int i = 0; i < headers.length; i++) {
+                Cell cell = row.createCell(i);
+                cell.setCellValue(headers[i]);
+                cell.setCellStyle(headerStyle);
+
+            }
+
+            int initRow = 1;
+            for (ParticipanteInscritoDto p : list) {
+                row = sheet.createRow(initRow);
+                row.setHeightInPoints((2 * sheet.getDefaultRowHeightInPoints()));
+
+                ExcelUtil.createStringCell(p.getApellidoPaterno() + " "+ p.getApellidoMaterno()+ " "+p.getNombres(),row,0,rowStyle);
+                ExcelUtil.createStringCell(p.getNumeroDocumento(),row,1,rowStyle);
+                ExcelUtil.createStringCell(p.getNombreEmpresa(),row,2,rowStyle);
+                ExcelUtil.createStringCell(p.getUnidad(),row,3,rowStyle);
+                ExcelUtil.createStringCell(p.getAsistio(),row,4,rowStyle);
+                ExcelUtil.createDoubleCell(p.getNotaMaxima(),row,5,rowStyle);
+
+                row.setRowStyle(rowStyle);
+                initRow++;
+            }
+
+            workbook.write(stream);
+            workbook.close();
+            return new ByteArrayInputStream(stream.toByteArray());
+        }catch(Exception ex){
+            System.out.println(ex);
+            return null;
+
         }
     }
 

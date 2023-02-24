@@ -5,6 +5,7 @@ import com.sigecap.sigecapexamenbackend.model.entity.Examen;
 import com.sigecap.sigecapexamenbackend.model.entity.ExamenApertura;
 import com.sigecap.sigecapexamenbackend.model.entity.ExamenSolicitudInscripcion;
 
+import java.io.ByteArrayInputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -31,4 +32,6 @@ public interface ExamenAperturaService {
     void validarInicioExamen(ExamenParticipanteDTO examenParticipanteDTO);
 
     void validarEncuesta(CursosDisponibleExamenAlumnoDTO cursosDisponibleExamenAlumnoDTO);
+
+    public ByteArrayInputStream exportReporteParticipantes(ConsultaAsistenciaParticipanteDTO consultaAsistenciaParticipanteDTO);
 }
