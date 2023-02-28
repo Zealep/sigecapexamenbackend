@@ -61,6 +61,7 @@ public class ExamenParticipanteJdbcRepository {
             t.setEstado(rs.getString("estado"));
             t.setNombreEstado(rs.getString("nombre_estado"));
             t.setIndicadorAsistio(rs.getString("in_asistio"));
+            t.setIndicadorFirmo(rs.getString("in_firmo"));
             return t;
 
         }

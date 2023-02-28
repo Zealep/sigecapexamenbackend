@@ -20,6 +20,7 @@ public class ExamenParticipanteDTO {
     private String estado;
     private String nombreEstado;
     private String indicadorAsistio;
+    private String indicadorFirmo;
     private List<IntentoExamenDTO> intentosExamen;
 
     public Long getIdSidExamen() {
@@ -150,5 +151,11 @@ public class ExamenParticipanteDTO {
         this.intentosExamen = intentosExamen;
     }
 
+    public String getIndicadorFirmo() {
+        return indicadorFirmo;
+    }
 
+    public void setIndicadorFirmo(String indicadorFirmo) {
+        this.indicadorFirmo = indicadorFirmo;
+    }
 }

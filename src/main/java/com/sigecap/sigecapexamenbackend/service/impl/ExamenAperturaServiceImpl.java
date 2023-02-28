@@ -190,14 +190,10 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
     @Override
     public void validarInicioExamen(ExamenParticipanteDTO examenParticipanteDTO) {
 
-    /*
-        if(bandejaExamenPorAlumnoDTO.getIndicadorEncuesta().equals("S")){
-            if(bandejaExamenPorAlumnoDTO.getIndicadorRealizoEncuesta() == null || bandejaExamenPorAlumnoDTO.getIndicadorRealizoEncuesta().equals("") || bandejaExamenPorAlumnoDTO.getIndicadorAsistio().equals("N") ){
-                throw new BusinessException(BusinessMsgError.ERROR_NO_REALIZO_ENCUESTA);
-            }
-        }
 
-     */
+        if(examenParticipanteDTO.getIndicadorFirmo().equals("NO")){
+            throw new BusinessException(BusinessMsgError.ERROR_NO_FIRMO);
+        }
 
         if(examenParticipanteDTO.getIndicadorAsistio() == null || examenParticipanteDTO.getIndicadorAsistio().equals("") || examenParticipanteDTO.getIndicadorAsistio().equals("NO")){
             throw new BusinessException(BusinessMsgError.ERROR_NO_REALIZO_ASISTENCIA);
