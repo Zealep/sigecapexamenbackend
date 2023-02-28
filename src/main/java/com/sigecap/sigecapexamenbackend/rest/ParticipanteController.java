@@ -89,6 +89,22 @@ public class ParticipanteController {
 		}
 	}
 
+	@PostMapping(value = "/consultarAsistenciaParticipantesInscritos/notas")
+	public ResponseEntity<List<ParticipanteInscritoDto>> consultaAsistenciaParticipanteyNotas(@RequestBody ConsultaAsistenciaParticipanteDTO consultaAsistenciaParticipanteDTO) {
+		List<ParticipanteInscritoDto> jqTable = new ArrayList<>();
+		try {
+
+			return new ResponseEntity<>(participanteInscritoRepository.getAsistenciaParticipantesCursoGrupoyNotas(consultaAsistenciaParticipanteDTO.getParIdCursoGrupo(),consultaAsistenciaParticipanteDTO.getParIdExamenApertura()), HttpStatus.OK);
+
+
+
+		}catch (Exception ex) {
+			System.out.print(ex.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+	}
+
 
 
 	

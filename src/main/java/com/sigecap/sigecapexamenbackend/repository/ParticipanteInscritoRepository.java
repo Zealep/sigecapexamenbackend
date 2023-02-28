@@ -27,6 +27,13 @@ public interface ParticipanteInscritoRepository extends JpaRepository<Participan
 	List<ParticipanteInscritoDto> getAsistenciaParticipantesCursoGrupo(
 			@Param("parIdCursoGrupo")String parIdCursoGrupo
 			);
+
+	@Query(nativeQuery = true,
+			value = "call spu_sgeListarParticipantesYNotas(:parIdCursoGrupo,:parIdExamenApertura)")
+	List<ParticipanteInscritoDto> getAsistenciaParticipantesCursoGrupoyNotas(
+			@Param("parIdCursoGrupo")String parIdCursoGrupo,
+			@Param("parIdExamenApertura")String parIdExamenApertura
+	);
 	
 	@Query(nativeQuery = true, value = 
     		"select  "
