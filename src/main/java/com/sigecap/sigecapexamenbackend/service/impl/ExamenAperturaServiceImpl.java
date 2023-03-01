@@ -231,7 +231,7 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
     public ByteArrayInputStream exportReporteParticipantes(ConsultaAsistenciaParticipanteDTO consultaAsistenciaParticipanteDTO) {
         try {
 
-            List<ParticipanteInscritoDto> list = participanteInscritoRepository.getAsistenciaParticipantesCursoGrupo(consultaAsistenciaParticipanteDTO.getParIdCursoGrupo());
+            List<ParticipanteInscritoDto> list = participanteInscritoRepository.getAsistenciaParticipantesCursoGrupoyNotas(consultaAsistenciaParticipanteDTO.getParIdCursoGrupo(),consultaAsistenciaParticipanteDTO.getParIdExamenApertura());
 
             String[] headers = {"Participante","DNI" ,"Empresa","Unidad","Asistencia","Nota Maxima"};
 
