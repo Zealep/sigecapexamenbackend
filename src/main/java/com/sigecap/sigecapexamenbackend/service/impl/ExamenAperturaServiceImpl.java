@@ -207,14 +207,8 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
             throw new BusinessException(BusinessMsgError.ERROR_FECHA_FIN_EXAMEN);
         }
 
-        ExamenSolicitudInscripcion ea = examenSolicitudInscripcionRepository.findById(examenParticipanteDTO.getIdSidExamen()).orElse(null);
-
-        Integer intentosRealizados = ea.getNumeroIntentoRealizado();
-        Integer intentosPermitidos = ea.getExamenApertura().getNumeroIntentos();
-        if(intentosRealizados != null){
-            if(intentosRealizados>=intentosPermitidos){
+        if(examenParticipanteDTO.getNroIntentosRealizados() >= examenParticipanteDTO.getNroIntentosPermitidos()){
                 throw new BusinessException(BusinessMsgError.ERROR_NUMEROS_INTENTOS_);
-            }
         }
     }
 
@@ -233,6 +227,10 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
 
             List<ParticipanteInscritoDto> list = participanteInscritoRepository.getAsistenciaParticipantesCursoGrupoyNotas(consultaAsistenciaParticipanteDTO.getParIdCursoGrupo(),consultaAsistenciaParticipanteDTO.getParIdExamenApertura());
 
+            if(list.size()==0){
+                return null;
+            }
+
             String[] headers = {"Participante","DNI" ,"Empresa","Unidad","Asistencia","Nota Maxima"};
 
             Workbook workbook = new HSSFWorkbook();
@@ -244,16 +242,30 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
             Sheet sheet = workbook.createSheet("Reporte de participantes inscritos en el grupo");
             sheet.setDefaultColumnWidth(20);
 
+
+            //titutlo
+
             Row row = sheet.createRow(0);
 
+            Cell cell = row.createCell(0);
+            cell.setCellValue("Curso:  " + list.get(0).getNombreCurso());
+            cell.setCellStyle(headerStyle);
+
+            row = sheet.createRow(1);
+            cell = row.createCell(0);
+            cell.setCellValue("Grupo:  " + list.get(0).getNombreGrupo());
+            cell.setCellStyle(headerStyle);
+
+            row = sheet.createRow(3);
+
             for (int i = 0; i < headers.length; i++) {
-                Cell cell = row.createCell(i);
+                cell = row.createCell(i);
                 cell.setCellValue(headers[i]);
                 cell.setCellStyle(headerStyle);
 
             }
 
-            int initRow = 1;
+            int initRow = 4;
             for (ParticipanteInscritoDto p : list) {
                 row = sheet.createRow(initRow);
                 row.setHeightInPoints((2 * sheet.getDefaultRowHeightInPoints()));
