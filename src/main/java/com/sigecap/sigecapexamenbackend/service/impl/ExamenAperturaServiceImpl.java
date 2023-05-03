@@ -4,6 +4,7 @@ import com.sigecap.sigecapexamenbackend.exception.BusinessException;
 import com.sigecap.sigecapexamenbackend.model.dto.*;
 import com.sigecap.sigecapexamenbackend.model.entity.*;
 import com.sigecap.sigecapexamenbackend.repository.*;
+import com.sigecap.sigecapexamenbackend.repository.jdbc.ExamenParticipanteJdbcRepository;
 import com.sigecap.sigecapexamenbackend.service.EmailService;
 import com.sigecap.sigecapexamenbackend.service.ExamenAperturaService;
 import com.sigecap.sigecapexamenbackend.service.ExamenService;
@@ -13,6 +14,8 @@ import com.sigecap.sigecapexamenbackend.util.Constantes;
 import com.sigecap.sigecapexamenbackend.util.ExcelUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +37,9 @@ import java.util.Optional;
 @Service("examenAperturaService")
 public class ExamenAperturaServiceImpl implements ExamenAperturaService {
 
+    private static final Logger logger = LoggerFactory.getLogger(ExamenAperturaServiceImpl.class);
+
+
     @PersistenceContext
     EntityManager em;
 
@@ -54,6 +60,9 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
 
     @Autowired
     private AsistenciaSolicitudInscripcionRepository asistenciaSolicitudInscripcionRepository;
+
+    @Autowired
+    private ExamenParticipanteJdbcRepository examenParticipanteJdbcRepository;
 
     @Override
     public List<ExamenApertura> getAllActives() {
@@ -190,6 +199,7 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
     @Override
     public void validarInicioExamen(ExamenParticipanteDTO examenParticipanteDTO) {
 
+        ExamenSolicitudInscripcion esi = this.getExamenInscripcionById(examenParticipanteDTO.getIdSidExamen());
 
         if(examenParticipanteDTO.getIndicadorFirmo().equals("NO")){
             throw new BusinessException(BusinessMsgError.ERROR_NO_FIRMO);
@@ -207,7 +217,7 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
             throw new BusinessException(BusinessMsgError.ERROR_FECHA_FIN_EXAMEN);
         }
 
-        if(examenParticipanteDTO.getNroIntentosRealizados() >= examenParticipanteDTO.getNroIntentosPermitidos()){
+        if(esi.getNumeroIntentoRealizado() >= examenParticipanteDTO.getNroIntentosPermitidos()){
                 throw new BusinessException(BusinessMsgError.ERROR_NUMEROS_INTENTOS_);
         }
     }
@@ -285,7 +295,7 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
             workbook.close();
             return new ByteArrayInputStream(stream.toByteArray());
         }catch(Exception ex){
-            System.out.println(ex);
+            logger.error(ex.getMessage());
             return null;
 
         }

@@ -4,6 +4,8 @@ import com.sigecap.sigecapexamenbackend.model.dto.CursosDisponibleExamenAlumnoDT
 import com.sigecap.sigecapexamenbackend.model.dto.ExamenParticipanteDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.FirmaExamenDTO;
 import com.sigecap.sigecapexamenbackend.model.dto.IntentoExamenDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -16,6 +18,7 @@ import java.util.List;
 
 @Component
 public class ExamenParticipanteJdbcRepository {
+    private static final Logger logger = LoggerFactory.getLogger(ExamenParticipanteJdbcRepository.class);
 
 
     @Autowired
@@ -34,6 +37,7 @@ public class ExamenParticipanteJdbcRepository {
             return jdbcTemplate.query(sql, parameters, new getExamenParticipanteMapper());
 
         }catch (Exception e){
+            logger.error(e.getMessage());
             return null;
         }
 
@@ -81,6 +85,7 @@ public class ExamenParticipanteJdbcRepository {
             return jdbcTemplate.query(sql, parameters, new getIntentoExamenMapper());
 
         }catch (Exception e){
+            logger.error(e.getMessage());
             return null;
         }
 
@@ -120,6 +125,7 @@ public class ExamenParticipanteJdbcRepository {
             return jdbcTemplate.query(sql, parameters, new getFirmaExamenMapper());
 
         }catch (Exception e){
+            logger.error(e.getMessage());
             return null;
         }
 

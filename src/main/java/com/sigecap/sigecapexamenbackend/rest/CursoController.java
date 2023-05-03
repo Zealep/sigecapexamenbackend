@@ -3,6 +3,8 @@ package com.sigecap.sigecapexamenbackend.rest;
 import com.sigecap.sigecapexamenbackend.model.entity.Curso;
 import com.sigecap.sigecapexamenbackend.model.entity.TipoPregunta;
 import com.sigecap.sigecapexamenbackend.service.CursoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +19,8 @@ import java.util.List;
 @RestController
 public class CursoController {
 
+    private static final Logger logger = LoggerFactory.getLogger(CursoController.class);
+
     @Autowired
     private CursoService cursoService;
 
@@ -25,6 +29,7 @@ public class CursoController {
         try{
             return new ResponseEntity<>(cursoService.getAllActives(), HttpStatus.OK);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -34,6 +39,7 @@ public class CursoController {
         try{
             return new ResponseEntity<>(cursoService.getById(id), HttpStatus.OK);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

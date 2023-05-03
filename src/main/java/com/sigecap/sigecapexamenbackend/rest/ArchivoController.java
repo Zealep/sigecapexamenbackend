@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sigecap.sigecapexamenbackend.model.entity.Archivo;
 import com.sigecap.sigecapexamenbackend.service.ArchivoService;
 import com.sigecap.sigecapexamenbackend.util.RespuestaApi;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class ArchivoController {
 
+    private static final Logger logger = LoggerFactory.getLogger(ArchivoController.class);
+
     @Autowired
     private ArchivoService archivoService;
 
@@ -28,6 +32,7 @@ public class ArchivoController {
             Archivo i = archivoService.save(img,file);
             return new ResponseEntity<RespuestaApi>(new RespuestaApi("OK", i.getIdArchivo(),""), HttpStatus.CREATED);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -42,6 +47,7 @@ public class ArchivoController {
             return new ResponseEntity<byte[]>(archivoService.getImage(a,idCurso),HttpStatus.OK);
         }
         catch (Exception e){
+            logger.error(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -53,6 +59,7 @@ public class ArchivoController {
             return new ResponseEntity<byte[]>(archivoService.getFirma(idDocumento),HttpStatus.OK);
         }
         catch (Exception e){
+            logger.error(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

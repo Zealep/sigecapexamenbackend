@@ -5,6 +5,8 @@ import com.sigecap.sigecapexamenbackend.model.dto.BandejaRespuestasInDTO;
 import com.sigecap.sigecapexamenbackend.model.entity.Respuesta;
 import com.sigecap.sigecapexamenbackend.service.RespuestaService;
 import com.sigecap.sigecapexamenbackend.util.RespuestaApi;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +18,9 @@ import java.util.List;
 @RestController
 public class RespuestaController {
 
+    private static final Logger logger = LoggerFactory.getLogger(RespuestaController.class);
+
+
     @Autowired
     private RespuestaService respuestaService;
 
@@ -24,6 +29,7 @@ public class RespuestaController {
         try {
             return new ResponseEntity<>(respuestaService.getAll(), HttpStatus.OK);
         } catch (Exception ex) {
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -33,6 +39,7 @@ public class RespuestaController {
         try {
             return new ResponseEntity<>(respuestaService.getById(id), HttpStatus.OK);
         } catch (Exception ex) {
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -42,6 +49,7 @@ public class RespuestaController {
         try {
             return new ResponseEntity<>(respuestaService.getByPregunta(idPregunta), HttpStatus.OK);
         } catch (Exception ex) {
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -58,6 +66,7 @@ public class RespuestaController {
             respuestaService.delete(id);
             return new ResponseEntity<>(new RespuestaApi("OK", null, null), HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -73,6 +82,7 @@ public class RespuestaController {
             respuestaService.updateState(id,state);
             return new ResponseEntity<>(new RespuestaApi("OK",null,null), HttpStatus.NO_CONTENT);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

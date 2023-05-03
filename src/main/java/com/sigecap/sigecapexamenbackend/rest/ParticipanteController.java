@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sigecap.sigecapexamenbackend.model.dto.ConsultaAsistenciaParticipanteDTO;
 import com.sigecap.sigecapexamenbackend.repository.ParticipanteInscritoRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -30,7 +32,9 @@ import com.sigecap.sigecapexamenbackend.service.ParticipanteService;
 @RestController
 @RequestMapping("/participante")
 public class ParticipanteController {
-		
+
+	private static final Logger logger = LoggerFactory.getLogger(ParticipanteController.class);
+
 	@Autowired
 	ParticipanteService participanteService;
 
@@ -45,6 +49,7 @@ public class ParticipanteController {
 		try{
 			return new ResponseEntity<>(participanteInscritoService.getListParticipanteByIdCursoAndIdCursoGrupo(curso,grupo), HttpStatus.OK);
 		}catch (Exception ex){
+			logger.error(ex.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -67,7 +72,7 @@ public class ParticipanteController {
 
 
 		}catch (Exception ex) {
-			System.out.print(ex.getMessage());
+			logger.error(ex.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
@@ -83,7 +88,7 @@ public class ParticipanteController {
 
 
 		}catch (Exception ex) {
-			System.out.print(ex.getMessage());
+			logger.error(ex.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
@@ -99,7 +104,7 @@ public class ParticipanteController {
 
 
 		}catch (Exception ex) {
-			System.out.print(ex.getMessage());
+			logger.error(ex.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}

@@ -7,6 +7,8 @@ import com.sigecap.sigecapexamenbackend.model.entity.ExamenSolicitudInscripcion;
 import com.sigecap.sigecapexamenbackend.service.ExamenAperturaService;
 import com.sigecap.sigecapexamenbackend.service.ExamenService;
 import com.sigecap.sigecapexamenbackend.util.RespuestaApi;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.InputStreamSource;
@@ -23,6 +25,9 @@ import java.util.List;
 @RestController
 public class ExamenAperturaController {
 
+    private static final Logger logger = LoggerFactory.getLogger(ExamenAperturaController.class);
+
+
     @Autowired
     private ExamenAperturaService examenAperturaService;
 
@@ -31,6 +36,7 @@ public class ExamenAperturaController {
         try {
             return new ResponseEntity<>(examenAperturaService.getAll(), HttpStatus.OK);
         } catch (Exception ex) {
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -40,6 +46,7 @@ public class ExamenAperturaController {
         try {
             return new ResponseEntity<>(examenAperturaService.getById(id), HttpStatus.OK);
         } catch (Exception ex) {
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -59,6 +66,7 @@ public class ExamenAperturaController {
             examenAperturaService.delete(id);
             return new ResponseEntity<>(new RespuestaApi("OK", null, null), HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -74,6 +82,7 @@ public class ExamenAperturaController {
             examenAperturaService.updateState(id, state);
             return new ResponseEntity<>(new RespuestaApi("OK", null, null), HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -84,6 +93,7 @@ public class ExamenAperturaController {
             examenAperturaService.cerrarExamen(id, new Date());
             return new ResponseEntity<>(new RespuestaApi("OK", null, null), HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -95,6 +105,7 @@ public class ExamenAperturaController {
             examenAperturaService.notificarParticipantes(idApertura, curso, grupo);
             return new ResponseEntity<>(new RespuestaApi("OK", null, null), HttpStatus.OK);
         } catch (Exception ex) {
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -111,6 +122,7 @@ public class ExamenAperturaController {
         try {
             return new ResponseEntity<ExamenSolicitudInscripcion>(examenAperturaService.getExamenInscripcionById(id),HttpStatus.OK);
         } catch (Exception ex) {
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -136,6 +148,7 @@ public class ExamenAperturaController {
             headers.add(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=reporte-participantes-grupo.xls");
             return ResponseEntity.ok().headers(headers).body(new InputStreamResource(stream));
         } catch (Exception e) {
+            logger.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }

@@ -3,10 +3,13 @@ package com.sigecap.sigecapexamenbackend.service.impl;
 import com.sigecap.sigecapexamenbackend.model.entity.Archivo;
 import com.sigecap.sigecapexamenbackend.repository.ArchivoRepository;
 import com.sigecap.sigecapexamenbackend.repository.AsistenciaSolicitudInscripcionRepository;
+import com.sigecap.sigecapexamenbackend.repository.jdbc.ExamenParticipanteJdbcRepository;
 import com.sigecap.sigecapexamenbackend.service.ArchivoService;
 import com.sigecap.sigecapexamenbackend.util.Constantes;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,9 @@ import java.util.Date;
 
 @Service("archivoService")
 public class ArchivoServiceImpl implements ArchivoService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ArchivoServiceImpl.class);
+
 
     @Autowired
     private ArchivoRepository archivoRepository;
@@ -63,6 +69,7 @@ public class ArchivoServiceImpl implements ArchivoService {
             asistenciaSolicitudInscripcionRepository.updateFirmaAsistencia(Long.parseLong(a.getIdDocumento()),Constantes.SI_FIRMO_EXAMEN,new Date());
 
         } catch (IOException e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
 
@@ -76,6 +83,7 @@ public class ArchivoServiceImpl implements ArchivoService {
             String path = URL_PATH_BASE + url;
             return FileUtils.readFileToByteArray(new File(FilenameUtils.separatorsToSystem(path)));
         }catch (IOException i){
+            logger.error(i.getMessage());
             return null;
         }
     }
@@ -94,6 +102,7 @@ public class ArchivoServiceImpl implements ArchivoService {
             }
 
         }catch (IOException i){
+            logger.error(i.getMessage());
             return null;
         }
     }

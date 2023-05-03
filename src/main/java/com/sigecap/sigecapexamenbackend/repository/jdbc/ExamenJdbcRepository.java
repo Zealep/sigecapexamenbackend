@@ -1,6 +1,9 @@
 package com.sigecap.sigecapexamenbackend.repository.jdbc;
 
 import com.sigecap.sigecapexamenbackend.model.dto.*;
+import com.sigecap.sigecapexamenbackend.rest.TipoPreguntaController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -13,6 +16,9 @@ import java.util.List;
 
 @Component
 public class ExamenJdbcRepository {
+
+    private static final Logger logger = LoggerFactory.getLogger(ExamenJdbcRepository.class);
+
 
     @Autowired
     NamedParameterJdbcTemplate jdbcTemplate;
@@ -29,6 +35,7 @@ public class ExamenJdbcRepository {
             return jdbcTemplate.query(sql, parameters,new getBandejaPorAlumnoMapper());
 
         }catch (Exception e){
+            logger.error(e.getMessage());
             return null;
         }
 
@@ -68,6 +75,7 @@ public class ExamenJdbcRepository {
             return jdbcTemplate.query(sql, parameters,new getPreguntasPorExamenMapper());
 
         }catch (Exception e){
+            logger.error(e.getMessage());
             return null;
         }
 

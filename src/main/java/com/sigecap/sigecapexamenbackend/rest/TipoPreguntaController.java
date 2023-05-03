@@ -3,6 +3,8 @@ package com.sigecap.sigecapexamenbackend.rest;
 import com.sigecap.sigecapexamenbackend.model.dto.ItemMenuDTO;
 import com.sigecap.sigecapexamenbackend.model.entity.TipoPregunta;
 import com.sigecap.sigecapexamenbackend.service.TipoPreguntaService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +20,9 @@ import java.util.List;
 @RequestMapping
 public class TipoPreguntaController {
 
+    private static final Logger logger = LoggerFactory.getLogger(TipoPreguntaController.class);
+
+
     @Autowired
     private TipoPreguntaService tipoPreguntaService;
 
@@ -26,6 +31,7 @@ public class TipoPreguntaController {
         try{
             return new ResponseEntity<>(tipoPreguntaService.getAllActives(), HttpStatus.OK);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

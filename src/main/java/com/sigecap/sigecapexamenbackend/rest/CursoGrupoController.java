@@ -4,6 +4,8 @@ import com.sigecap.sigecapexamenbackend.model.entity.Curso;
 import com.sigecap.sigecapexamenbackend.model.entity.CursoGrupo;
 import com.sigecap.sigecapexamenbackend.service.CursoGrupoService;
 import com.sigecap.sigecapexamenbackend.service.CursoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +19,8 @@ import java.util.List;
 @RestController
 public class CursoGrupoController {
 
+    private static final Logger logger = LoggerFactory.getLogger(CursoGrupoController.class);
+
     @Autowired
     private CursoGrupoService cursoGrupoService;
 
@@ -25,6 +29,7 @@ public class CursoGrupoController {
         try{
             return new ResponseEntity<>(cursoGrupoService.getAllActives(), HttpStatus.OK);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -34,6 +39,7 @@ public class CursoGrupoController {
         try{
             return new ResponseEntity<>(cursoGrupoService.getById(id), HttpStatus.OK);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -43,6 +49,7 @@ public class CursoGrupoController {
         try{
             return new ResponseEntity<>(cursoGrupoService.getByIdCurso(curso), HttpStatus.OK);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

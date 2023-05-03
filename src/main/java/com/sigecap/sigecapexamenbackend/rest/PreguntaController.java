@@ -9,6 +9,8 @@ import com.sigecap.sigecapexamenbackend.model.entity.Respuesta;
 import com.sigecap.sigecapexamenbackend.model.entity.TipoPregunta;
 import com.sigecap.sigecapexamenbackend.service.PreguntaService;
 import com.sigecap.sigecapexamenbackend.util.RespuestaApi;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +22,9 @@ import java.util.List;
 @RestController
 public class PreguntaController {
 
+    private static final Logger logger = LoggerFactory.getLogger(PreguntaController.class);
+
+
     @Autowired
     private PreguntaService preguntaService;
 
@@ -28,6 +33,7 @@ public class PreguntaController {
         try{
             return new ResponseEntity<>(preguntaService.getAll(), HttpStatus.OK);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -37,6 +43,8 @@ public class PreguntaController {
         try{
             return new ResponseEntity<>(preguntaService.getById(id), HttpStatus.OK);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
+
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -51,6 +59,7 @@ public class PreguntaController {
         try{
             return new ResponseEntity<>(preguntaService.getByCurso(idCurso), HttpStatus.OK);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -60,6 +69,7 @@ public class PreguntaController {
         try{
             return new ResponseEntity<>(preguntaService.getByTipoPregunta(idTipoPregunta), HttpStatus.OK);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -69,6 +79,7 @@ public class PreguntaController {
         try{
             return new ResponseEntity<>(preguntaService.getByCursoAndTipoPregunta(idCurso,idTipoPregunta), HttpStatus.OK);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -78,6 +89,7 @@ public class PreguntaController {
         try{
             return new ResponseEntity<>(preguntaService.save(pregunta), HttpStatus.CREATED);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -88,6 +100,7 @@ public class PreguntaController {
             preguntaService.delete(id);
             return new ResponseEntity<>(new RespuestaApi("OK",null,null), HttpStatus.NO_CONTENT);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -98,6 +111,7 @@ public class PreguntaController {
             preguntaService.updateState(id,state);
             return new ResponseEntity<>(new RespuestaApi("OK",null,null), HttpStatus.NO_CONTENT);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -106,6 +120,7 @@ public class PreguntaController {
         try{
             return new ResponseEntity<List<ExamenPreguntaDTO>>(preguntaService.getPreguntasyRespuestasPorExamen(examen), HttpStatus.OK);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -115,6 +130,7 @@ public class PreguntaController {
         try{
             return new ResponseEntity<List<EncuestaPreguntaDTO>>(preguntaService.getPreguntasyRespuestasPorEncuesta(), HttpStatus.OK);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

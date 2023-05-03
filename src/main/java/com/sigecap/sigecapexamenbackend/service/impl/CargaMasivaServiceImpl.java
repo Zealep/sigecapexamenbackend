@@ -17,6 +17,8 @@ import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.BOMInputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,9 @@ import java.nio.file.Paths;
 
 @Service("cargaMasivaService")
 public class CargaMasivaServiceImpl implements CargaMasivaService {
+
+    private static final Logger logger = LoggerFactory.getLogger(CargaMasivaServiceImpl.class);
+
 
     @Autowired
     private PreguntaService preguntaService;
@@ -120,6 +125,7 @@ public class CargaMasivaServiceImpl implements CargaMasivaService {
                 }
             }
         } catch (Exception e) {
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
 

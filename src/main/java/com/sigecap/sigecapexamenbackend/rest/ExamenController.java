@@ -11,6 +11,8 @@ import com.sigecap.sigecapexamenbackend.service.EncuestaInscripcionRespuestaServ
 import com.sigecap.sigecapexamenbackend.service.ExamenService;
 import com.sigecap.sigecapexamenbackend.service.PreguntaService;
 import com.sigecap.sigecapexamenbackend.util.RespuestaApi;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +23,8 @@ import java.util.List;
 
 @RestController
 public class ExamenController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ExamenController.class);
 
     @Autowired
     private ExamenService examenService;
@@ -39,6 +43,7 @@ public class ExamenController {
         try{
             return new ResponseEntity<>(examenService.getAll(), HttpStatus.OK);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -49,6 +54,7 @@ public class ExamenController {
         try{
             return new ResponseEntity<>(examenService.getByCurso(curso), HttpStatus.OK);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -58,6 +64,7 @@ public class ExamenController {
         try{
             return new ResponseEntity<>(examenService.getById(id), HttpStatus.OK);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -67,6 +74,7 @@ public class ExamenController {
         try{
             return new ResponseEntity<>(examenService.save(examen), HttpStatus.CREATED);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -77,6 +85,7 @@ public class ExamenController {
             examenService.delete(id);
             return new ResponseEntity<>(new RespuestaApi("OK",null,null), HttpStatus.NO_CONTENT);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -92,6 +101,7 @@ public class ExamenController {
             examenService.updateState(id,state);
             return new ResponseEntity<>(new RespuestaApi("OK",null,null), HttpStatus.NO_CONTENT);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -101,6 +111,7 @@ public class ExamenController {
             List<CursosDisponibleExamenAlumnoDTO> examenes = examenService.listBandejaExamenesCursoPorAlumno(usuario);
             return new ResponseEntity<>(examenes, HttpStatus.OK);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -117,6 +128,7 @@ public class ExamenController {
             List<ExamenParticipanteDTO> examenes = examenService.getExamenesParticipante(idCursoGrupo,idSolicitudInscripcionDetalle);
             return new ResponseEntity<>(examenes, HttpStatus.OK);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -131,6 +143,7 @@ public class ExamenController {
             }
             return new ResponseEntity<>(firma, HttpStatus.OK);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

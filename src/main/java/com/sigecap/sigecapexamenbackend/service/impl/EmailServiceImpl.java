@@ -6,6 +6,8 @@ import java.io.File;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -19,6 +21,9 @@ import com.sigecap.sigecapexamenbackend.service.EmailService;
 
 @Component
 public class EmailServiceImpl implements EmailService{
+
+    private static final Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
+
 
     @Autowired
     private JavaMailSender emailSender;
@@ -48,6 +53,7 @@ public class EmailServiceImpl implements EmailService{
             helper.setText(body,true);
             emailSender.send(message);
         } catch (Exception ex) {
+            logger.error(ex.getMessage());
             System.out.println(ex.getMessage());
         }
 
@@ -72,6 +78,7 @@ public class EmailServiceImpl implements EmailService{
 
             emailSender.send(message);
         } catch (Exception ex) {
+            logger.error(ex.getMessage());
             System.out.println(ex.getMessage());
         }
 

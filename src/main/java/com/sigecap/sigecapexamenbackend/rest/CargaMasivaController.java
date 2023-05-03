@@ -5,6 +5,8 @@ import com.sigecap.sigecapexamenbackend.model.entity.Archivo;
 import com.sigecap.sigecapexamenbackend.service.ArchivoService;
 import com.sigecap.sigecapexamenbackend.service.CargaMasivaService;
 import com.sigecap.sigecapexamenbackend.util.RespuestaApi;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class CargaMasivaController {
 
+    private static final Logger logger = LoggerFactory.getLogger(CargaMasivaController.class);
+
     @Autowired
     private CargaMasivaService cargaMasivaService;
 
@@ -26,6 +30,7 @@ public class CargaMasivaController {
           cargaMasivaService.cargarPreguntasYRespuestas((file));
             return new ResponseEntity<RespuestaApi>(new RespuestaApi("OK","",""), HttpStatus.CREATED);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 

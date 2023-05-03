@@ -2,6 +2,8 @@ package com.sigecap.sigecapexamenbackend.rest;
 
 import com.sigecap.sigecapexamenbackend.model.dto.ItemMenuDTO;
 import com.sigecap.sigecapexamenbackend.service.MenuService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,9 @@ import java.util.List;
 public class MenuController {
     private final MenuService menuService;
 
+    private static final Logger logger = LoggerFactory.getLogger(MenuController.class);
+
+
     public MenuController(MenuService menuService) {
         this.menuService = menuService;
     }
@@ -24,6 +29,7 @@ public class MenuController {
         try{
             return new ResponseEntity<>(menuService.getMenu(usuario), HttpStatus.OK);
         }catch (Exception ex){
+            logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

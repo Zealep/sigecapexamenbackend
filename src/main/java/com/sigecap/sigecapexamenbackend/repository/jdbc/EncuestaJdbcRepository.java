@@ -1,6 +1,9 @@
 package com.sigecap.sigecapexamenbackend.repository.jdbc;
 
 import com.sigecap.sigecapexamenbackend.model.dto.PreguntasPorEncuestaDTO;
+import com.sigecap.sigecapexamenbackend.rest.TipoPreguntaController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -14,6 +17,9 @@ import java.util.List;
 @Component
 public class EncuestaJdbcRepository {
 
+    private static final Logger logger = LoggerFactory.getLogger(EncuestaJdbcRepository.class);
+
+
     @Autowired
     NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -23,6 +29,7 @@ public class EncuestaJdbcRepository {
             String sql = "call spu_ListarPreguntasEncuesta();";
             return jdbcTemplate.query(sql, new getPreguntasPorEncuestaMapper());
         } catch (Exception e) {
+            logger.error(e.getMessage());
             return null;
         }
 
