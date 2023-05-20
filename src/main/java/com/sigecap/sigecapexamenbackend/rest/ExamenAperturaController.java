@@ -31,6 +31,7 @@ public class ExamenAperturaController {
     @Autowired
     private ExamenAperturaService examenAperturaService;
 
+
     @GetMapping(value = "/examen-apertura", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ExamenApertura>> getAll() {
         try {
@@ -151,6 +152,12 @@ public class ExamenAperturaController {
             logger.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
+    }
+
+    @PostMapping(value = "/examen-apertura/nuevosInscritos")
+    public ResponseEntity<RespuestaApi> nuevosInscritos(@RequestBody ConsultaAsistenciaParticipanteDTO parms){
+            examenAperturaService.nuevosInscritos(parms);
+            return new ResponseEntity<>(new RespuestaApi("OK",null,null),HttpStatus.OK);
     }
 
 

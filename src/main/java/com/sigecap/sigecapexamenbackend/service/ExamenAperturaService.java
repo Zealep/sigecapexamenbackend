@@ -34,4 +34,6 @@ public interface ExamenAperturaService {
     void validarEncuesta(CursosDisponibleExamenAlumnoDTO cursosDisponibleExamenAlumnoDTO);
 
     public ByteArrayInputStream exportReporteParticipantes(ConsultaAsistenciaParticipanteDTO consultaAsistenciaParticipanteDTO);
+
+    void nuevosInscritos(ConsultaAsistenciaParticipanteDTO consultaAsistenciaParticipanteDTO);
 }

@@ -4,6 +4,7 @@ import com.sigecap.sigecapexamenbackend.exception.BusinessException;
 import com.sigecap.sigecapexamenbackend.model.dto.*;
 import com.sigecap.sigecapexamenbackend.model.entity.*;
 import com.sigecap.sigecapexamenbackend.repository.*;
+import com.sigecap.sigecapexamenbackend.repository.jdbc.ExamenAperturaJdbcRepository;
 import com.sigecap.sigecapexamenbackend.repository.jdbc.ExamenParticipanteJdbcRepository;
 import com.sigecap.sigecapexamenbackend.service.EmailService;
 import com.sigecap.sigecapexamenbackend.service.ExamenAperturaService;
@@ -63,6 +64,9 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
 
     @Autowired
     private ExamenParticipanteJdbcRepository examenParticipanteJdbcRepository;
+
+    @Autowired
+    private ExamenAperturaJdbcRepository examenAperturaJdbcRepository;
 
     @Override
     public List<ExamenApertura> getAllActives() {
@@ -299,6 +303,26 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
             return null;
 
         }
+    }
+
+    @Override
+    public void nuevosInscritos(ConsultaAsistenciaParticipanteDTO consultaAsistenciaParticipanteDTO) {
+        List<String> nuevosInscritos = examenAperturaJdbcRepository.getNuevosInscritos(consultaAsistenciaParticipanteDTO.getParIdCursoGrupo(),consultaAsistenciaParticipanteDTO.getParIdExamenApertura());
+            if(nuevosInscritos == null || nuevosInscritos.isEmpty()){
+                throw new BusinessException(BusinessMsgError.ERROR_NUEVOS_INSCRITOS);
+            }
+            nuevosInscritos.stream().forEach(x->{
+                ExamenSolicitudInscripcion ex = new ExamenSolicitudInscripcion();
+                ExamenApertura e = new ExamenApertura();
+                e.setIdExamenApertura(consultaAsistenciaParticipanteDTO.getParIdExamenApertura());
+                ex.setExamenApertura(e);
+                ex.setIndicadorAsistio("N");
+                ex.setIdSolicitudInscripcionDetalle(x);
+                ex.setIndicadorRealizoExamen("N");
+                ex.setNumeroIntentoRealizado(0);
+                ex.setEstado(Constantes.POR_INICIAR);
+                examenSolicitudInscripcionRepository.save(ex);
+            });
     }
 
     private void guardarRelacionPorcadaAlumno(ExamenApertura examenApertura) {
