@@ -45,12 +45,18 @@ public class ArchivoServiceImpl implements ArchivoService {
     @Override
     @Transactional
     public Archivo save(Archivo a, MultipartFile file) {
-        if(a.getIdArchivo()==null) {
+
+        Archivo ar = archivoRepository.getByIdDocumentoAndNombre(Constantes.ESTADO_ACTIVO,a.getIdDocumento(),a.getNombre());
+
+        if(ar==null) {
             String pk = archivoRepository.generatePrimaryKey(Constantes.TABLA_ARCHIVO, Constantes.ID_TABLA_ARCHIVO);
             a.setIdArchivo(pk);
         }
-        a.setEstado(Constantes.ESTADO_ACTIVO);
+        else{
+            a.setIdArchivo(ar.getIdArchivo());
+        }
 
+        a.setEstado(Constantes.ESTADO_ACTIVO);
 
         try {
             String url = "/FIRMAS/"+a.getIdDocumento();

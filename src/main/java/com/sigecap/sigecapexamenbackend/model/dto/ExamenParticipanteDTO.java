@@ -6,6 +6,7 @@ import java.util.List;
 public class ExamenParticipanteDTO {
 
     private Long idSidExamen;
+    private String idSolicitudInscripcionDetalle;
     private String idCursoGrupo;
     private String nombreGrupo;
     private String idCurso;
@@ -29,6 +30,14 @@ public class ExamenParticipanteDTO {
 
     public String getIdExamenApertura() {
         return idExamenApertura;
+    }
+
+    public String getIdSolicitudInscripcionDetalle() {
+        return idSolicitudInscripcionDetalle;
+    }
+
+    public void setIdSolicitudInscripcionDetalle(String idSolicitudInscripcionDetalle) {
+        this.idSolicitudInscripcionDetalle = idSolicitudInscripcionDetalle;
     }
 
     public void setIdExamenApertura(String idExamenApertura) {

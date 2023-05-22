@@ -14,4 +14,9 @@ public interface ArchivoRepository extends CrudRepository<Archivo,String> {
 
     @Query("select c from Archivo c where c.estado=?1 and c.idDocumento=?2")
     Archivo getByIdDocumento(String estado, String idDocumento);
+
+    @Query("select c from Archivo c where c.estado=?1 and c.idDocumento=?2 and c.nombre =?3 ")
+    Archivo getByIdDocumentoAndNombre(String estado, String idDocumento,String nombre);
+
+
 }
