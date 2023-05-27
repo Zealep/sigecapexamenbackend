@@ -206,24 +206,23 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
         ExamenSolicitudInscripcion esi = this.getExamenInscripcionById(examenParticipanteDTO.getIdSidExamen());
         List<FirmaExamenDTO> firma = examenParticipanteJdbcRepository.getFirmaExamen(examenParticipanteDTO.getIdSolicitudInscripcionDetalle());
 
-
-        if(firma.get(0).getRealizoFirma().equals("NO")){
+        if(firma.get(0).getRealizoFirma().equals("N")){
             throw new BusinessException(BusinessMsgError.ERROR_NO_FIRMO);
         }
 
-        if(examenParticipanteDTO.getIndicadorAsistio() == null || examenParticipanteDTO.getIndicadorAsistio().equals("") || examenParticipanteDTO.getIndicadorAsistio().equals("NO")){
+        if(esi.getIndicadorAsistio() == null || esi.getIndicadorAsistio().equals("") || esi.getIndicadorAsistio().equals("NO")){
             throw new BusinessException(BusinessMsgError.ERROR_NO_REALIZO_ASISTENCIA);
         }
 
-        if(new Date().toInstant().isBefore(examenParticipanteDTO.getFechaHoraApertura().toInstant())){
+        if(new Date().toInstant().isBefore(esi.getExamenApertura().getFechaHoraApertura().toInstant())){
             throw new BusinessException(BusinessMsgError.ERROR_FECHA_INICIO_EXAMEN);
         }
 
-        if(new Date().toInstant().isAfter(examenParticipanteDTO.getFechaHoraCierre().toInstant())){
+        if(new Date().toInstant().isAfter(esi.getExamenApertura().getFechaHoraCierre().toInstant())){
             throw new BusinessException(BusinessMsgError.ERROR_FECHA_FIN_EXAMEN);
         }
 
-        if(esi.getNumeroIntentoRealizado() >= examenParticipanteDTO.getNroIntentosPermitidos()){
+        if(esi.getNumeroIntentoRealizado() >= esi.getExamenApertura().getNumeroIntentos()){
                 throw new BusinessException(BusinessMsgError.ERROR_NUMEROS_INTENTOS_);
         }
     }
