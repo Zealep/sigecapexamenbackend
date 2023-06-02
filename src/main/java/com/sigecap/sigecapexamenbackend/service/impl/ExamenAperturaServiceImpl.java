@@ -206,6 +206,10 @@ public class ExamenAperturaServiceImpl implements ExamenAperturaService {
         ExamenSolicitudInscripcion esi = this.getExamenInscripcionById(examenParticipanteDTO.getIdSidExamen());
         List<FirmaExamenDTO> firma = examenParticipanteJdbcRepository.getFirmaExamen(examenParticipanteDTO.getIdSolicitudInscripcionDetalle());
 
+        if(firma.size() == 0 || firma== null){
+            throw new BusinessException(BusinessMsgError.ERROR_NO_FIRMO);
+        }
+
         if(firma.get(0).getRealizoFirma().equals("N")){
             throw new BusinessException(BusinessMsgError.ERROR_NO_FIRMO);
         }
