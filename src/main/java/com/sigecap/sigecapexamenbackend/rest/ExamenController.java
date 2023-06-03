@@ -148,4 +148,11 @@ public class ExamenController {
         }
     }
 
+
+    @GetMapping(value = "/examen/validarEditar/{idExamen}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RespuestaApi> validarEditarExamen(@PathVariable(name = "idExamen") String idExamen){
+            examenService.validarModificarExamen(idExamen);
+            return new ResponseEntity<>(new RespuestaApi("OK",null,null), HttpStatus.OK);
+    }
+
 }

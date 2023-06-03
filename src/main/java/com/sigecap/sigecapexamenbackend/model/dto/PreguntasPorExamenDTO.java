@@ -10,6 +10,8 @@ public class PreguntasPorExamenDTO {
     private String idRespuesta;
     private String enunciadoRespuesta;
     private String retroAlimentacionRespuesta;
+    private String inRespuestaCorrecta;
+
 
     public String getIdTipoPregunta() {
         return idTipoPregunta;
@@ -73,5 +75,13 @@ public class PreguntasPorExamenDTO {
 
     public void setRetroAlimentacionRespuesta(String retroAlimentacionRespuesta) {
         this.retroAlimentacionRespuesta = retroAlimentacionRespuesta;
+    }
+
+    public String getInRespuestaCorrecta() {
+        return inRespuestaCorrecta;
+    }
+
+    public void setInRespuestaCorrecta(String inRespuestaCorrecta) {
+        this.inRespuestaCorrecta = inRespuestaCorrecta;
     }
 }

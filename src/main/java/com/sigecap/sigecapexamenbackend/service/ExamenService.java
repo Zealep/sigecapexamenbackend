@@ -28,4 +28,6 @@ public interface ExamenService {
 
     List<IntentoExamenDTO> getIntentoExamen(Long idSidExamen);
 
+    void validarModificarExamen(String idExamen);
+
 }

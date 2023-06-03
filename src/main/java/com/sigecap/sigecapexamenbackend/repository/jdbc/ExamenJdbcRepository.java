@@ -95,6 +95,7 @@ public class ExamenJdbcRepository {
             t.setIdRespuesta(rs.getString("id_respuesta"));
             t.setEnunciadoRespuesta(rs.getString("enunciado_respuesta"));
             t.setRetroAlimentacionRespuesta(rs.getString("retroalimentacion_respuesta"));
+            t.setInRespuestaCorrecta(rs.getString("in_respuesta_correcta"));
             return t;
 
         }

@@ -28,6 +28,12 @@ public interface Constantes {
     public static final String TABLA_ARCHIVO= "sgc_tz_archivo";
     public static final String ID_TABLA_ARCHIVO= "id_archivo";
 
+    public static final String TABLA_SOLICITUD_INSCRIPCION_DETALLE= "sgc_tz_solicitud_inscripcion_detalle";
+    public static final String ID_TABLA_SOLICITUD_INSCRIPCION_DETALLE= "id_solicitud_inscripcion_detalle";
+
+    public static final String TABLA_ENTIDAD= "sgc_tz_entidad";
+    public static final String ID_TABLA_ENTIDAD= "id_entidad";
+
     public static final String CODIGO_EMPRESA = "01";
 
     // TIPOS DE PREGUNTAS

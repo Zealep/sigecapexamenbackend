@@ -1,5 +1,6 @@
 package com.sigecap.sigecapexamenbackend.service.impl;
 
+import com.sigecap.sigecapexamenbackend.exception.BusinessException;
 import com.sigecap.sigecapexamenbackend.model.dto.*;
 import com.sigecap.sigecapexamenbackend.model.entity.Examen;
 import com.sigecap.sigecapexamenbackend.model.entity.Respuesta;
@@ -7,6 +8,7 @@ import com.sigecap.sigecapexamenbackend.repository.ExamenRepository;
 import com.sigecap.sigecapexamenbackend.repository.jdbc.ExamenJdbcRepository;
 import com.sigecap.sigecapexamenbackend.repository.jdbc.ExamenParticipanteJdbcRepository;
 import com.sigecap.sigecapexamenbackend.service.ExamenService;
+import com.sigecap.sigecapexamenbackend.util.BusinessMsgError;
 import com.sigecap.sigecapexamenbackend.util.Constantes;
 import com.sigecap.sigecapexamenbackend.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,11 +143,17 @@ public class ExamenServiceImpl implements ExamenService {
     else{
         return null;
     }
-
     }
-
     @Override
     public List<IntentoExamenDTO> getIntentoExamen(Long idSidExamen) {
         return null;
+    }
+
+    @Override
+    public void validarModificarExamen(String idExamen) {
+       Integer exist = examenRepository.validateEditarExamen(idExamen);
+       if(exist > 0){
+            throw new BusinessException(BusinessMsgError.ERROR_MODIFICAR_EXAMEN);
+       }
     }
 }
