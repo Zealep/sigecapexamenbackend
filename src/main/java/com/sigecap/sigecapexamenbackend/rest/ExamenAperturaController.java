@@ -193,8 +193,6 @@ public class ExamenAperturaController {
 
             String tipoReporte = "1";
 
-            idSidEaIntento =7529L;
-
             ExamenSolicInsIntento objSidEai = new ExamenSolicInsIntento();
             objSidEai = examenSolicInscripcionIntentoRepository.findById(idSidEaIntento).orElse(null);
             List<ExamenSolicInsIntentoRespuesta> listSidEaiR = new ArrayList<>();
