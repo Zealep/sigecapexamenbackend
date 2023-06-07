@@ -102,6 +102,7 @@ public class ExamenParticipanteJdbcRepository {
             t.setFechaInicio(rs.getTimestamp("fecha_inicio"));
             t.setFechaTermino(rs.getTimestamp("fecha_termino"));
             t.setNota(rs.getDouble("nota"));
+            t.setNumeroIntento(rs.getInt("numero_intento"));
             t.setCodigoEstado(rs.getString("codigo_estado"));
             t.setNombreEstado(rs.getString("nombre_estado"));
             t.setComentarioTexto(rs.getString("comentarioTexto"));

@@ -155,4 +155,21 @@ public class ExamenController {
             return new ResponseEntity<>(new RespuestaApi("OK",null,null), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/examen/indicadorDj/{idSolicitudInscripcionDetalle}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RespuestaApi> actualizarIndicadorDJ(@PathVariable(name = "idSolicitudInscripcionDetalle") String idSolicitudInscripcionDetalle){
+        examenService.actualizarIndicadorDj(idSolicitudInscripcionDetalle);
+        return new ResponseEntity<>(new RespuestaApi("OK",null,null), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/examen/intento/{idSidExamen}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<IntentoExamenDTO>> getIntentosExamen(@PathVariable(name = "idSidExamen") Long idSidExamen){
+        try{
+            List<IntentoExamenDTO> intentosExamen = examenService.getIntentoExamen(idSidExamen);
+            return new ResponseEntity<>(intentosExamen, HttpStatus.OK);
+        }catch (Exception ex){
+            logger.error(ex.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

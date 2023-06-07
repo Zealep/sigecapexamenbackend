@@ -271,6 +271,7 @@ public class ExamenAperturaController {
             }
 
 
+
             HashMap<String, Object> parametros = new HashMap<String, Object>();
             parametros.put("parNombreCurso", objSid.getSolicitudInscripcion().getCursoGrupo().getCurso().getNombreCurso());
             parametros.put("parRutaLogo", CargarRecurso.cargarImagen("logo.jpg"));

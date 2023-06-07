@@ -30,4 +30,8 @@ public interface ExamenService {
 
     void validarModificarExamen(String idExamen);
 
+    void actualizarIndicadorDj(String idSolicitudInscripcionDetalle);
+
+
+
 }

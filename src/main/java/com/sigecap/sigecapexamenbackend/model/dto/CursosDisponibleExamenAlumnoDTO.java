@@ -14,6 +14,24 @@ public class CursosDisponibleExamenAlumnoDTO {
     private String indicadorRealizoEncuesta;
     private String idArchivo;
     private String nombreArchivo;
+    private String indicadorRealizoDj;
+    private String indicadorRealizarDj;
+
+    public String getIndicadorRealizoDj() {
+        return indicadorRealizoDj;
+    }
+
+    public void setIndicadorRealizoDj(String indicadorRealizoDj) {
+        this.indicadorRealizoDj = indicadorRealizoDj;
+    }
+
+    public String getIndicadorRealizarDj() {
+        return indicadorRealizarDj;
+    }
+
+    public void setIndicadorRealizarDj(String indicadorRealizarDj) {
+        this.indicadorRealizarDj = indicadorRealizarDj;
+    }
 
     public String getIdCursoGrupo() {
         return idCursoGrupo;

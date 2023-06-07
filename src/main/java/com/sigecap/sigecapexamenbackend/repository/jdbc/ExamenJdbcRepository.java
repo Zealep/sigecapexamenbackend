@@ -60,6 +60,9 @@ public class ExamenJdbcRepository {
             t.setIndicadorRealizoEncuesta(rs.getString("indicador_realizo_encuesta"));
             t.setIdArchivo(rs.getString("id_archivo"));
             t.setNombreArchivo(rs.getString("nombre_archivo"));
+            t.setIndicadorRealizoDj(rs.getString("indicador_dj_nexacerrolindo"));
+            t.setIndicadorRealizarDj(rs.getString("indicador_realizar_dj_nexacerrolindo"));
+
             return t;
 
         }

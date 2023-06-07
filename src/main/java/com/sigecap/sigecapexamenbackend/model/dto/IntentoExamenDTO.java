@@ -7,6 +7,7 @@ public class IntentoExamenDTO {
     private Date fechaInicio;
     private Date fechaTermino;
     private Double nota;
+    private Integer numeroIntento;
     private String codigoEstado;
     private String nombreEstado;
     private String comentarioTexto;
@@ -14,6 +15,14 @@ public class IntentoExamenDTO {
 
     public Long getIdSidIntento() {
         return idSidIntento;
+    }
+
+    public Integer getNumeroIntento() {
+        return numeroIntento;
+    }
+
+    public void setNumeroIntento(Integer numeroIntento) {
+        this.numeroIntento = numeroIntento;
     }
 
     public void setIdSidIntento(Long idSidIntento) {

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface ExamenRepository extends CrudRepository<Examen,String> {
@@ -25,6 +26,10 @@ public interface ExamenRepository extends CrudRepository<Examen,String> {
     @Query("update Examen c set c.estado=?2 where c.idExamen=?1")
     @Modifying
     void deleteLogicById(String id,String estado);
+
+    @Query(value = "update sgc_tz_solicitud_inscripcion_detalle set in_dj_ncl=?2,fecha_dj_ncl=?3 where id_solicitud_inscripcion_detalle=?1",nativeQuery = true)
+    @Modifying
+    void actualizarIndicadorDj(String idSolicitudDetalle,String indicador, Date fecha);
 
     @Query(value = "SELECT count(*) FROM sge_tz_examen_apertura ea " +
             "inner join sge_tz_sid_por_ea sid_ea on ea.id_examen_apertura = sid_ea.id_examen_apertura " +

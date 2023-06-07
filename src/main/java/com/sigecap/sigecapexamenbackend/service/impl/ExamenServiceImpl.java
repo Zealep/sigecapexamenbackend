@@ -22,6 +22,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -146,7 +147,7 @@ public class ExamenServiceImpl implements ExamenService {
     }
     @Override
     public List<IntentoExamenDTO> getIntentoExamen(Long idSidExamen) {
-        return null;
+        return examenParticipanteJdbcRepository.getIntentoExamen(idSidExamen);
     }
 
     @Override
@@ -155,5 +156,11 @@ public class ExamenServiceImpl implements ExamenService {
        if(exist > 0){
             throw new BusinessException(BusinessMsgError.ERROR_MODIFICAR_EXAMEN);
        }
+    }
+
+    @Override
+    @Transactional
+    public void actualizarIndicadorDj(String idSolicitudInscripcionDetalle) {
+        examenRepository.actualizarIndicadorDj(idSolicitudInscripcionDetalle,"S",new Date());
     }
 }

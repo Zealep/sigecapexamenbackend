@@ -83,6 +83,9 @@ public class ParticipanteInscritoDto{
 	@Column(name="nota")
 	private Double notaMaxima;
 
+	@Column(name="id_sid_examen")
+	private Long idSidExamen;
+
 	public String getIdSolicitudInscripcionDetalle() {
 		return idSolicitudInscripcionDetalle;
 	}
@@ -282,5 +285,13 @@ public class ParticipanteInscritoDto{
 
 	public void setIdSidIntento(String idSidIntento) {
 		this.idSidIntento = idSidIntento;
+	}
+
+	public Long getIdSidExamen() {
+		return idSidExamen;
+	}
+
+	public void setIdSidExamen(Long idSidExamen) {
+		this.idSidExamen = idSidExamen;
 	}
 }
