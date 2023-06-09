@@ -89,4 +89,45 @@ public class ExamenRevisionServiceImpl implements ExamenRevisionService {
 
 
     }
+
+    @Override
+    public void recalcularNota(Long idExamenIntento) {
+
+        ExamenSolicInsIntento intento = examenInscripcionIntentoService.getById(idExamenIntento);
+        ExamenSolicitudInscripcion solicitudInscripcion = examenSolicitudInscripcionRepository.findById(intento.getExamenSolicitudInscripcion().getIdExamenSolicitudInscripcion()).orElse(null);
+        List<ExamenSolicInsIntentoRespuesta> respuestasIntento = intento.getDetalleRespuestas();
+
+        String tipoExamen = solicitudInscripcion.getExamenApertura().getExamen().getTipoExamen().getIdTipoExamen();
+
+        Double nota = 0.0;
+
+        if(tipoExamen.equals(Constantes.TIPO_EXAMEN_FIJO)){
+
+            for(ExamenSolicInsIntentoRespuesta respuesta:respuestasIntento){
+                Respuesta r = respuestaService.getByPreguntaAndRespuesta(respuesta.getIdPregunta(),respuesta.getIdRespuestaMarcada());
+                if(r!=null){
+                    if(r.getRespuestaCorrecta().equals(Constantes.INDICADOR_RESPUESTA_CORRECTA)){
+                        Double puntuacion = r.getPregunta().getPuntuacion().doubleValue();
+                        nota = nota + puntuacion;
+                    }
+                }
+            }
+        }
+
+        if(tipoExamen.equals(Constantes.TIPO_EXAMEN_BALOTARIO)){
+            BigDecimal puntaje = new BigDecimal("20").divide(new BigDecimal(solicitudInscripcion.getExamenApertura().getExamen().getCantidadPreguntas()));
+
+            for(ExamenSolicInsIntentoRespuesta respuesta:respuestasIntento) {
+                Respuesta r = respuestaService.getByPreguntaAndRespuesta(respuesta.getIdPregunta(),respuesta.getIdRespuestaMarcada());
+                if(r!=null){
+                    if(r.getRespuestaCorrecta().equals(Constantes.INDICADOR_RESPUESTA_CORRECTA)){
+                        nota = nota +  puntaje.doubleValue();;
+                    }
+                }
+            }
+        }
+
+        examenInscripcionIntentoService.updateNota(idExamenIntento,nota);
+
+    }
 }

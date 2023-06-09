@@ -62,6 +62,13 @@ public class ExamenInscripcionIntentoServiceImpl implements ExamenInscripcionInt
 
     @Override
     @Transactional
+    public void updateNota(Long id, Double nota) {
+        examenSolicInscripcionIntentoRepository.updateNota(id,nota);
+
+    }
+
+    @Override
+    @Transactional
     public void updateEstado(Long id, String estado) {
         examenSolicInscripcionIntentoRepository.updateEstado(id,estado);
 

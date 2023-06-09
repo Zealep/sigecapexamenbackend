@@ -14,6 +14,10 @@ public interface ExamenSolicInscripcionIntentoRepository extends CrudRepository<
     @Modifying
     void updateNotaAndIntento(Long id,Double nota,Integer intento);
 
+    @Query("update ExamenSolicInsIntento c set c.nota=?2 where c.idExamSoliInscIntento=?1")
+    @Modifying
+    void updateNota(Long id,Double nota);
+
     @Query("update ExamenSolicInsIntento c set c.estado=?2 where c.idExamSoliInscIntento=?1")
     @Modifying
     void updateEstado(Long id,String estado);

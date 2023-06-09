@@ -15,6 +15,8 @@ public interface ExamenInscripcionIntentoService {
 
     void updateNotaAndIntento(Long id,Double nota,Integer intento);
 
+    void updateNota(Long id,Double nota);
+
     void updateEstado(Long id,String estado);
 
     Integer ultimoIntento(Long idExamenSolicitud);
