@@ -1,5 +1,6 @@
 package com.sigecap.sigecapexamenbackend.rest;
 
+import com.sigecap.sigecapexamenbackend.model.dto.CursosAsincronosDTO;
 import com.sigecap.sigecapexamenbackend.model.entity.Curso;
 import com.sigecap.sigecapexamenbackend.model.entity.TipoPregunta;
 import com.sigecap.sigecapexamenbackend.service.CursoService;
@@ -38,6 +39,16 @@ public class CursoController {
     public ResponseEntity<Curso> getById(@PathVariable String id){
         try{
             return new ResponseEntity<>(cursoService.getById(id), HttpStatus.OK);
+        }catch (Exception ex){
+            logger.error(ex.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/curso/asincrono/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CursosAsincronosDTO>> getCursosAsincronosByUsuario(@PathVariable String id){
+        try{
+            return new ResponseEntity<>(cursoService.getCursosAsincronos(id), HttpStatus.OK);
         }catch (Exception ex){
             logger.error(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

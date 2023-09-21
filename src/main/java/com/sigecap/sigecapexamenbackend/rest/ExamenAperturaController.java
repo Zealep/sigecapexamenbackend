@@ -222,7 +222,7 @@ public class ExamenAperturaController {
 
 
             List<PreguntasPorExamenDTO> listExamenPreguntaRespuesta = new ArrayList<>();
-            listExamenPreguntaRespuesta = examenJdbcRepository.getPreguntasPorExamen(IdExamen);
+            listExamenPreguntaRespuesta = examenJdbcRepository.getAllPreguntasPorExamen(IdExamen);
 
             Collections.sort(listExamenPreguntaRespuesta,
                     new Comparator<PreguntasPorExamenDTO>() {
@@ -242,33 +242,39 @@ public class ExamenAperturaController {
             int indiceRespuesta = 0;
             String letras[] = {"a","b","c","d","e","f","g","h","i","j"};
 
-            for(PreguntasPorExamenDTO obj: listExamenPreguntaRespuesta) {
-
+            	
                 for(ExamenSolicInsIntentoRespuesta objR: listSidEaiR) {
-                    if(objR.getIdPregunta().equals(obj.getIdPregunta())) {
-                        if(!noPregunta.equals(obj.getEnunciadoPregunta())) {
-                            noPregunta = obj.getEnunciadoPregunta();
-                            examen =  examen + "\n<style forecolor=\'black\' size='10' >"  + indicePregunta + ") " + noPregunta + "</style>\n\n";
-                            indicePregunta++;
-                            indiceRespuesta = 0;
-                        }
-                        noRespuesta = obj.getEnunciadoRespuesta();
-                        examen = examen + "<style forecolor=\'black\' size='8' >" + letras[indiceRespuesta] + ")" + noRespuesta + "</style>";
-                        if(obj.getInRespuestaCorrecta().equals("S")) {
-                            examen = examen + "<style backcolor=\'yellow\' size='8'> Correcto</style>";
-                        }
-                        if(objR.getIdRespuestaMarcada().equals(obj.getIdRespuesta())) {
-                            examen = examen + "<style backcolor=\'green\' size='8'> Marcado</style>\n";
-                        }
-                        else {
-                            examen = examen + "\n";
-                        }
-
-                        indiceRespuesta++;
-                    }
+                	
+                	
+                	for(PreguntasPorExamenDTO objE: listExamenPreguntaRespuesta) {
+                    	
+	                    if(objR.getIdPregunta().equals(objE.getIdPregunta())) {
+	                    	
+	                        if(!noPregunta.equals(objE.getEnunciadoPregunta())) {
+	                        	
+		                    	
+	                            noPregunta = objE.getEnunciadoPregunta();
+	                            examen =  examen + "\n<style forecolor=\'black\' size='10' >"  + indicePregunta + ") " + noPregunta + "</style>\n\n";
+	                            indicePregunta++;
+	                            indiceRespuesta = 0;
+	                        }
+	                        noRespuesta = objE.getEnunciadoRespuesta();
+	                        examen = examen + "<style forecolor=\'black\' size='8' >" + letras[indiceRespuesta] + ")" + noRespuesta + "</style>";
+	                        if(objE.getInRespuestaCorrecta().equals("S")) {
+	                            examen = examen + "<style backcolor=\'yellow\' size='8'> Correcto</style>";
+	                        }
+	                        if(objR.getIdRespuestaMarcada().equals(objE.getIdRespuesta())) {
+	                            examen = examen + "<style backcolor=\'green\' size='8'> Marcado</style>\n";
+	                        }
+	                        else {
+	                            examen = examen + "\n";
+	                        }
+	
+	                        indiceRespuesta++;
+	                    }
+	                    
+                	}
                 }
-
-            }
 
 
 

@@ -1,7 +1,9 @@
 package com.sigecap.sigecapexamenbackend.service.impl;
 
+import com.sigecap.sigecapexamenbackend.model.dto.CursosAsincronosDTO;
 import com.sigecap.sigecapexamenbackend.model.entity.Curso;
 import com.sigecap.sigecapexamenbackend.repository.CursoRepository;
+import com.sigecap.sigecapexamenbackend.repository.jdbc.CursoAsincronoRepository;
 import com.sigecap.sigecapexamenbackend.service.CursoService;
 import com.sigecap.sigecapexamenbackend.util.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ public class CursoServiceImpl implements CursoService {
 
     @Autowired
     private CursoRepository cursoRepository;
+
+    @Autowired
+    private CursoAsincronoRepository cursoAsincronoRepository;
 
     @Override
     public List<Curso> getAllActives() {
@@ -28,5 +33,10 @@ public class CursoServiceImpl implements CursoService {
     @Override
     public Curso getById(String id) {
         return cursoRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<CursosAsincronosDTO> getCursosAsincronos(String idUsuario) {
+        return cursoAsincronoRepository.getCursosAsincronos(idUsuario);
     }
 }

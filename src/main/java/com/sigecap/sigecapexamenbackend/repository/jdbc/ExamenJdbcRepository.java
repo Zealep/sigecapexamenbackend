@@ -83,6 +83,21 @@ public class ExamenJdbcRepository {
         }
 
     }
+public List<PreguntasPorExamenDTO> getAllPreguntasPorExamen(String examen){
+        try{
+            MapSqlParameterSource parameters = new MapSqlParameterSource();
+            parameters.addValue("examen",examen);
+
+            String sql = "call spu_ListarTodasPreguntasPorExamen( '"+examen+"');";
+
+            return jdbcTemplate.query(sql, parameters,new getPreguntasPorExamenMapper());
+
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            return null;
+        }
+
+    }
 
     private static final class getPreguntasPorExamenMapper implements RowMapper<PreguntasPorExamenDTO> {
 
