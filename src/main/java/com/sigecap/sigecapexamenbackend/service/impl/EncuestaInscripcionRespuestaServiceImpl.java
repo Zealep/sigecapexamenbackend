@@ -29,7 +29,7 @@ public class EncuestaInscripcionRespuestaServiceImpl implements EncuestaInscripc
     public void save(EncuestaInscripcionRespuestasDTO s) {
 
         s.getRespuestasEncuesta().stream().forEach(x->{
-            if(x.getRespuesta().equals("") || x.getRespuesta() == null){
+            if(x.getRespuesta() == null){
                 x.setRespuesta(Constantes.RESPUESTA_VACIA);
             }
             encuestaInscripcionRespuestaRepository.save(x);
