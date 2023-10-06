@@ -16,6 +16,8 @@ public class CursosDisponibleExamenAlumnoDTO {
     private String nombreArchivo;
     private String indicadorRealizoDj;
     private String indicadorRealizarDj;
+    private String idModalidad;
+    private String inRealizoCursoAsincrono;
 
     public String getIndicadorRealizoDj() {
         return indicadorRealizoDj;
@@ -127,5 +129,21 @@ public class CursosDisponibleExamenAlumnoDTO {
 
     public void setNombreArchivo(String nombreArchivo) {
         this.nombreArchivo = nombreArchivo;
+    }
+
+    public String getIdModalidad() {
+        return idModalidad;
+    }
+
+    public void setIdModalidad(String idModalidad) {
+        this.idModalidad = idModalidad;
+    }
+
+    public String getInRealizoCursoAsincrono() {
+        return inRealizoCursoAsincrono;
+    }
+
+    public void setInRealizoCursoAsincrono(String inRealizoCursoAsincrono) {
+        this.inRealizoCursoAsincrono = inRealizoCursoAsincrono;
     }
 }
