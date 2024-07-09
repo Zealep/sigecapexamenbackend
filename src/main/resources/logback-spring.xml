@@ -38,7 +38,7 @@
     </root>
 
     <!-- LOG para paquetes 'net.atopecode.*' a partir del nivel 'TRACE' y superiores. -->
-    <logger name="com.zealep.ventasbackend" level="trace" additivity="false">
+    <logger name="com.sigecap.sigecapexamenbackend" level="trace" additivity="false">
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </logger>

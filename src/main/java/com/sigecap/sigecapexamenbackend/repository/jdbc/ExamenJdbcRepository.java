@@ -63,7 +63,7 @@ public class ExamenJdbcRepository {
             t.setIndicadorRealizoDj(rs.getString("indicador_dj_nexacerrolindo"));
             t.setIndicadorRealizarDj(rs.getString("indicador_realizar_dj_nexacerrolindo"));
             t.setIdModalidad(rs.getString("id_modalidad"));
-            t.setInRealizoCursoAsincrono("in_realizo_curso_asincrono");
+            t.setInRealizoCursoAsincrono(rs.getString("in_realizo_curso_asincrono"));
 
             return t;
 
